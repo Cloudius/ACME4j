@@ -62,15 +62,12 @@ public class JoseUtilsTest {
         String encodedSignature = jose.get("signature").toString();
         String encodedPayload = jose.get("payload").toString();
 
-        StringBuilder expectedHeader = new StringBuilder();
-        expectedHeader.append('{');
-        expectedHeader.append("\"nonce\":\"").append(nonce).append("\",");
-        expectedHeader.append("\"url\":\"").append(resourceUrl).append("\",");
-        expectedHeader.append("\"alg\":\"RS256\",");
-        expectedHeader.append("\"kid\":\"").append(TestUtils.ACCOUNT_URL).append('"');
-        expectedHeader.append('}');
-
-        assertThat(new String(URL_DECODER.decode(encodedHeader), UTF_8), sameJSONAs(expectedHeader.toString()));
+        String expectedHeader = '{' +
+                "\"nonce\":\"" + nonce + "\"," +
+                "\"url\":\"" + resourceUrl + "\"," +
+                "\"alg\":\"RS256\"," +
+                "\"kid\":\"" + TestUtils.ACCOUNT_URL + "\"}";
+        assertThat(new String(URL_DECODER.decode(encodedHeader), UTF_8), sameJSONAs(expectedHeader));
         assertThat(new String(URL_DECODER.decode(encodedPayload), UTF_8), sameJSONAs("{\"foo\":123,\"bar\":\"a-string\"}"));
         assertThat(encodedSignature, not(emptyOrNullString()));
 
@@ -97,15 +94,12 @@ public class JoseUtilsTest {
         String encodedSignature = jose.get("signature").toString();
         String encodedPayload = jose.get("payload").toString();
 
-        StringBuilder expectedHeader = new StringBuilder();
-        expectedHeader.append('{');
-        expectedHeader.append("\"nonce\":\"").append(nonce).append("\",");
-        expectedHeader.append("\"url\":\"").append(resourceUrl).append("\",");
-        expectedHeader.append("\"alg\":\"RS256\",");
-        expectedHeader.append("\"kid\":\"").append(TestUtils.ACCOUNT_URL).append('"');
-        expectedHeader.append('}');
-
-        assertThat(new String(URL_DECODER.decode(encodedHeader), UTF_8), sameJSONAs(expectedHeader.toString()));
+        String expectedHeader = '{' +
+                "\"nonce\":\"" + nonce + "\"," +
+                "\"url\":\"" + resourceUrl + "\"," +
+                "\"alg\":\"RS256\"," +
+                "\"kid\":\"" + TestUtils.ACCOUNT_URL + "\"}";
+        assertThat(new String(URL_DECODER.decode(encodedHeader), UTF_8), sameJSONAs(expectedHeader));
         assertThat(new String(URL_DECODER.decode(encodedPayload), UTF_8), is(""));
         assertThat(encodedSignature, not(emptyOrNullString()));
 
@@ -134,17 +128,14 @@ public class JoseUtilsTest {
         String encodedSignature = jose.get("signature").toString();
         String encodedPayload = jose.get("payload").toString();
 
-        StringBuilder expectedHeader = new StringBuilder();
-        expectedHeader.append('{');
-        expectedHeader.append("\"url\":\"").append(resourceUrl).append("\",");
-        expectedHeader.append("\"alg\":\"RS256\",");
-        expectedHeader.append("\"jwk\": {");
-        expectedHeader.append("\"kty\": \"").append(TestUtils.KTY).append("\",");
-        expectedHeader.append("\"e\": \"").append(TestUtils.E).append("\",");
-        expectedHeader.append("\"n\": \"").append(TestUtils.N).append("\"}");
-        expectedHeader.append("}");
-
-        assertThat(new String(URL_DECODER.decode(encodedHeader), UTF_8), sameJSONAs(expectedHeader.toString()));
+        String expectedHeader = '{' +
+                "\"url\":\"" + resourceUrl + "\"," +
+                "\"alg\":\"RS256\"," +
+                "\"jwk\": {" +
+                "\"kty\": \"" + TestUtils.KTY + "\"," +
+                "\"e\": \"" + TestUtils.E + "\"," +
+                "\"n\": \"" + TestUtils.N + "\"}}";
+        assertThat(new String(URL_DECODER.decode(encodedHeader), UTF_8), sameJSONAs(expectedHeader));
         assertThat(new String(URL_DECODER.decode(encodedPayload), UTF_8), sameJSONAs("{\"foo\":123,\"bar\":\"a-string\"}"));
         assertThat(encodedSignature, not(emptyOrNullString()));
 
@@ -294,13 +285,11 @@ public class JoseUtilsTest {
             assertThat(jws.getHeader("alg"), is("HS256"));
 
             String decodedPayload = jws.getPayload();
-            StringBuilder expectedPayload = new StringBuilder();
-            expectedPayload.append('{');
-            expectedPayload.append("\"kty\":\"").append(TestUtils.KTY).append("\",");
-            expectedPayload.append("\"e\":\"").append(TestUtils.E).append("\",");
-            expectedPayload.append("\"n\":\"").append(TestUtils.N).append("\"");
-            expectedPayload.append("}");
-            assertThat(decodedPayload, sameJSONAs(expectedPayload.toString()));
+            String expectedPayload = '{' +
+                    "\"kty\":\"" + TestUtils.KTY + "\"," +
+                    "\"e\":\"" + TestUtils.E + "\"," +
+                    "\"n\":\"" + TestUtils.N + "\"}";
+            assertThat(decodedPayload, sameJSONAs(expectedPayload));
         } catch (JoseException ex) {
             fail(ex.getMessage());
         }

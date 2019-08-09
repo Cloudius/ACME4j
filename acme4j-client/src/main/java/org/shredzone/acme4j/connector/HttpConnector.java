@@ -84,7 +84,7 @@ public class HttpConnector {
      *
      * @param conn {@link HttpURLConnection} to configure.
      */
-    protected void configure(HttpURLConnection conn) {
+    void configure(HttpURLConnection conn) {
         conn.setConnectTimeout(TIMEOUT);
         conn.setReadTimeout(TIMEOUT);
         conn.setUseCaches(false);

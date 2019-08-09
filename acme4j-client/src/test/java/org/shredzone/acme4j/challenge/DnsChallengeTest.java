@@ -29,7 +29,7 @@ import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
  */
 public class DnsChallengeTest {
 
-    private Login login = TestUtils.login();
+    private final Login login = TestUtils.login();
 
     /**
      * Test that {@link Dns01Challenge} generates a correct authorization key.

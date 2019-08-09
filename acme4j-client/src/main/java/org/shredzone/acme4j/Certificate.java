@@ -52,7 +52,7 @@ public class Certificate extends AcmeResource {
     private ArrayList<X509Certificate> certChain;
     private ArrayList<URL> alternates;
 
-    protected Certificate(Login login, URL certUrl) {
+    Certificate(Login login, URL certUrl) {
         super(login, certUrl);
     }
 
@@ -157,7 +157,7 @@ public class Certificate extends AcmeResource {
      *               reason.
      * @since 2.6
      */
-    public static void revoke(Login login, X509Certificate cert, @Nullable RevocationReason reason)
+    private static void revoke(Login login, X509Certificate cert, @Nullable RevocationReason reason)
             throws AcmeException {
         LOG.debug("revoke");
 

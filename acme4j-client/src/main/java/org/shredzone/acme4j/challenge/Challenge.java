@@ -44,11 +44,11 @@ public class Challenge extends AcmeJsonResource {
     private static final long serialVersionUID = 2338794776848388099L;
     private static final Logger LOG = LoggerFactory.getLogger(Challenge.class);
 
-    protected static final String KEY_TYPE = "type";
-    protected static final String KEY_URL = "url";
-    protected static final String KEY_STATUS = "status";
-    protected static final String KEY_VALIDATED = "validated";
-    protected static final String KEY_ERROR = "error";
+    private static final String KEY_TYPE = "type";
+    private static final String KEY_URL = "url";
+    private static final String KEY_STATUS = "status";
+    private static final String KEY_VALIDATED = "validated";
+    private static final String KEY_ERROR = "error";
 
     /**
      * Creates a new generic {@link Challenge} object.
@@ -103,7 +103,7 @@ public class Challenge extends AcmeJsonResource {
      *
      * @param response {@link JSONBuilder} to write the response to
      */
-    protected void prepareResponse(JSONBuilder response) {
+    void prepareResponse(JSONBuilder response) {
         // Do nothing here...
     }
 
@@ -113,8 +113,8 @@ public class Challenge extends AcmeJsonResource {
      * @param type Type to check
      * @return {@code true} if acceptable, {@code false} if not
      */
-    protected boolean acceptable(String type) {
-        return type != null && !type.trim().isEmpty();
+    boolean acceptable(String type) {
+        return !type.trim().isEmpty();
     }
 
     @Override

@@ -67,8 +67,8 @@ public class DefaultConnection implements Connection {
     private static final URI BAD_NONCE_ERROR = URI.create("urn:ietf:params:acme:error:badNonce");
     private static final int MAX_ATTEMPTS = 10;
 
-    protected final HttpConnector httpConnector;
-    protected HttpURLConnection conn;
+    private final HttpConnector httpConnector;
+    HttpURLConnection conn;
 
     /**
      * Creates a new {@link DefaultConnection}.
@@ -257,7 +257,7 @@ public class DefaultConnection implements Connection {
      * @param accept  Accept header
      * @return HTTP 200 class status that was returned
      */
-    protected int sendRequest(URL url, Session session, String accept) throws AcmeException {
+    private int sendRequest(URL url, Session session, String accept) throws AcmeException {
         Objects.requireNonNull(url, "url");
         Objects.requireNonNull(session, "session");
         Objects.requireNonNull(accept, "accept");
@@ -305,8 +305,8 @@ public class DefaultConnection implements Connection {
      * @param accept          Accept header
      * @return HTTP 200 class status that was returned
      */
-    protected int sendSignedRequest(URL url, @Nullable JSONBuilder claims, Session session,
-                                    KeyPair keypair, @Nullable URL accountLocation, String accept) throws AcmeException {
+    private int sendSignedRequest(URL url, @Nullable JSONBuilder claims, Session session,
+                                  KeyPair keypair, @Nullable URL accountLocation, String accept) throws AcmeException {
         Objects.requireNonNull(url, "url");
         Objects.requireNonNull(session, "session");
         Objects.requireNonNull(keypair, "keypair");

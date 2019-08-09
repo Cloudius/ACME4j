@@ -56,7 +56,7 @@ public class PebbleHttpConnector extends HttpConnector {
      * Lazily creates an {@link SSLSocketFactory} that exclusively accepts the Pebble
      * certificate.
      */
-    protected synchronized SSLSocketFactory createSocketFactory() throws IOException {
+    private synchronized SSLSocketFactory createSocketFactory() throws IOException {
         if (sslSocketFactory == null) {
             try (InputStream in = getClass().getResourceAsStream("/org/shredzone/acme4j/provider/pebble/pebble.truststore")) {
                 KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());

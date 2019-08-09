@@ -32,7 +32,7 @@ import static org.shredzone.acme4j.toolbox.AcmeUtils.base64UrlEncode;
 public class TokenChallenge extends Challenge {
     private static final long serialVersionUID = 1634133407432681800L;
 
-    protected static final String KEY_TOKEN = "token";
+    private static final String KEY_TOKEN = "token";
 
     /**
      * Creates a new generic {@link TokenChallenge} object.
@@ -47,7 +47,7 @@ public class TokenChallenge extends Challenge {
     /**
      * Gets the token.
      */
-    protected String getToken() {
+    String getToken() {
         String token = getJSON().get(KEY_TOKEN).asString();
         if (!AcmeUtils.isValidBase64Url(token)) {
             throw new AcmeProtocolException("Invalid token: " + token);

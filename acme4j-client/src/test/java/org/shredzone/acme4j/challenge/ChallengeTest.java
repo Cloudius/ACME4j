@@ -44,10 +44,10 @@ import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
  * Unit tests for {@link Challenge}.
  */
 public class ChallengeTest {
-    private URL locationUrl = url("https://example.com/acme/some-location");
+    private final URL locationUrl = url("https://example.com/acme/some-location");
 
     /**
-     * Test that after unmarshaling, the challenge properties are set correctly.
+     * Test that after unmarshalling, the challenge properties are set correctly.
      */
     @Test
     public void testUnmarshal() {

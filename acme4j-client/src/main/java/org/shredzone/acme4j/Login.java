@@ -133,7 +133,7 @@ public class Login {
     /**
      * Sets a different {@link KeyPair}.
      */
-    protected void setKeyPair(KeyPair keyPair) {
+    void setKeyPair(KeyPair keyPair) {
         this.keyPair = Objects.requireNonNull(keyPair, "keyPair");
     }
 

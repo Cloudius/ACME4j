@@ -111,7 +111,7 @@ Account account = login.getAccount();
 assertThat(account.getContacts().get(0), is(email));
 ```
 
-The entire mock server can be prepared for a test that way. For example, if you want to write a unit test for a method that only downloads an existing ceritificate, you can construct a server with all the necessary resources being already present. If your unit test is executed, it will find a mock server that is ready for certificate downloading.
+The entire mock server can be prepared for a test that way. For example, if you want to write a unit test for a method that only downloads an existing certificate, you can construct a server with all the necessary resources being already present. If your unit test is executed, it will find a mock server that is ready for certificate downloading.
 
 You will find more examples in the [example package](https://github.com/shred/acme4j/tree/master/acme4j-mock/src/test/java/org/shredzone/acme4j/mock/example) at the acme4j-mock unit tests.
 

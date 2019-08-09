@@ -161,7 +161,7 @@ public class JSONBuilderTest {
         assertThat(cb1.toString(), is("{\"ar\":[]}"));
 
         JSONBuilder cb2 = new JSONBuilder();
-        res = cb2.array("ar", Arrays.asList(123));
+        res = cb2.array("ar", Collections.singletonList(123));
         assertThat(res, is(sameInstance(cb2)));
         assertThat(cb2.toString(), is("{\"ar\":[123]}"));
 

@@ -120,7 +120,7 @@ public class AcmeJsonResourceTest {
 
         private int updateCount = 0;
 
-        public DummyJsonResource(Login login, URL location) {
+        DummyJsonResource(Login login, URL location) {
             super(login, location);
         }
 

@@ -28,6 +28,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -297,7 +298,7 @@ public final class TestUtils {
         final JsonWebKey jwk = JsonWebKey.Factory.newJwk(keyPair.getPublic());
         Map<String, Object> params = new TreeMap<>(jwk.toParams(OutputControlLevel.PUBLIC_ONLY));
         MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(JsonUtil.toJson(params).getBytes("UTF-8"));
+        md.update(JsonUtil.toJson(params).getBytes(StandardCharsets.UTF_8));
         byte[] thumbprint = md.digest();
 
         System.out.println("N = " + params.get("n"));

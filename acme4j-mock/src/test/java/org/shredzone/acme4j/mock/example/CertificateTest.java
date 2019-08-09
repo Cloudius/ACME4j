@@ -48,7 +48,7 @@ public class CertificateTest {
      * @param order A valid {@link Order} to download the certificate from
      * @return A list of {@link X509Certificate} that was downloaded
      */
-    public List<X509Certificate> downloadCertificate(Order order) {
+    private List<X509Certificate> downloadCertificate(Order order) {
         if (order.getStatus() != Status.VALID) {
             throw new IllegalStateException("Order is not valid!");
         }

@@ -250,12 +250,12 @@ public class OrderIT extends PebbleITBase {
     }
 
     @FunctionalInterface
-    private static interface Validator {
+    private interface Validator {
         Challenge prepare(Authorization auth) throws Exception;
     }
 
     @FunctionalInterface
-    private static interface Revoker {
+    private interface Revoker {
         void revoke(Session session, Certificate certificate, KeyPair keyPair,
                     KeyPair domainKeyPair) throws Exception;
     }

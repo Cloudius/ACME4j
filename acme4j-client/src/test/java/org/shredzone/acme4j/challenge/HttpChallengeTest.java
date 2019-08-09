@@ -34,7 +34,7 @@ public class HttpChallengeTest {
     private static final String KEY_AUTHORIZATION =
             "rSoI9JpyvFi-ltdnBW0W1DjKstzG7cHixjzcOjwzAEQ.HnWjTDnyqlCrm6tZ-6wX-TrEXgRdeNu9G71gqxSO6o0";
 
-    private Login login = TestUtils.login();
+    private final Login login = TestUtils.login();
 
     /**
      * Test that {@link Http01Challenge} generates a correct authorization key.

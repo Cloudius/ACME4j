@@ -283,7 +283,7 @@ public class MockOrder extends MockResource {
      * Returns a {@link List} of all {@link Identifier} in this order. This list is
      * unmodifiable.
      */
-    public List<Identifier> getIdentifiers() {
+    private List<Identifier> getIdentifiers() {
         return identifiers;
     }
 

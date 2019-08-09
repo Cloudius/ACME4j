@@ -36,8 +36,8 @@ import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
  */
 public class AccountBuilderTest {
 
-    private URL resourceUrl = url("http://example.com/acme/resource");
-    private URL locationUrl = url("http://example.com/acme/account");
+    private final URL resourceUrl = url("http://example.com/acme/resource");
+    private final URL locationUrl = url("http://example.com/acme/account");
 
     /**
      * Test if a new account can be created.

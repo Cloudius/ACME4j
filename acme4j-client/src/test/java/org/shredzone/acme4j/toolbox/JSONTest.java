@@ -23,6 +23,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -68,7 +69,7 @@ public class JSONTest {
         assertThat(map.get("foo"), is("a-text"));
         assertThat(map.get("bar"), is(123L));
 
-        try (InputStream in = new ByteArrayInputStream(json.getBytes("utf-8"))) {
+        try (InputStream in = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8))) {
             JSON fromStream = JSON.parse(in);
             assertThat(fromStream.toString(), is(sameJSONAs(json)));
             Map<String, Object> map2 = fromStream.toMap();
@@ -83,7 +84,7 @@ public class JSONTest {
      * Test that bad JSON fails.
      */
     @Test(expected = AcmeProtocolException.class)
-    public void testParsersBadJSON() throws IOException {
+    public void testParsersBadJSON() {
         JSON.parse("This is no JSON.");
     }
 
@@ -238,7 +239,7 @@ public class JSONTest {
      * Test that getters are null safe.
      */
     @Test
-    public void testNullGetter() throws MalformedURLException {
+    public void testNullGetter() {
         JSON json = TestUtils.getJSON("datatypes");
 
         assertThat(json.get("none"), is(notNullValue()));
@@ -335,7 +336,7 @@ public class JSONTest {
      * Test that wrong getters return an exception.
      */
     @Test
-    public void testWrongGetter() throws MalformedURLException {
+    public void testWrongGetter() {
         JSON json = TestUtils.getJSON("datatypes");
 
         try {

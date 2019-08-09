@@ -38,8 +38,8 @@ import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
  */
 public class OrderTest {
 
-    private URL locationUrl = url("http://example.com/acme/order/1234");
-    private URL finalizeUrl = url("https://example.com/acme/acct/1/order/1/finalize");
+    private final URL locationUrl = url("http://example.com/acme/order/1234");
+    private final URL finalizeUrl = url("https://example.com/acme/acct/1/order/1/finalize");
 
     /**
      * Test that order is properly updated.

@@ -83,7 +83,7 @@ public final class JSON implements Serializable {
      * @return {@link JSON} of the read content.
      */
     public static JSON parse(@WillClose InputStream in) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
             String json = reader.lines().map(String::trim).collect(joining());
             return parse(json);
         }
@@ -475,10 +475,10 @@ public final class JSON implements Serializable {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj == null || !(obj instanceof Value)) {
-                return false;
-            }
-            return Objects.equals(val, ((Value) obj).val);
+            /*if (obj instanceof Value) {*/
+                return (obj instanceof Value) && Objects.equals(val, ((Value) obj).val);
+          /*  }
+            return false;*/
         }
 
         @Override
@@ -495,7 +495,7 @@ public final class JSON implements Serializable {
         private final Array array;
         private int index = 0;
 
-        public ValueIterator(Array array) {
+        ValueIterator(Array array) {
             this.array = array;
         }
 

@@ -39,7 +39,7 @@ public class Order extends AcmeJsonResource {
     private static final long serialVersionUID = 5435808648658292177L;
     private static final Logger LOG = LoggerFactory.getLogger(Order.class);
 
-    protected Order(Login login, URL location) {
+    Order(Login login, URL location) {
         super(login, location);
     }
 

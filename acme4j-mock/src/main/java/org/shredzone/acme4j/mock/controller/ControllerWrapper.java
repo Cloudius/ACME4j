@@ -50,7 +50,7 @@ public abstract class ControllerWrapper<C extends Controller> implements Control
     /**
      * Returns the receiving {@link Controller} instance.
      */
-    protected C getController() {
+    private C getController() {
         return receiver;
     }
 

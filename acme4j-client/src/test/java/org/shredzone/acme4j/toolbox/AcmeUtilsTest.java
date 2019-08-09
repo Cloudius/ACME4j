@@ -316,7 +316,7 @@ public class AcmeUtilsTest {
         private final Instant cmp;
         private final DateTimeFormatter dtf = DateTimeFormatter.ISO_INSTANT;
 
-        public InstantMatcher(Instant cmp) {
+        InstantMatcher(Instant cmp) {
             this.cmp = cmp;
         }
 

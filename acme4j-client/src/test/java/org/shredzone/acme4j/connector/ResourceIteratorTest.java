@@ -39,8 +39,8 @@ public class ResourceIteratorTest {
     private final int RESOURCES_PER_PAGE = 5;
     private final String TYPE = "authorizations";
 
-    private List<URL> resourceURLs = new ArrayList<>(PAGES * RESOURCES_PER_PAGE);
-    private List<URL> pageURLs = new ArrayList<>(PAGES);
+    private final List<URL> resourceURLs = new ArrayList<>(PAGES * RESOURCES_PER_PAGE);
+    private final List<URL> pageURLs = new ArrayList<>(PAGES);
 
     @Before
     public void setup() {
@@ -95,9 +95,7 @@ public class ResourceIteratorTest {
 
         // don't try this at home, kids...
         try {
-            for (; ; ) {
-                result.add(it.next().getLocation());
-            }
+            while (true) result.add(it.next().getLocation());
         } catch (NoSuchElementException ex) {
             assertThat(it.hasNext(), is(false));
             assertThat(it.hasNext(), is(false));
@@ -147,7 +145,7 @@ public class ResourceIteratorTest {
             @Override
             public Collection<URL> getLinks(String relation) {
                 if ("next".equals(relation) && (ix + 1 < pageURLs.size())) {
-                    return Arrays.asList(pageURLs.get(ix + 1));
+                    return Collections.singletonList(pageURLs.get(ix + 1));
                 }
                 return Collections.emptyList();
             }

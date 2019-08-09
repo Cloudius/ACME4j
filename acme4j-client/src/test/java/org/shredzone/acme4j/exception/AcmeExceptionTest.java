@@ -48,7 +48,7 @@ public class AcmeExceptionTest {
 
         AcmeException ex = new AcmeException(message, cause);
         assertThat(ex.getMessage(), is(message));
-        assertThat(ex.getCause(), is((Throwable) cause));
+        assertThat(ex.getCause(), is(cause));
     }
 
 }

@@ -45,8 +45,8 @@ import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
  */
 public class CertificateTest {
 
-    private URL resourceUrl = url("http://example.com/acme/resource");
-    private URL locationUrl = url("http://example.com/acme/certificate");
+    private final URL resourceUrl = url("http://example.com/acme/resource");
+    private final URL locationUrl = url("http://example.com/acme/certificate");
 
     /**
      * Test that a certificate can be downloaded.

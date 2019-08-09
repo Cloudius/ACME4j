@@ -50,7 +50,7 @@ public class Account extends AcmeJsonResource {
     private static final String KEY_STATUS = "status";
     private static final String KEY_EXTERNAL_ACCOUNT_BINDING = "externalAccountBinding";
 
-    protected Account(Login login) {
+    Account(Login login) {
         super(login, login.getAccountLocation());
     }
 
@@ -173,7 +173,7 @@ public class Account extends AcmeJsonResource {
      *                             certificate for this identifier
      * @since 2.3
      */
-    public Authorization preAuthorize(Identifier identifier) throws AcmeException {
+    private Authorization preAuthorize(Identifier identifier) throws AcmeException {
         Objects.requireNonNull(identifier, "identifier");
 
         URL newAuthzUrl = getSession().resourceUrl(Resource.NEW_AUTHZ);

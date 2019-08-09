@@ -27,6 +27,7 @@ import org.shredzone.acme4j.toolbox.JSONBuilder;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 
 /**
@@ -82,7 +83,7 @@ public class BammBammClient {
     public void dnsAddARecord(String domain, String ip) throws IOException {
         JSONBuilder jb = new JSONBuilder();
         jb.put("host", domain);
-        jb.array("addresses", Arrays.asList(ip));
+        jb.array("addresses", Collections.singletonList(ip));
         sendRequest("add-a", jb.toString());
     }
 

@@ -41,7 +41,7 @@ public class Authorization extends AcmeJsonResource {
     private static final long serialVersionUID = -3116928998379417741L;
     private static final Logger LOG = LoggerFactory.getLogger(Authorization.class);
 
-    protected Authorization(Login login, URL location) {
+    Authorization(Login login, URL location) {
         super(login, location);
     }
 

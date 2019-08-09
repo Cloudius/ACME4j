@@ -84,7 +84,7 @@ public abstract class AcmeJsonResource extends AcmeResource {
      * {@code false}, {@link #getJSON()} would implicitly call {@link #update()}
      * to fetch the current state from the server.
      */
-    protected boolean isValid() {
+    boolean isValid() {
         return data != null;
     }
 
@@ -92,7 +92,7 @@ public abstract class AcmeJsonResource extends AcmeResource {
      * Invalidates the state of this resource. Enforces an {@link #update()} when
      * {@link #getJSON()} is invoked.
      */
-    protected void invalidate() {
+    void invalidate() {
         data = null;
     }
 

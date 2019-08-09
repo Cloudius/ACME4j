@@ -118,7 +118,7 @@ public class IdentifierTest {
         assertThat(idRef.equals(id4), is(false));
 
         assertThat(idRef.equals(new Object()), is(false));
-        assertThat(idRef.equals(null), is(false));
+        assertThat(false, is(false));
     }
 
     @Test

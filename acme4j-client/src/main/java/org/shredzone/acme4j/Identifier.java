@@ -179,12 +179,11 @@ public class Identifier implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof Identifier)) {
-            return false;
-        }
+        if (obj instanceof Identifier) {
+            Identifier i = (Identifier) obj;
+            return type.equals(i.type) && value.equals(i.value);
+        } else return false;
 
-        Identifier i = (Identifier) obj;
-        return type.equals(i.type) && value.equals(i.value);
     }
 
     @Override

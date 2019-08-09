@@ -42,7 +42,7 @@ import static java.util.Objects.requireNonNull;
 public class AccountBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(AccountBuilder.class);
 
-    private List<URI> contacts = new ArrayList<>();
+    private final List<URI> contacts = new ArrayList<>();
     private Boolean termsOfServiceAgreed;
     private Boolean onlyExisting;
     private String keyIdentifier;
@@ -85,7 +85,7 @@ public class AccountBuilder {
      * @return itself
      * @throws IllegalArgumentException if there is a syntax error in the URI string
      */
-    public AccountBuilder addEmail(String email) {
+    AccountBuilder addEmail(String email) {
         addContact("mailto:" + email);
         return this;
     }
@@ -132,7 +132,7 @@ public class AccountBuilder {
      * @return itself
      */
     public AccountBuilder withKeyIdentifier(String kid, SecretKey macKey) {
-        if (kid != null && kid.isEmpty()) {
+        if (kid.isEmpty()) {
             throw new IllegalArgumentException("kid must not be empty");
         }
         this.macKey = requireNonNull(macKey, "macKey");
@@ -148,7 +148,7 @@ public class AccountBuilder {
      * @param encodedMacKey Base64url encoded MAC key. It will be decoded for your convenience.
      * @return itself
      */
-    public AccountBuilder withKeyIdentifier(String kid, String encodedMacKey) {
+    AccountBuilder withKeyIdentifier(String kid, String encodedMacKey) {
         byte[] encodedKey = AcmeUtils.base64UrlDecode(requireNonNull(encodedMacKey, "encodedMacKey"));
         return withKeyIdentifier(kid, new SecretKeySpec(encodedKey, "HMAC"));
     }

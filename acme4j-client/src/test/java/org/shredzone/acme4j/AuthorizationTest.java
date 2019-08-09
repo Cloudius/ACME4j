@@ -47,7 +47,7 @@ public class AuthorizationTest {
     private static final String SNAILMAIL_TYPE = "snail-01"; // a non-existent challenge
     private static final String DUPLICATE_TYPE = "duplicate-01"; // a duplicate challenge
 
-    private URL locationUrl = url("http://example.com/acme/account");
+    private final URL locationUrl = url("http://example.com/acme/account");
 
     /**
      * Test that {@link Authorization#findChallenge(String)} finds challenges.
@@ -357,7 +357,7 @@ public class AuthorizationTest {
      * Dummy challenge that is never going to be created.
      */
     private static class NonExistingChallenge extends Challenge {
-        public NonExistingChallenge(Login login, JSON data) {
+        NonExistingChallenge(Login login, JSON data) {
             super(login, data);
         }
     }

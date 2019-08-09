@@ -65,7 +65,7 @@ public class ClientTest {
      *
      * @param domains Domains to get a common certificate for
      */
-    public void fetchCertificate(Collection<String> domains) throws IOException, AcmeException {
+    private void fetchCertificate(Collection<String> domains) throws IOException, AcmeException {
         // Load the user key file. If there is no key file, create a new one.
         KeyPair userKeyPair = loadOrCreateUserKeyPair();
 
@@ -133,7 +133,7 @@ public class ClientTest {
         }
 
         // That's all! Configure your web server to use the DOMAIN_KEY_FILE and
-        // DOMAIN_CHAIN_FILE for the requested domans.
+        // DOMAIN_CHAIN_FILE for the requested domains.
     }
 
     /**
@@ -293,7 +293,7 @@ public class ClientTest {
      * @param auth {@link Authorization} to find the challenge in
      * @return {@link Challenge} to verify
      */
-    public Challenge httpChallenge(Authorization auth) throws AcmeException {
+    private Challenge httpChallenge(Authorization auth) throws AcmeException {
         // Find a single http-01 challenge
         Http01Challenge challenge = auth.findChallenge(Http01Challenge.class);
         if (challenge == null) {
@@ -309,16 +309,15 @@ public class ClientTest {
         LOG.info("The file must not contain any leading or trailing whitespaces or line breaks!");
         LOG.info("If you're ready, dismiss the dialog...");
 
-        StringBuilder message = new StringBuilder();
-        message.append("Please create a file in your web server's base directory.\n\n");
-        message.append("http://")
-                .append(auth.getIdentifier().getDomain())
-                .append("/.well-known/acme-challenge/")
-                .append(challenge.getToken())
-                .append("\n\n");
-        message.append("Content:\n\n");
-        message.append(challenge.getAuthorization());
-        acceptChallenge(message.toString());
+        String message = "Please create a file in your web server's base directory.\n\n" +
+                "http://" +
+                auth.getIdentifier().getDomain() +
+                "/.well-known/acme-challenge/" +
+                challenge.getToken() +
+                "\n\n" +
+                "Content:\n\n" +
+                challenge.getAuthorization();
+        acceptChallenge(message);
 
         return challenge;
     }
@@ -334,7 +333,7 @@ public class ClientTest {
      * @param auth {@link Authorization} to find the challenge in
      * @return {@link Challenge} to verify
      */
-    public Challenge dnsChallenge(Authorization auth) throws AcmeException {
+    private Challenge dnsChallenge(Authorization auth) throws AcmeException {
         // Find a single dns-01 challenge
         Dns01Challenge challenge = auth.findChallenge(Dns01Challenge.TYPE);
         if (challenge == null) {
@@ -347,13 +346,11 @@ public class ClientTest {
                 auth.getIdentifier().getDomain(), challenge.getDigest());
         LOG.info("If you're ready, dismiss the dialog...");
 
-        StringBuilder message = new StringBuilder();
-        message.append("Please create a TXT record:\n\n");
-        message.append("_acme-challenge.")
-                .append(auth.getIdentifier().getDomain())
-                .append(". IN TXT ")
-                .append(challenge.getDigest());
-        acceptChallenge(message.toString());
+        String message = "Please create a TXT record:\n\n_acme-challenge." +
+                auth.getIdentifier().getDomain() +
+                ". IN TXT " +
+                challenge.getDigest();
+        acceptChallenge(message);
 
         return challenge;
     }
@@ -364,7 +361,7 @@ public class ClientTest {
      *
      * @param message Instructions to be shown in the dialog
      */
-    public void acceptChallenge(String message) throws AcmeException {
+    private void acceptChallenge(String message) throws AcmeException {
         int option = JOptionPane.showConfirmDialog(null,
                 message,
                 "Prepare Challenge",
@@ -380,7 +377,7 @@ public class ClientTest {
      *
      * @param message Instructions to be shown in the dialog
      */
-    public void completeChallenge(String message) throws AcmeException {
+    private void completeChallenge(String message) throws AcmeException {
         JOptionPane.showMessageDialog(null,
                 message,
                 "Complete Challenge",
@@ -393,7 +390,7 @@ public class ClientTest {
      *
      * @param agreement {@link URI} of the Terms of Service
      */
-    public void acceptAgreement(URI agreement) throws AcmeException {
+    private void acceptAgreement(URI agreement) throws AcmeException {
         int option = JOptionPane.showConfirmDialog(null,
                 "Do you accept the Terms of Service?\n\n" + agreement,
                 "Accept ToS",

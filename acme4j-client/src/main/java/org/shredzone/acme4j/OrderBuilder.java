@@ -57,7 +57,7 @@ public class OrderBuilder {
      *
      * @param login {@link Login} to bind with
      */
-    protected OrderBuilder(Login login) {
+    OrderBuilder(Login login) {
         this.login = login;
     }
 
@@ -299,7 +299,7 @@ public class OrderBuilder {
                     claims.put("recurrent-certificate-predate", recurrentPredate);
                 }
                 if (recurrentGet) {
-                    claims.put("recurrent-certificate-get", recurrentGet);
+                    claims.put("recurrent-certificate-get", true);
                 }
             }
 

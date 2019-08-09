@@ -67,7 +67,7 @@ public final class CertificateUtils {
      *
      * @since 2.1
      */
-    public static final ASN1ObjectIdentifier ACME_VALIDATION =
+    private static final ASN1ObjectIdentifier ACME_VALIDATION =
             new ASN1ObjectIdentifier(TlsAlpn01Challenge.ACME_VALIDATION_OID).intern();
 
     private CertificateUtils() {
@@ -106,7 +106,7 @@ public final class CertificateUtils {
             throws IOException {
         Objects.requireNonNull(keypair, "keypair");
         Objects.requireNonNull(id, "id");
-        if (acmeValidation == null || acmeValidation.length != 32) {
+        if (acmeValidation.length != 32) {
             throw new IllegalArgumentException("Bad acmeValidation parameter");
         }
 

@@ -33,7 +33,7 @@ public class AcmeNetworkExceptionTest {
         AcmeNetworkException ex = new AcmeNetworkException(cause);
 
         assertThat(ex.getMessage(), notNullValue());
-        assertThat(ex.getCause(), is((Throwable) cause));
+        assertThat(ex.getCause(), is(cause));
     }
 
 }

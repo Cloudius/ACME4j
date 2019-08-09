@@ -51,9 +51,9 @@ import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
  */
 public class AccountTest {
 
-    private URL resourceUrl = url("http://example.com/acme/resource");
-    private URL locationUrl = url(TestUtils.ACCOUNT_URL);
-    private URL agreementUrl = url("http://example.com/agreement.pdf");
+    private final URL resourceUrl = url("http://example.com/acme/resource");
+    private final URL locationUrl = url(TestUtils.ACCOUNT_URL);
+    private final URL agreementUrl = url("http://example.com/agreement.pdf");
 
     /**
      * Test that a account can be updated.
@@ -76,7 +76,7 @@ public class AccountTest {
             public int sendSignedPostAsGetRequest(URL url, Login login) {
                 if (url("https://example.com/acme/acct/1/orders").equals(url)) {
                     jsonResponse = new JSONBuilder()
-                            .array("orders", Arrays.asList("https://example.com/acme/order/1"))
+                            .array("orders", Collections.singletonList("https://example.com/acme/order/1"))
                             .toJSON();
                 } else {
                     jsonResponse = getJSON("updateAccountResponse");
@@ -130,7 +130,7 @@ public class AccountTest {
      * Test lazy loading.
      */
     @Test
-    public void testLazyLoading() throws AcmeException, IOException {
+    public void testLazyLoading() throws IOException {
         final AtomicBoolean requestWasSent = new AtomicBoolean(false);
 
         TestableConnectionProvider provider = new TestableConnectionProvider() {
@@ -153,12 +153,7 @@ public class AccountTest {
 
             @Override
             public Collection<URL> getLinks(String relation) {
-                switch (relation) {
-                    case "termsOfService":
-                        return Arrays.asList(agreementUrl);
-                    default:
-                        return null;
-                }
+                return ("termsOfService".equals(relation)) ? Collections.singletonList(agreementUrl) : null;
             }
 
             @Override
@@ -334,15 +329,13 @@ public class AccountTest {
 
                     String decodedPayload = jws.getPayload();
 
-                    StringBuilder expectedPayload = new StringBuilder();
-                    expectedPayload.append('{');
-                    expectedPayload.append("\"account\":\"").append(locationUrl).append("\",");
-                    expectedPayload.append("\"oldKey\":{");
-                    expectedPayload.append("\"kty\":\"").append(TestUtils.KTY).append("\",");
-                    expectedPayload.append("\"e\":\"").append(TestUtils.E).append("\",");
-                    expectedPayload.append("\"n\":\"").append(TestUtils.N).append("\"");
-                    expectedPayload.append("}}");
-                    assertThat(decodedPayload, sameJSONAs(expectedPayload.toString()));
+                    String expectedPayload = '{' +
+                            "\"account\":\"" + locationUrl + "\"," +
+                            "\"oldKey\":{" +
+                            "\"kty\":\"" + TestUtils.KTY + "\"," +
+                            "\"e\":\"" + TestUtils.E + "\"," +
+                            "\"n\":\"" + TestUtils.N + "\"}}";
+                    assertThat(decodedPayload, sameJSONAs(expectedPayload));
                 } catch (JoseException ex) {
                     fail("decoding inner payload failed");
                 }

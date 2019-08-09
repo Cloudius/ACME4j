@@ -22,7 +22,7 @@ import java.io.InputStream;
  * Multiple line separators are compressed to a single line separator.
  */
 @ParametersAreNonnullByDefault
-public class TrimmingInputStream extends InputStream {
+class TrimmingInputStream extends InputStream {
 
     private final InputStream in;
     private boolean wasLineSeparator = true;

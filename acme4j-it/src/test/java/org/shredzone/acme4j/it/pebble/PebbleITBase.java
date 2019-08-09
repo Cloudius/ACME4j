@@ -42,7 +42,7 @@ import static org.junit.Assert.assertThat;
  * Also, a running pebble-challtestsrv is required to listen on localhost port 8055. The
  * server's base URL can be changed via the system property {@code bammbammUrl}.
  */
-public abstract class PebbleITBase {
+abstract class PebbleITBase {
     private final String pebbleHost = System.getProperty("pebbleHost", "localhost");
     private final int pebblePort = Integer.parseInt(System.getProperty("pebblePort", "14000"));
 
@@ -60,21 +60,21 @@ public abstract class PebbleITBase {
         cleanup.clear();
     }
 
-    protected void cleanup(CleanupCallback callback) {
+    void cleanup(CleanupCallback callback) {
         cleanup.add(callback);
     }
 
     /**
      * @return The {@link URI} of the pebble server to test against.
      */
-    protected URI pebbleURI() {
+    URI pebbleURI() {
         return URI.create("acme://pebble/" + pebbleHost + ":" + pebblePort);
     }
 
     /**
      * @return {@link BammBammClient} singleton instance.
      */
-    protected BammBammClient getBammBammClient() {
+    BammBammClient getBammBammClient() {
         if (bammBammClient == null) {
             bammBammClient = new BammBammClient(bammbammUrl);
         }
@@ -86,7 +86,7 @@ public abstract class PebbleITBase {
      *
      * @return Created {@link KeyPair}, guaranteed to be unknown to the Pebble server
      */
-    protected KeyPair createKeyPair() {
+    KeyPair createKeyPair() {
         return KeyPairUtils.createKeyPair(2048);
     }
 
@@ -96,7 +96,7 @@ public abstract class PebbleITBase {
      *
      * @param url {@link URL} to assert
      */
-    protected void assertIsPebbleUrl(URL url) {
+    void assertIsPebbleUrl(URL url) {
         assertThat(url, not(nullValue()));
         assertThat(url.getProtocol(), is("https"));
         assertThat(url.getHost(), is(pebbleHost));
@@ -109,7 +109,7 @@ public abstract class PebbleITBase {
      *
      * @param auth {@link Authorization} to update
      */
-    protected void updateAuth(Authorization auth) {
+    void updateAuth(Authorization auth) {
         try {
             auth.update();
         } catch (AcmeException ex) {
@@ -122,7 +122,7 @@ public abstract class PebbleITBase {
      *
      * @param order {@link Order} to update
      */
-    protected void updateOrder(Order order) {
+    void updateOrder(Order order) {
         try {
             order.update();
         } catch (AcmeException ex) {
@@ -131,7 +131,7 @@ public abstract class PebbleITBase {
     }
 
     @FunctionalInterface
-    public static interface CleanupCallback {
+    interface CleanupCallback {
         void cleanup() throws Exception;
     }
 

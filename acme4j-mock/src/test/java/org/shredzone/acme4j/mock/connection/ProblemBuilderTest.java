@@ -92,7 +92,7 @@ public class ProblemBuilderTest {
      * Test building of complex problems with subproblems.
      */
     @Test
-    public void testSubProblem() throws MalformedURLException, URISyntaxException {
+    public void testSubProblem() throws MalformedURLException {
         URL baseUrl = new URL("https://mock.test/resource");
         Identifier identifier1 = Identifier.dns("example.org");
         Identifier identifier2 = Identifier.dns("www.example.org");

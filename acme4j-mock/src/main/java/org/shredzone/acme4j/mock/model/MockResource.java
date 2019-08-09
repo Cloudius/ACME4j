@@ -64,7 +64,7 @@ public abstract class MockResource {
      * @param path Elements of the URL path
      * @return Fake https URL that refers to a mock server and contains the path elements
      */
-    protected static URL buildUrl(String... path) {
+    static URL buildUrl(String... path) {
         try {
             return BASE_URI.resolve(String.join("/", path)).toURL();
         } catch (MalformedURLException ex) {

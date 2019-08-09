@@ -29,7 +29,7 @@ import static org.mockito.Mockito.mock;
  */
 public class AcmeLazyLoadingExceptionTest {
 
-    private URL resourceUrl = TestUtils.url("http://example.com/acme/resource/123");
+    private final URL resourceUrl = TestUtils.url("http://example.com/acme/resource/123");
 
     @Test
     public void testAcmeLazyLoadingException() {
@@ -42,7 +42,7 @@ public class AcmeLazyLoadingExceptionTest {
         assertThat(ex, is(instanceOf(RuntimeException.class)));
         assertThat(ex.getMessage(), containsString(resourceUrl.toString()));
         assertThat(ex.getMessage(), containsString(TestResource.class.getSimpleName()));
-        assertThat(ex.getCause(), is((Throwable) cause));
+        assertThat(ex.getCause(), is(cause));
         assertThat(ex.getType(), is(equalTo(TestResource.class)));
         assertThat(ex.getLocation(), is(resourceUrl));
     }
@@ -50,7 +50,7 @@ public class AcmeLazyLoadingExceptionTest {
     private static class TestResource extends AcmeResource {
         private static final long serialVersionUID = 1023419539450677538L;
 
-        public TestResource(Login login, URL location) {
+        TestResource(Login login, URL location) {
             super(login, location);
         }
     }

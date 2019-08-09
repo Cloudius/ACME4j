@@ -40,6 +40,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.Security;
 import java.util.Arrays;
@@ -229,7 +230,7 @@ public class CSRBuilderTest {
             builder.write(baos);
             pemBytes = baos.toByteArray();
         }
-        assertThat(new String(pemBytes, "utf-8"), is(equalTo(pem)));
+        assertThat(new String(pemBytes, StandardCharsets.UTF_8), is(equalTo(pem)));
     }
 
     /**
@@ -285,7 +286,7 @@ public class CSRBuilderTest {
     private static class RDNMatcher extends BaseMatcher<RDN> {
         private final String expectedValue;
 
-        public RDNMatcher(String expectedValue) {
+        RDNMatcher(String expectedValue) {
             this.expectedValue = expectedValue;
         }
 
@@ -319,7 +320,7 @@ public class CSRBuilderTest {
         private final String expectedValue;
         private final int expectedTag;
 
-        public GeneralNameMatcher(String expectedValue, int expectedTag) {
+        GeneralNameMatcher(String expectedValue, int expectedTag) {
             this.expectedTag = expectedTag;
             this.expectedValue = expectedValue;
         }

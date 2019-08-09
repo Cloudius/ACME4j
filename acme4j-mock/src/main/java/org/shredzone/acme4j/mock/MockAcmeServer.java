@@ -290,11 +290,11 @@ public class MockAcmeServer {
      *                       order can be finalized.
      * @return The {@link MockOrder} instance that was created
      */
-    public MockOrder createOrder(Collection<Identifier> identifiers, Collection<MockAuthorization> authorizations) {
-        if (identifiers == null || identifiers.isEmpty()) {
+    private MockOrder createOrder(Collection<Identifier> identifiers, Collection<MockAuthorization> authorizations) {
+        if (identifiers.isEmpty()) {
             throw new IllegalArgumentException("Requires at least one identifier");
         }
-        if (authorizations == null || authorizations.isEmpty()) {
+        if (authorizations.isEmpty()) {
             throw new IllegalArgumentException("Requires at least one authorization");
         }
 

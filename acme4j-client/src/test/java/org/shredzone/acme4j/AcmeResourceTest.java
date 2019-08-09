@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -73,7 +74,7 @@ public class AcmeResourceTest {
         }
 
         // Make sure there is no PrivateKey in the stream
-        String str = new String(serialized, "iso-8859-1");
+        String str = new String(serialized, StandardCharsets.ISO_8859_1);
         if (str.contains("Ljava/security/PrivateKey")) {
             fail("serialized stream contains a PrivateKey");
         }
@@ -124,7 +125,7 @@ public class AcmeResourceTest {
     private static class DummyResource extends AcmeResource {
         private static final long serialVersionUID = 7188822681353082472L;
 
-        public DummyResource(Login login, URL location) {
+        DummyResource(Login login, URL location) {
             super(login, location);
         }
     }

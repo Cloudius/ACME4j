@@ -38,6 +38,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.interfaces.ECKey;
@@ -297,18 +298,16 @@ public class CSRBuilder {
      *            is closed after use.
      */
     public void write(@WillClose OutputStream out) throws IOException {
-        write(new OutputStreamWriter(out, "utf-8"));
+        write(new OutputStreamWriter(out, StandardCharsets.UTF_8));
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(namebuilder.build());
-        sb.append(namelist.stream().collect(joining(",DNS=", ",DNS=", "")));
-        sb.append(iplist.stream()
-                .map(InetAddress::getHostAddress)
-                .collect(joining(",IP=", ",IP=", "")));
-        return sb.toString();
+        return namebuilder.build() +
+                namelist.stream().collect(joining(",DNS=", ",DNS=", "")) +
+                iplist.stream()
+                        .map(InetAddress::getHostAddress)
+                        .collect(joining(",IP=", ",IP=", ""));
     }
 
 }

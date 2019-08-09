@@ -52,7 +52,7 @@ public class Session {
     private String nonce;
     private Locale locale = Locale.getDefault();
     private Proxy proxy = Proxy.NO_PROXY;
-    protected Instant directoryCacheExpiry;
+    Instant directoryCacheExpiry;
 
     /**
      * Creates a new {@link Session}.

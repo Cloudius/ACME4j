@@ -32,7 +32,7 @@ import java.util.List;
 public class DummyConnection implements Connection {
 
     @Override
-    public void resetNonce(Session session) throws AcmeException {
+    public void resetNonce(Session session) {
         throw new UnsupportedOperationException();
     }
 
@@ -42,12 +42,12 @@ public class DummyConnection implements Connection {
     }
 
     @Override
-    public int sendCertificateRequest(URL url, Login login) throws AcmeException {
+    public int sendCertificateRequest(URL url, Login login) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public int sendSignedPostAsGetRequest(URL url, Login login) throws AcmeException {
+    public int sendSignedPostAsGetRequest(URL url, Login login) {
         throw new UnsupportedOperationException();
     }
 
@@ -58,8 +58,7 @@ public class DummyConnection implements Connection {
     }
 
     @Override
-    public int sendSignedRequest(URL url, JSONBuilder claims, Session session, KeyPair keypair)
-            throws AcmeException {
+    public int sendSignedRequest(URL url, JSONBuilder claims, Session session, KeyPair keypair) {
         throw new UnsupportedOperationException();
     }
 
@@ -69,7 +68,7 @@ public class DummyConnection implements Connection {
     }
 
     @Override
-    public List<X509Certificate> readCertificates() throws AcmeException {
+    public List<X509Certificate> readCertificates() {
         throw new UnsupportedOperationException();
     }
 

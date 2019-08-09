@@ -41,7 +41,7 @@ public class OrderHttpIT {
 
     private final String bammbammUrl = System.getProperty("bammbammUrl", "http://localhost:14001");
 
-    private BammBammClient client = new BammBammClient(bammbammUrl);
+    private final BammBammClient client = new BammBammClient(bammbammUrl);
 
     /**
      * Test if a certificate can be ordered via http-01 challenge.
@@ -105,7 +105,7 @@ public class OrderHttpIT {
     /**
      * @return The {@link URI} of the Boulder server to test against.
      */
-    protected URI boulderURI() {
+    private URI boulderURI() {
         return URI.create("http://localhost:4001/directory");
     }
 
@@ -114,7 +114,7 @@ public class OrderHttpIT {
      *
      * @return Created new {@link KeyPair}
      */
-    protected KeyPair createKeyPair() {
+    private KeyPair createKeyPair() {
         return KeyPairUtils.createKeyPair(2048);
     }
 
