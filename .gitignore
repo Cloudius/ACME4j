@@ -1,1 +1,103 @@
-target
+### Eclipse template
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# Java annotation processor (APT)
+.factorypath
+
+# sbteclipse plugin
+.target
+
+# Scala IDE specific (Scala & Java development for Eclipse)
+.cache-main
+.scala_dependencies
+.worksheet
+
+### Java template
+# Log file
+*.log
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+### JetBrains template
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# Generated files
+.idea/
+
+# File-based project format
+*.iws
+*.iml
+
+# IntelliJ
+out/
+
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+/target
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+### Windows template
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Windows shortcuts
+*.lnk
+
+### macOS template
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+## PKI keys
+*.crt
+*.csr
+# *.der
+# *.key
+*.p12
+# *.pem
+
+## Hidden cross project folders
+shared/.js
+shared/.jvm

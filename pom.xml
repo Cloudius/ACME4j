@@ -51,10 +51,10 @@
     </developers>
 
     <properties>
-        <bouncycastle.version>1.61</bouncycastle.version>
-        <httpclient.version>4.5.7</httpclient.version>
+        <bouncycastle.version>1.62</bouncycastle.version>
+        <httpclient.version>4.5.9</httpclient.version>
         <jose4j.version>0.6.5</jose4j.version>
-        <slf4j.version>1.7.26</slf4j.version>
+        <slf4j.version>1.7.27</slf4j.version>
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
     </properties>
@@ -212,16 +212,11 @@
     <dependencies>
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
-            <artifactId>jsr305</artifactId>
-            <version>3.0.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
             <artifactId>annotations</artifactId>
             <version>3.0.1</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -232,25 +227,6 @@
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest</artifactId>
             <version>2.1</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>uk.co.datumedge</groupId>
-            <artifactId>hamcrest-json</artifactId>
-            <version>0.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>2.23.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.awaitility</groupId>
-            <artifactId>awaitility</artifactId>
-            <version>3.1.5</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

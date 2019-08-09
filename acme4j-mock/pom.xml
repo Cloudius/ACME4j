@@ -47,13 +47,21 @@
     <dependencies>
         <dependency>
             <groupId>org.shredzone.acme4j</groupId>
-            <artifactId>acme4j-client</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.shredzone.acme4j</groupId>
             <artifactId>acme4j-utils</artifactId>
             <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.0.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>uk.co.datumedge</groupId>
+            <artifactId>hamcrest-json</artifactId>
+            <version>0.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

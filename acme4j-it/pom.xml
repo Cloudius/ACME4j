@@ -14,7 +14,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -140,7 +141,9 @@
                                     <exec>
                                         <arg>sh</arg>
                                         <arg>-c</arg>
-                                        <arg>pebble -strict -dnsserver $(getent hosts bammbamm|cut -d' ' -f1):8053 -config /test/config/pebble-config.json</arg>
+                                        <arg>pebble -strict -dnsserver $(getent hosts bammbamm|cut -d' ' -f1):8053
+                                            -config /test/config/pebble-config.json
+                                        </arg>
                                     </exec>
                                 </cmd>
                                 <wait>
@@ -165,7 +168,9 @@
                                     <exec>
                                         <arg>sh</arg>
                                         <arg>-c</arg>
-                                        <arg>pebble-challtestsrv -defaultIPv6 "" -defaultIPv4 $(getent hosts bammbamm|cut -d' ' -f1)</arg>
+                                        <arg>pebble-challtestsrv -defaultIPv6 "" -defaultIPv4 $(getent hosts
+                                            bammbamm|cut -d' ' -f1)
+                                        </arg>
                                     </exec>
                                 </cmd>
                                 <wait>
@@ -196,16 +201,17 @@
             <artifactId>httpclient</artifactId>
             <version>${httpclient.version}</version>
         </dependency>
-
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>3.1.6</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>uk.co.datumedge</groupId>
+            <artifactId>hamcrest-json</artifactId>
+            <version>0.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
