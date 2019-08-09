@@ -13,23 +13,22 @@
  */
 package org.shredzone.acme4j.mock.model;
 
-import static java.util.stream.Collectors.toList;
-
-import java.net.URL;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.Identifier;
 import org.shredzone.acme4j.Status;
 import org.shredzone.acme4j.mock.connection.Repository;
 import org.shredzone.acme4j.mock.controller.AuthorizationController;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * A mock authorization.
@@ -57,10 +56,8 @@ public class MockAuthorization extends MockResource {
     /**
      * Creates a new {@link MockAuthorization} instance.
      *
-     * @param repository
-     *         {@link Repository} to add the resource to
-     * @param identifier
-     *         {@link Identifier} to be authorized
+     * @param repository {@link Repository} to add the resource to
+     * @param identifier {@link Identifier} to be authorized
      * @return The generated {@link MockAuthorization}
      */
     public static MockAuthorization create(Repository repository, Identifier identifier) {
@@ -105,9 +102,8 @@ public class MockAuthorization extends MockResource {
     /**
      * Sets the current status.
      *
-     * @param status
-     *         new {@link Status}, or {@code null} to clear the status and let the
-     *         resource decide on its current status automatically.
+     * @param status new {@link Status}, or {@code null} to clear the status and let the
+     *               resource decide on its current status automatically.
      */
     public void setStatus(@Nullable Status status) {
         this.status = status;
@@ -124,8 +120,7 @@ public class MockAuthorization extends MockResource {
     /**
      * Sets the expiration date.
      *
-     * @param expires
-     *         {@link Instant} of expiration, or {@code null} if undefined
+     * @param expires {@link Instant} of expiration, or {@code null} if undefined
      */
     public void setExpires(@Nullable Instant expires) {
         this.expires = expires;
@@ -152,8 +147,7 @@ public class MockAuthorization extends MockResource {
     /**
      * Sets whether this is a wildcard authorization.
      *
-     * @param wildcard
-     *         Wildcard authorization, {@code null} means undefined.
+     * @param wildcard Wildcard authorization, {@code null} means undefined.
      */
     public void setWildcard(@Nullable Boolean wildcard) {
         this.wildcard = wildcard;

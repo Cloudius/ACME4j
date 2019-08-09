@@ -13,10 +13,8 @@
  */
 package org.shredzone.acme4j.exception;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.shredzone.acme4j.toolbox.TestUtils.createProblem;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
+import org.junit.Test;
+import org.shredzone.acme4j.Problem;
 
 import java.net.URI;
 import java.net.URL;
@@ -25,8 +23,10 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Test;
-import org.shredzone.acme4j.Problem;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.shredzone.acme4j.toolbox.TestUtils.createProblem;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
 
 /**
  * Unit tests for {@link AcmeRateLimitedException}.
@@ -42,8 +42,8 @@ public class AcmeRateLimitedExceptionTest {
         String detail = "Too many requests per minute";
         Instant retryAfter = Instant.now().plus(Duration.ofMinutes(1));
         Collection<URL> documents = Arrays.asList(
-                        url("http://example.com/doc1.html"),
-                        url("http://example.com/doc2.html"));
+                url("http://example.com/doc1.html"),
+                url("http://example.com/doc2.html"));
 
         Problem problem = createProblem(type, detail, null);
 

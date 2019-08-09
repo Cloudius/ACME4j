@@ -13,22 +13,21 @@
  */
 package org.shredzone.acme4j.connector;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.KeyPair;
-import java.security.cert.X509Certificate;
-import java.util.Collection;
-import java.util.List;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.Login;
 import org.shredzone.acme4j.Session;
 import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.exception.AcmeRetryAfterException;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.KeyPair;
+import java.security.cert.X509Certificate;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Connects to the ACME server and offers different methods for invoking the API.
@@ -39,8 +38,7 @@ public interface Connection extends AutoCloseable {
     /**
      * Resets the session nonce, by fetching a new one.
      *
-     * @param session
-     *            {@link Session} instance to fetch a nonce for
+     * @param session {@link Session} instance to fetch a nonce for
      */
     void resetNonce(Session session) throws AcmeException;
 
@@ -50,10 +48,8 @@ public interface Connection extends AutoCloseable {
      * If the response code was not {@link HttpURLConnection#HTTP_OK}, an
      * {@link AcmeException} matching the error is raised.
      *
-     * @param url
-     *            {@link URL} to send the request to.
-     * @param session
-     *            {@link Session} instance to be used for tracking
+     * @param url     {@link URL} to send the request to.
+     * @param session {@link Session} instance to be used for tracking
      */
     void sendRequest(URL url, Session session) throws AcmeException;
 
@@ -65,10 +61,8 @@ public interface Connection extends AutoCloseable {
      * If the server does not return a 200 class status code, an {@link AcmeException} is
      * raised matching the error.
      *
-     * @param url
-     *            {@link URL} to send the request to.
-     * @param login
-     *            {@link Login} instance to be used for signing and tracking.
+     * @param url   {@link URL} to send the request to.
+     * @param login {@link Login} instance to be used for signing and tracking.
      * @return HTTP 200 class status that was returned
      */
     int sendCertificateRequest(URL url, Login login) throws AcmeException;
@@ -81,10 +75,8 @@ public interface Connection extends AutoCloseable {
      * If the server does not return a 200 class status code, an {@link AcmeException} is
      * raised matching the error.
      *
-     * @param url
-     *            {@link URL} to send the request to.
-     * @param login
-     *            {@link Login} instance to be used for signing and tracking.
+     * @param url   {@link URL} to send the request to.
+     * @param login {@link Login} instance to be used for signing and tracking.
      * @return HTTP 200 class status that was returned
      */
     int sendSignedPostAsGetRequest(URL url, Login login) throws AcmeException;
@@ -97,12 +89,9 @@ public interface Connection extends AutoCloseable {
      * If the server does not return a 200 class status code, an {@link AcmeException} is
      * raised matching the error.
      *
-     * @param url
-     *            {@link URL} to send the request to.
-     * @param claims
-     *            {@link JSONBuilder} containing claims.
-     * @param login
-     *            {@link Login} instance to be used for signing and tracking.
+     * @param url    {@link URL} to send the request to.
+     * @param claims {@link JSONBuilder} containing claims.
+     * @param login  {@link Login} instance to be used for signing and tracking.
      * @return HTTP 200 class status that was returned
      */
     int sendSignedRequest(URL url, JSONBuilder claims, Login login) throws AcmeException;
@@ -114,18 +103,14 @@ public interface Connection extends AutoCloseable {
      * If the server does not return a 200 class status code, an {@link AcmeException} is
      * raised matching the error.
      *
-     * @param url
-     *            {@link URL} to send the request to.
-     * @param claims
-     *            {@link JSONBuilder} containing claims.
-     * @param session
-     *            {@link Session} instance to be used for tracking.
-     * @param keypair
-     *            {@link KeyPair} to be used for signing.
+     * @param url     {@link URL} to send the request to.
+     * @param claims  {@link JSONBuilder} containing claims.
+     * @param session {@link Session} instance to be used for tracking.
+     * @param keypair {@link KeyPair} to be used for signing.
      * @return HTTP 200 class status that was returned
      */
     int sendSignedRequest(URL url, JSONBuilder claims, Session session, KeyPair keypair)
-                throws AcmeException;
+            throws AcmeException;
 
     /**
      * Reads a server response as JSON data.
@@ -146,8 +131,7 @@ public interface Connection extends AutoCloseable {
      * Throws an {@link AcmeRetryAfterException} if the last status was HTTP Accepted and
      * a Retry-After header was received.
      *
-     * @param message
-     *            Message to be sent along with the {@link AcmeRetryAfterException}
+     * @param message Message to be sent along with the {@link AcmeRetryAfterException}
      */
     void handleRetryAfter(String message) throws AcmeException;
 
@@ -174,8 +158,7 @@ public interface Connection extends AutoCloseable {
      * <p>
      * Relative links are resolved against the last request's URL.
      *
-     * @param relation
-     *            Link relation
+     * @param relation Link relation
      * @return Collection of links. Empty if there was no such relation.
      */
     Collection<URL> getLinks(String relation);

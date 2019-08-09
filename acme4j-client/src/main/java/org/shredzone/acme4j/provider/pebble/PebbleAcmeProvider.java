@@ -13,17 +13,16 @@
  */
 package org.shredzone.acme4j.provider.pebble;
 
+import org.shredzone.acme4j.connector.HttpConnector;
+import org.shredzone.acme4j.provider.AbstractAcmeProvider;
+import org.shredzone.acme4j.provider.AcmeProvider;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
-import org.shredzone.acme4j.connector.HttpConnector;
-import org.shredzone.acme4j.provider.AbstractAcmeProvider;
-import org.shredzone.acme4j.provider.AcmeProvider;
 
 /**
  * An {@link AcmeProvider} for <em>Pebble</em>.
@@ -66,8 +65,7 @@ public class PebbleAcmeProvider extends AbstractAcmeProvider {
     /**
      * Parses the server URI path and returns the server's base URL.
      *
-     * @param path
-     *            server URI path
+     * @param path server URI path
      * @return URL of the server's base
      */
     private URL parsePath(String path) throws MalformedURLException {

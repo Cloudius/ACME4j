@@ -13,18 +13,6 @@
  */
 package org.shredzone.acme4j.mock.model;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
-
-import java.security.cert.X509Certificate;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Random;
-
 import org.junit.Test;
 import org.shredzone.acme4j.Identifier;
 import org.shredzone.acme4j.Problem;
@@ -34,6 +22,18 @@ import org.shredzone.acme4j.mock.connection.ProblemBuilder;
 import org.shredzone.acme4j.mock.connection.Repository;
 import org.shredzone.acme4j.mock.controller.OrderController;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
+
+import java.security.cert.X509Certificate;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Random;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.*;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
 
 /**
  * Unit tests for {@link MockOrder}.
@@ -114,7 +114,7 @@ public class MockOrderTest {
         assertThat(order.getCertificateSigningRequest(), is(csr));
         assertThat(order.getExpires(), is(expires));
         assertThat(order.getNotBefore(), is(notBefore));
-        assertThat(order.getNotAfter(),is(notAfter));
+        assertThat(order.getNotAfter(), is(notAfter));
         assertThat(order.getAuthorizations(), contains(authz));
 
         JSONBuilder jb = new JSONBuilder();

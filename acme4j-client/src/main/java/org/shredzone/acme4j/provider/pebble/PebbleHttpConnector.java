@@ -13,6 +13,14 @@
  */
 package org.shredzone.acme4j.provider.pebble;
 
+import org.shredzone.acme4j.connector.HttpConnector;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.concurrent.ThreadSafe;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -23,15 +31,6 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.concurrent.ThreadSafe;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManagerFactory;
-
-import org.shredzone.acme4j.connector.HttpConnector;
 
 /**
  * {@link HttpConnector} to be used for Pebble. Pebble uses a static, self signed SSL
@@ -71,7 +70,7 @@ public class PebbleHttpConnector extends HttpConnector {
 
                 sslSocketFactory = ctx.getSocketFactory();
             } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException
-                            | KeyManagementException ex) {
+                    | KeyManagementException ex) {
                 throw new IOException("Could not create truststore", ex);
             }
         }

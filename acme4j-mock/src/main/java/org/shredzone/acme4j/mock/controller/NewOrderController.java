@@ -13,17 +13,6 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import static java.util.stream.Collectors.toList;
-
-import java.net.URL;
-import java.security.PublicKey;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.Identifier;
 import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.mock.MockAcmeServer;
@@ -32,6 +21,16 @@ import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.mock.model.MockAccount;
 import org.shredzone.acme4j.mock.model.MockOrder;
 import org.shredzone.acme4j.toolbox.JSON;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.security.PublicKey;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * A {@link Controller} that handles new order requests.
@@ -45,8 +44,7 @@ public class NewOrderController implements Controller {
     /**
      * Creates a new {@link NewOrderController}.
      *
-     * @param server
-     *         {@link MockAcmeServer} that is used for creating new accounts
+     * @param server {@link MockAcmeServer} that is used for creating new accounts
      */
     public NewOrderController(MockAcmeServer server) {
         this.server = server;
@@ -54,7 +52,7 @@ public class NewOrderController implements Controller {
 
     /**
      * Creates a new order for the identifiers in the payload, and returns the new order.
-     *
+     * <p>
      * {@inheritDoc}
      */
     @Override

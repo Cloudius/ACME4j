@@ -13,8 +13,9 @@
  */
 package org.shredzone.acme4j.toolbox;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+import org.jose4j.json.JsonUtil;
+import org.jose4j.lang.JoseException;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.security.KeyPair;
@@ -26,9 +27,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
-import org.jose4j.json.JsonUtil;
-import org.jose4j.lang.JoseException;
-import org.junit.Test;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Unit test for {@link JSONBuilder}.

@@ -13,38 +13,26 @@
  */
 package org.shredzone.acme4j.mock;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.Test;
+import org.shredzone.acme4j.*;
+import org.shredzone.acme4j.challenge.Challenge;
+import org.shredzone.acme4j.challenge.Http01Challenge;
+import org.shredzone.acme4j.mock.connection.MockAcmeProvider;
+import org.shredzone.acme4j.mock.controller.*;
+import org.shredzone.acme4j.mock.model.MockAccount;
+import org.shredzone.acme4j.mock.model.MockAuthorization;
+import org.shredzone.acme4j.mock.model.MockChallenge;
+import org.shredzone.acme4j.mock.model.MockOrder;
+import org.shredzone.acme4j.util.KeyPairUtils;
 
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.KeyPair;
 import java.util.Optional;
 
-import org.junit.Test;
-import org.shredzone.acme4j.Account;
-import org.shredzone.acme4j.Authorization;
-import org.shredzone.acme4j.Identifier;
-import org.shredzone.acme4j.Login;
-import org.shredzone.acme4j.Order;
-import org.shredzone.acme4j.Session;
-import org.shredzone.acme4j.Status;
-import org.shredzone.acme4j.challenge.Challenge;
-import org.shredzone.acme4j.challenge.Http01Challenge;
-import org.shredzone.acme4j.mock.connection.MockAcmeProvider;
-import org.shredzone.acme4j.mock.controller.Controller;
-import org.shredzone.acme4j.mock.controller.KeyChangeController;
-import org.shredzone.acme4j.mock.controller.NewAccountController;
-import org.shredzone.acme4j.mock.controller.NewAuthzController;
-import org.shredzone.acme4j.mock.controller.NewNonceController;
-import org.shredzone.acme4j.mock.controller.NewOrderController;
-import org.shredzone.acme4j.mock.controller.RevokeCertController;
-import org.shredzone.acme4j.mock.model.MockAccount;
-import org.shredzone.acme4j.mock.model.MockAuthorization;
-import org.shredzone.acme4j.mock.model.MockChallenge;
-import org.shredzone.acme4j.mock.model.MockOrder;
-import org.shredzone.acme4j.util.KeyPairUtils;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Unit tests for {@link MockAcmeServer}.
@@ -79,7 +67,8 @@ public class MockAcmeServerTest {
     public void testCustomConstructor() {
         MockAcmeServer server = new MockAcmeServer(m -> {
             m.remove("newAuthz");
-            m.put("custom", new Controller() {});
+            m.put("custom", new Controller() {
+            });
         });
 
         assertThat(server.getDirectory().getEndpoints().size(), is(6));
@@ -289,12 +278,9 @@ public class MockAcmeServerTest {
     /**
      * Assert that an endpoint is defined in the directory.
      *
-     * @param server
-     *         {@link MockAcmeServer} to test
-     * @param type
-     *         Endpoint name
-     * @param expectedType
-     *         Expected {@link Controller} type
+     * @param server       {@link MockAcmeServer} to test
+     * @param type         Endpoint name
+     * @param expectedType Expected {@link Controller} type
      */
     private void assertEndpoint(MockAcmeServer server, String type, Class<? extends Controller> expectedType) {
         URL endpointUrl = server.getDirectory().getEndpoints().get(type);

@@ -13,11 +13,10 @@
  */
 package org.shredzone.acme4j;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.Objects;
-
-import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * A generic ACME resource.
@@ -32,10 +31,8 @@ public abstract class AcmeResource implements Serializable {
     /**
      * Create a new {@link AcmeResource}.
      *
-     * @param login
-     *            {@link Login} the resource is bound with
-     * @param location
-     *            Location {@link URL} of this resource
+     * @param login    {@link Login} the resource is bound with
+     * @param location Location {@link URL} of this resource
      */
     protected AcmeResource(Login login, URL location) {
         this.location = Objects.requireNonNull(location, "location");
@@ -66,8 +63,7 @@ public abstract class AcmeResource implements Serializable {
      * private key. After de-serialization of an {@link AcmeResource}, use this method to
      * rebind it to a {@link Login}.
      *
-     * @param login
-     *            {@link Login} to bind this resource to
+     * @param login {@link Login} to bind this resource to
      */
     public void rebind(Login login) {
         if (this.login != null) {

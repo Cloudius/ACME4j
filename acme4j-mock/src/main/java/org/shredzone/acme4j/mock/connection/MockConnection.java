@@ -13,18 +13,6 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.KeyPair;
-import java.security.cert.X509Certificate;
-import java.time.Instant;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.Login;
 import org.shredzone.acme4j.Session;
 import org.shredzone.acme4j.connector.Connection;
@@ -33,6 +21,17 @@ import org.shredzone.acme4j.exception.AcmeRetryAfterException;
 import org.shredzone.acme4j.exception.AcmeServerException;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.KeyPair;
+import java.security.cert.X509Certificate;
+import java.time.Instant;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A mock {@link Connection}. Its main purpose is to invoke the {@link
@@ -52,10 +51,8 @@ public class MockConnection implements Connection {
     /**
      * Creates a new connection.
      *
-     * @param repository
-     *         {@link Repository} to be used for resolving URLs
-     * @param noncePool
-     *         {@link NoncePool} to be used for nonces
+     * @param repository {@link Repository} to be used for resolving URLs
+     * @param noncePool  {@link NoncePool} to be used for nonces
      */
     public MockConnection(Repository repository, NoncePool noncePool) {
         this.repository = repository;
@@ -184,12 +181,9 @@ public class MockConnection implements Connection {
      * Validates the nonce used in the {@link Session}. If it is valid, or if the session
      * did not contain a nonce yet, a new nonce is generated and set.
      *
-     * @param requestUrl
-     *         Request {@link URL}
-     * @param session
-     *         {@link Session} containing the nonce to be checked
-     * @throws AcmeServerException
-     *         if the {@link Session} contained an invalid nonce
+     * @param requestUrl Request {@link URL}
+     * @param session    {@link Session} containing the nonce to be checked
+     * @throws AcmeServerException if the {@link Session} contained an invalid nonce
      */
     private void validateAndUpdateNonce(URL requestUrl, Session session) throws AcmeServerException {
         if (session.getNonce() == null) {

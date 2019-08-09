@@ -13,18 +13,6 @@
  */
 package org.shredzone.acme4j;
 
-import static java.util.Objects.requireNonNull;
-import static java.util.stream.Collectors.toList;
-
-import java.net.URL;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.connector.Connection;
 import org.shredzone.acme4j.connector.Resource;
 import org.shredzone.acme4j.exception.AcmeException;
@@ -33,6 +21,17 @@ import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toList;
 
 /**
  * A builder for a new {@link Order} object.
@@ -56,8 +55,7 @@ public class OrderBuilder {
     /**
      * Create a new {@link OrderBuilder}.
      *
-     * @param login
-     *            {@link Login} to bind with
+     * @param login {@link Login} to bind with
      */
     protected OrderBuilder(Login login) {
         this.login = login;
@@ -66,9 +64,8 @@ public class OrderBuilder {
     /**
      * Adds a domain name to the order.
      *
-     * @param domain
-     *            Name of a domain to be ordered. May be a wildcard domain if supported by
-     *            the CA. IDN names are accepted and will be ACE encoded automatically.
+     * @param domain Name of a domain to be ordered. May be a wildcard domain if supported by
+     *               the CA. IDN names are accepted and will be ACE encoded automatically.
      * @return itself
      */
     public OrderBuilder domain(String domain) {
@@ -78,10 +75,9 @@ public class OrderBuilder {
     /**
      * Adds domain names to the order.
      *
-     * @param domains
-     *            Collection of domain names to be ordered. May be wildcard domains if
-     *            supported by the CA. IDN names are accepted and will be ACE encoded
-     *            automatically.
+     * @param domains Collection of domain names to be ordered. May be wildcard domains if
+     *                supported by the CA. IDN names are accepted and will be ACE encoded
+     *                automatically.
      * @return itself
      */
     public OrderBuilder domains(String... domains) {
@@ -94,10 +90,9 @@ public class OrderBuilder {
     /**
      * Adds a collection of domain names to the order.
      *
-     * @param domains
-     *            Collection of domain names to be ordered. May be wildcard domains if
-     *            supported by the CA. IDN names are accepted and will be ACE encoded
-     *            automatically.
+     * @param domains Collection of domain names to be ordered. May be wildcard domains if
+     *                supported by the CA. IDN names are accepted and will be ACE encoded
+     *                automatically.
      * @return itself
      */
     public OrderBuilder domains(Collection<String> domains) {
@@ -108,8 +103,7 @@ public class OrderBuilder {
     /**
      * Adds an {@link Identifier} to the order.
      *
-     * @param identifier
-     *            {@link Identifier} to be added to the order.
+     * @param identifier {@link Identifier} to be added to the order.
      * @return itself
      * @since 2.3
      */
@@ -121,8 +115,7 @@ public class OrderBuilder {
     /**
      * Adds a collection of {@link Identifier} to the order.
      *
-     * @param identifiers
-     *            Collection of {@link Identifier} to be added to the order.
+     * @param identifiers Collection of {@link Identifier} to be added to the order.
      * @return itself
      * @since 2.3
      */
@@ -183,8 +176,7 @@ public class OrderBuilder {
      * <p>
      * Implies {@link #recurrent()}.
      *
-     * @param start
-     *            Start date of validity
+     * @param start Start date of validity
      * @return itself
      * @since 2.3
      */
@@ -200,8 +192,7 @@ public class OrderBuilder {
      * <p>
      * Implies {@link #recurrent()}.
      *
-     * @param end
-     *            End date of validity
+     * @param end End date of validity
      * @return itself
      * @see Metadata#getStarMaxRenewal()
      * @since 2.3
@@ -218,8 +209,7 @@ public class OrderBuilder {
      * <p>
      * Implies {@link #recurrent()}.
      *
-     * @param duration
-     *            Duration of validity of each certificate
+     * @param duration Duration of validity of each certificate
      * @return itself
      * @see Metadata#getStarMinCertValidity()
      * @since 2.3
@@ -236,8 +226,7 @@ public class OrderBuilder {
      * <p>
      * Implies {@link #recurrent()}.
      *
-     * @param duration
-     *            Duration of certificate pre-dating
+     * @param duration Duration of certificate pre-dating
      * @return itself
      * @since 2.7
      */

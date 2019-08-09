@@ -13,13 +13,12 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import java.net.URL;
-import java.security.PublicKey;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.mock.model.MockOrder;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.security.PublicKey;
 
 /**
  * A {@link Controller} that handles order related requests.
@@ -33,8 +32,7 @@ public class OrderController implements Controller {
     /**
      * Creates a new {@link OrderController}.
      *
-     * @param order
-     *         {@link MockOrder} this controller is bound to
+     * @param order {@link MockOrder} this controller is bound to
      */
     public OrderController(MockOrder order) {
         this.order = order;
@@ -42,7 +40,7 @@ public class OrderController implements Controller {
 
     /**
      * Just returns the current state of the order.
-     *
+     * <p>
      * {@inheritDoc}
      */
     @Override

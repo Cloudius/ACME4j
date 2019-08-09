@@ -13,18 +13,17 @@
  */
 package org.shredzone.acme4j;
 
-import static java.util.Objects.requireNonNull;
+import org.shredzone.acme4j.challenge.Challenge;
+import org.shredzone.acme4j.exception.AcmeProtocolException;
+import org.shredzone.acme4j.toolbox.JSON;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.concurrent.ThreadSafe;
 import java.net.URL;
 import java.security.KeyPair;
 import java.util.Objects;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.concurrent.ThreadSafe;
-
-import org.shredzone.acme4j.challenge.Challenge;
-import org.shredzone.acme4j.exception.AcmeProtocolException;
-import org.shredzone.acme4j.toolbox.JSON;
+import static java.util.Objects.requireNonNull;
 
 /**
  * A {@link Login} is a {@link Session} that is connected to an {@link Account} at the
@@ -46,12 +45,9 @@ public class Login {
     /**
      * Creates a new {@link Login}.
      *
-     * @param accountLocation
-     *            Account location {@link URL}
-     * @param keyPair
-     *            {@link KeyPair} of the account
-     * @param session
-     *            {@link Session} to be used
+     * @param accountLocation Account location {@link URL}
+     * @param keyPair         {@link KeyPair} of the account
+     * @param session         {@link Session} to be used
      */
     public Login(URL accountLocation, KeyPair keyPair, Session session) {
         this.accountLocation = Objects.requireNonNull(accountLocation, "accountLocation");
@@ -93,8 +89,7 @@ public class Login {
     /**
      * Creates a new instance of {@link Authorization} and binds it to this login.
      *
-     * @param location
-     *            Location of the Authorization
+     * @param location Location of the Authorization
      * @return {@link Authorization} bound to the login
      */
     public Authorization bindAuthorization(URL location) {
@@ -104,8 +99,7 @@ public class Login {
     /**
      * Creates a new instance of {@link Certificate} and binds it to this login.
      *
-     * @param location
-     *            Location of the Certificate
+     * @param location Location of the Certificate
      * @return {@link Certificate} bound to the login
      */
     public Certificate bindCertificate(URL location) {
@@ -115,8 +109,7 @@ public class Login {
     /**
      * Creates a new instance of {@link Order} and binds it to this login.
      *
-     * @param location
-     *            Location URL of the order
+     * @param location Location URL of the order
      * @return {@link Order} bound to the login
      */
     public Order bindOrder(URL location) {
@@ -126,8 +119,7 @@ public class Login {
     /**
      * Creates a {@link Challenge} instance for the given challenge data.
      *
-     * @param data
-     *            Challenge JSON data
+     * @param data Challenge JSON data
      * @return {@link Challenge} instance
      */
     public Challenge createChallenge(JSON data) {

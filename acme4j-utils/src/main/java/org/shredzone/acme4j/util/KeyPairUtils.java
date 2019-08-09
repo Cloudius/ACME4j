@@ -13,19 +13,6 @@
  */
 package org.shredzone.acme4j.util;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.WillClose;
-
 import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.spec.ECParameterSpec;
 import org.bouncycastle.openssl.PEMException;
@@ -33,6 +20,13 @@ import org.bouncycastle.openssl.PEMKeyPair;
 import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.WillClose;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.security.*;
 
 /**
  * Utility class offering convenience methods for {@link KeyPair}.
@@ -49,8 +43,7 @@ public class KeyPairUtils {
     /**
      * Creates a new RSA {@link KeyPair}.
      *
-     * @param keysize
-     *            Key size
+     * @param keysize Key size
      * @return Generated {@link KeyPair}
      */
     public static KeyPair createKeyPair(int keysize) {
@@ -66,8 +59,7 @@ public class KeyPairUtils {
     /**
      * Creates a new elliptic curve {@link KeyPair}.
      *
-     * @param name
-     *            ECDSA curve name (e.g. "secp256r1")
+     * @param name ECDSA curve name (e.g. "secp256r1")
      * @return Generated {@link KeyPair}
      */
     public static KeyPair createECKeyPair(String name) {
@@ -86,9 +78,8 @@ public class KeyPairUtils {
     /**
      * Reads a {@link KeyPair} from a PEM file.
      *
-     * @param r
-     *            {@link Reader} to read the PEM file from. The {@link Reader} is closed
-     *            after use.
+     * @param r {@link Reader} to read the PEM file from. The {@link Reader} is closed
+     *          after use.
      * @return {@link KeyPair} read
      */
     public static KeyPair readKeyPair(@WillClose Reader r) throws IOException {
@@ -103,11 +94,9 @@ public class KeyPairUtils {
     /**
      * Writes a {@link KeyPair} PEM file.
      *
-     * @param keypair
-     *            {@link KeyPair} to write
-     * @param w
-     *            {@link Writer} to write the PEM file to. The {@link Writer} is closed
-     *            after use.
+     * @param keypair {@link KeyPair} to write
+     * @param w       {@link Writer} to write the PEM file to. The {@link Writer} is closed
+     *                after use.
      */
     public static void writeKeyPair(KeyPair keypair, @WillClose Writer w) throws IOException {
         try (JcaPEMWriter jw = new JcaPEMWriter(w)) {

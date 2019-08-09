@@ -13,11 +13,10 @@
  */
 package org.shredzone.acme4j.exception;
 
-import java.time.Instant;
-import java.util.Objects;
-
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.Immutable;
+import java.time.Instant;
+import java.util.Objects;
 
 /**
  * This exception is thrown when a server side process has not been completed yet, and the
@@ -33,10 +32,8 @@ public class AcmeRetryAfterException extends AcmeException {
     /**
      * Creates a new {@link AcmeRetryAfterException}.
      *
-     * @param msg
-     *            Error details
-     * @param retryAfter
-     *            retry-after date returned by the server
+     * @param msg        Error details
+     * @param retryAfter retry-after date returned by the server
      */
     public AcmeRetryAfterException(String msg, Instant retryAfter) {
         super(msg);

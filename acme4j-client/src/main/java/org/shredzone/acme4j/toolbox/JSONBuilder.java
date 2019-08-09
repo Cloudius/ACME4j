@@ -13,23 +13,18 @@
  */
 package org.shredzone.acme4j.toolbox;
 
-import static org.shredzone.acme4j.toolbox.AcmeUtils.base64UrlEncode;
+import org.jose4j.json.JsonUtil;
 
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.security.Key;
 import java.security.PublicKey;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-
-import org.jose4j.json.JsonUtil;
+import static org.shredzone.acme4j.toolbox.AcmeUtils.base64UrlEncode;
 
 /**
  * Builder for JSON structures.
@@ -50,10 +45,8 @@ public class JSONBuilder {
     /**
      * Puts a property. If a property with the key exists, it will be replaced.
      *
-     * @param key
-     *            Property key
-     * @param value
-     *            Property value
+     * @param key   Property key
+     * @param value Property value
      * @return {@code this}
      */
     public JSONBuilder put(String key, @Nullable Object value) {
@@ -65,10 +58,8 @@ public class JSONBuilder {
      * Puts an {@link Instant} to the JSON. If a property with the key exists, it will be
      * replaced.
      *
-     * @param key
-     *            Property key
-     * @param value
-     *            Property {@link Instant} value
+     * @param key   Property key
+     * @param value Property {@link Instant} value
      * @return {@code this}
      */
     public JSONBuilder put(String key, @Nullable Instant value) {
@@ -85,10 +76,8 @@ public class JSONBuilder {
      * Puts a {@link Duration} to the JSON. If a property with the key exists, it will be
      * replaced.
      *
-     * @param key
-     *            Property key
-     * @param value
-     *            Property {@link Duration} value
+     * @param key   Property key
+     * @param value Property {@link Duration} value
      * @return {@code this}
      * @since 2.3
      */
@@ -105,10 +94,8 @@ public class JSONBuilder {
     /**
      * Puts binary data to the JSON. The data is base64 url encoded.
      *
-     * @param key
-     *            Property key
-     * @param data
-     *            Property data
+     * @param key  Property key
+     * @param data Property data
      * @return {@code this}
      */
     public JSONBuilder putBase64(String key, byte[] data) {
@@ -118,10 +105,8 @@ public class JSONBuilder {
     /**
      * Puts a {@link Key} into the claim. The key is serializied as JWK.
      *
-     * @param key
-     *            Property key
-     * @param publickey
-     *            {@link PublicKey} to serialize
+     * @param key       Property key
+     * @param publickey {@link PublicKey} to serialize
      * @return {@code this}
      */
     public JSONBuilder putKey(String key, PublicKey publickey) {
@@ -134,8 +119,7 @@ public class JSONBuilder {
     /**
      * Creates an object for the given key.
      *
-     * @param key
-     *            Key of the object
+     * @param key Key of the object
      * @return Newly created {@link JSONBuilder} for the object.
      */
     public JSONBuilder object(String key) {
@@ -147,10 +131,8 @@ public class JSONBuilder {
     /**
      * Puts an array.
      *
-     * @param key
-     *            Property key
-     * @param values
-     *            Collection of property values
+     * @param key    Property key
+     * @param values Collection of property values
      * @return {@code this}
      */
     public JSONBuilder array(String key, Collection<?> values) {

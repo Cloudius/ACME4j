@@ -13,13 +13,6 @@
  */
 package org.shredzone.acme4j.provider;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.BiFunction;
-
 import org.shredzone.acme4j.Login;
 import org.shredzone.acme4j.Session;
 import org.shredzone.acme4j.challenge.Challenge;
@@ -29,6 +22,13 @@ import org.shredzone.acme4j.connector.Resource;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.shredzone.acme4j.toolbox.TestUtils;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiFunction;
 
 /**
  * Test implementation of {@link AcmeProvider}. It also implements a dummy implementation
@@ -43,10 +43,8 @@ public class TestableConnectionProvider extends DummyConnection implements AcmeP
     /**
      * Register a {@link Resource} mapping.
      *
-     * @param r
-     *            {@link Resource} to be mapped
-     * @param u
-     *            {@link URL} to be returned
+     * @param r {@link Resource} to be mapped
+     * @param u {@link URL} to be returned
      */
     public void putTestResource(Resource r, URL u) {
         directory.put(r.path(), u);
@@ -55,10 +53,8 @@ public class TestableConnectionProvider extends DummyConnection implements AcmeP
     /**
      * Add a property to the metadata registry.
      *
-     * @param key
-     *            Metadata key
-     * @param value
-     *            Metadata value
+     * @param key   Metadata key
+     * @param value Metadata value
      */
     public void putMetadata(String key, Object value) {
         if (metadata == null) {
@@ -70,10 +66,8 @@ public class TestableConnectionProvider extends DummyConnection implements AcmeP
     /**
      * Register a {@link Challenge}.
      *
-     * @param type
-     *            Challenge type to register.
-     * @param creator
-     *            Creator {@link BiFunction} that creates a matching {@link Challenge}
+     * @param type    Challenge type to register.
+     * @param creator Creator {@link BiFunction} that creates a matching {@link Challenge}
      */
     public void putTestChallenge(String type, BiFunction<Login, JSON, Challenge> creator) {
         creatorMap.put(type, creator);

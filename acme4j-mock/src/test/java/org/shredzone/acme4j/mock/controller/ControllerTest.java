@@ -13,18 +13,18 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.Test;
+import org.shredzone.acme4j.exception.AcmeException;
+import org.shredzone.acme4j.toolbox.JSON;
+import org.shredzone.acme4j.util.KeyPairUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.PublicKey;
 
-import org.junit.Test;
-import org.shredzone.acme4j.exception.AcmeException;
-import org.shredzone.acme4j.toolbox.JSON;
-import org.shredzone.acme4j.util.KeyPairUtils;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Unit tests for {@link Controller}.
@@ -40,7 +40,8 @@ public class ControllerTest {
         PublicKey publicKey = KeyPairUtils.createKeyPair(1024).getPublic();
         JSON payload = JSON.empty();
 
-        Controller controller = new Controller() {};
+        Controller controller = new Controller() {
+        };
 
         try {
             controller.doSimpleRequest(requestUrl);

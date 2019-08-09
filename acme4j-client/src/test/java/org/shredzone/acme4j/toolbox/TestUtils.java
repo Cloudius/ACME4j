@@ -13,26 +13,22 @@
  */
 package org.shredzone.acme4j.toolbox;
 
-import static java.util.Collections.unmodifiableList;
-import static java.util.stream.Collectors.toList;
+import org.jose4j.json.JsonUtil;
+import org.jose4j.jwk.JsonWebKey;
+import org.jose4j.jwk.JsonWebKey.OutputControlLevel;
+import org.jose4j.keys.HmacKey;
+import org.shredzone.acme4j.Login;
+import org.shredzone.acme4j.Problem;
+import org.shredzone.acme4j.Session;
+import org.shredzone.acme4j.connector.Connection;
+import org.shredzone.acme4j.provider.AcmeProvider;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UncheckedIOException;
+import javax.crypto.SecretKey;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.SecureRandom;
+import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
@@ -45,17 +41,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.crypto.SecretKey;
-
-import org.jose4j.json.JsonUtil;
-import org.jose4j.jwk.JsonWebKey;
-import org.jose4j.jwk.JsonWebKey.OutputControlLevel;
-import org.jose4j.keys.HmacKey;
-import org.shredzone.acme4j.Login;
-import org.shredzone.acme4j.Problem;
-import org.shredzone.acme4j.Session;
-import org.shredzone.acme4j.connector.Connection;
-import org.shredzone.acme4j.provider.AcmeProvider;
+import static java.util.Collections.unmodifiableList;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Some utility methods for unit tests.
@@ -84,14 +71,13 @@ public final class TestUtils {
     /**
      * Reads a resource as byte array.
      *
-     * @param name
-     *            Resource name
+     * @param name Resource name
      * @return Resource content as byte array.
      */
     public static byte[] getResourceAsByteArray(String name) throws IOException {
         byte[] buffer = new byte[2048];
         try (InputStream in = TestUtils.class.getResourceAsStream(name);
-                ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+             ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             int len;
             while ((len = in.read(buffer)) >= 0) {
                 out.write(buffer, 0, len);
@@ -103,8 +89,7 @@ public final class TestUtils {
     /**
      * Reads a JSON string from json test files and parses it.
      *
-     * @param key
-     *            JSON resource
+     * @param key JSON resource
      * @return Parsed JSON resource
      */
     public static JSON getJSON(String key) {
@@ -138,8 +123,7 @@ public final class TestUtils {
      * Creates an {@link URL} from a String. Only throws a runtime exception if the URL is
      * malformed.
      *
-     * @param url
-     *            URL to use
+     * @param url URL to use
      * @return {@link URL} object
      */
     public static URL url(String url) {
@@ -153,8 +137,7 @@ public final class TestUtils {
     /**
      * Creates a {@link Session} instance. It uses {@link #ACME_SERVER_URI} as server URI.
      *
-     * @param provider
-     *            {@link AcmeProvider} to be used in this session
+     * @param provider {@link AcmeProvider} to be used in this session
      */
     public static Session session(final AcmeProvider provider) {
         return new Session(URI.create(ACME_SERVER_URI)) {
@@ -227,8 +210,7 @@ public final class TestUtils {
     /**
      * Creates a random ECC key pair with the given curve name.
      *
-     * @param name
-     *            Curve name
+     * @param name Curve name
      * @return {@link KeyPair} for testing
      */
     public static KeyPair createECKeyPair(String name) throws IOException {
@@ -245,8 +227,7 @@ public final class TestUtils {
     /**
      * Creates a HMAC key using the given hash algorithm.
      *
-     * @param algorithm
-     *            Name of the hash algorithm to be used
+     * @param algorithm Name of the hash algorithm to be used
      * @return {@link SecretKey} for testing
      */
     public static SecretKey createSecretKey(String algorithm) throws IOException {
@@ -270,8 +251,8 @@ public final class TestUtils {
         try (InputStream in = TestUtils.class.getResourceAsStream("/cert.pem")) {
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
             return unmodifiableList(cf.generateCertificates(in).stream()
-                       .map(c -> (X509Certificate) c)
-                       .collect(toList()));
+                    .map(c -> (X509Certificate) c)
+                    .collect(toList()));
         } catch (CertificateException ex) {
             throw new IOException(ex);
         }
@@ -280,12 +261,9 @@ public final class TestUtils {
     /**
      * Creates a {@link Problem} with the given type and details.
      *
-     * @param type
-     *            Problem type
-     * @param detail
-     *            Problem details
-     * @param instance
-     *            Instance, or {@code null}
+     * @param type     Problem type
+     * @param detail   Problem details
+     * @param instance Instance, or {@code null}
      * @return Created {@link Problem} object
      */
     public static Problem createProblem(URI type, String detail, URL instance) {

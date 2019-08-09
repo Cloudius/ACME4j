@@ -13,10 +13,10 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
+import org.junit.Test;
+
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
-
-import org.junit.Test;
 
 /**
  * Unit tests for {@link NoncePool}.

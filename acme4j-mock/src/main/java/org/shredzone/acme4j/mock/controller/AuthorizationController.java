@@ -13,13 +13,12 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import java.net.URL;
-import java.security.PublicKey;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.mock.model.MockAuthorization;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.security.PublicKey;
 
 /**
  * A {@link Controller} that handles authorization related requests.
@@ -33,9 +32,8 @@ public class AuthorizationController implements Controller {
     /**
      * Creates a new {@link AuthorizationController}.
      *
-     * @param authorization
-     *         {@link org.shredzone.acme4j.mock.model.MockAuthorization} this controller
-     *         is bound to
+     * @param authorization {@link org.shredzone.acme4j.mock.model.MockAuthorization} this controller
+     *                      is bound to
      */
     public AuthorizationController(MockAuthorization authorization) {
         this.authorization = authorization;
@@ -43,7 +41,7 @@ public class AuthorizationController implements Controller {
 
     /**
      * Just returns the current state of the authorization.
-     *
+     * <p>
      * {@inheritDoc}
      */
     @Override

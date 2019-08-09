@@ -13,22 +13,6 @@
  */
 package org.shredzone.acme4j.mock.model;
 
-import static java.util.Collections.unmodifiableList;
-import static java.util.stream.Collectors.toList;
-
-import java.io.IOException;
-import java.net.URL;
-import java.security.KeyPair;
-import java.security.cert.X509Certificate;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.Identifier;
 import org.shredzone.acme4j.Problem;
 import org.shredzone.acme4j.Status;
@@ -40,6 +24,21 @@ import org.shredzone.acme4j.mock.controller.OrderController;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.shredzone.acme4j.util.CSRBuilder;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.io.IOException;
+import java.net.URL;
+import java.security.KeyPair;
+import java.security.cert.X509Certificate;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import static java.util.Collections.unmodifiableList;
+import static java.util.stream.Collectors.toList;
 
 /**
  * A mock order.
@@ -67,7 +66,7 @@ public class MockOrder extends MockResource {
      * Collection, MockCertificateAuthority)}.
      */
     private MockOrder(Collection<Identifier> identifiers, Collection<MockAuthorization> authorizations,
-              MockCertificateAuthority mockCa) {
+                      MockCertificateAuthority mockCa) {
         this.identifiers = unmodifiableList(new ArrayList<>(identifiers));
         this.authorizations = new ArrayList<>(authorizations);
         this.mockCa = mockCa;
@@ -76,18 +75,14 @@ public class MockOrder extends MockResource {
     /**
      * Creates a new {@link MockOrder} instance.
      *
-     * @param repository
-     *         {@link Repository} to add the resource to
-     * @param identifiers
-     *         A {@link Collection} of {@link Identifier} being ordered
-     * @param authorizations
-     *         A {@link Collection} of {@link MockAuthorization} required for this order
-     * @param mockCa
-     *          {@link MockCertificateAuthority} to be used for certificate signing
+     * @param repository     {@link Repository} to add the resource to
+     * @param identifiers    A {@link Collection} of {@link Identifier} being ordered
+     * @param authorizations A {@link Collection} of {@link MockAuthorization} required for this order
+     * @param mockCa         {@link MockCertificateAuthority} to be used for certificate signing
      * @return The generated {@link MockOrder}
      */
     public static MockOrder create(Repository repository, Collection<Identifier> identifiers,
-               Collection<MockAuthorization> authorizations, MockCertificateAuthority mockCa) {
+                                   Collection<MockAuthorization> authorizations, MockCertificateAuthority mockCa) {
         MockOrder order = new MockOrder(identifiers, authorizations, mockCa);
         repository.addResource(order, OrderController::new);
         repository.addController(order.getFinalizeLocation(), new FinalizeController(order));
@@ -98,8 +93,7 @@ public class MockOrder extends MockResource {
     /**
      * Sets a generated CSR that matches the current state of the order.
      *
-     * @param keyPair
-     *         {@link KeyPair} to be used for signing the CSR
+     * @param keyPair {@link KeyPair} to be used for signing the CSR
      */
     public void generateCsr(KeyPair keyPair) {
         try {
@@ -160,9 +154,8 @@ public class MockOrder extends MockResource {
     /**
      * Sets the current order status.
      *
-     * @param status
-     *         new {@link Status}, or {@code null} to clear the status and let the
-     *         resource decide on its current status automatically.
+     * @param status new {@link Status}, or {@code null} to clear the status and let the
+     *               resource decide on its current status automatically.
      */
     public void setStatus(@Nullable Status status) {
         this.status = status;
@@ -179,8 +172,7 @@ public class MockOrder extends MockResource {
     /**
      * Sets the expiration date of this order.
      *
-     * @param expires
-     *         Expiration date, or {@code null} if undefined.
+     * @param expires Expiration date, or {@code null} if undefined.
      */
     public void setExpires(@Nullable Instant expires) {
         this.expires = expires;
@@ -198,8 +190,7 @@ public class MockOrder extends MockResource {
     /**
      * Sets the requested "not-before" date of the certificate.
      *
-     * @param notBefore
-     *         "not-before" date, or {@code null} if undefined.
+     * @param notBefore "not-before" date, or {@code null} if undefined.
      */
     public void setNotBefore(@Nullable Instant notBefore) {
         this.notBefore = notBefore;
@@ -217,8 +208,7 @@ public class MockOrder extends MockResource {
     /**
      * Sets the requested "not-after" date of the certificate.
      *
-     * @param notAfter
-     *         "not-after" date, or {@code null} if undefined.
+     * @param notAfter "not-after" date, or {@code null} if undefined.
      */
     public void setNotAfter(@Nullable Instant notAfter) {
         this.notAfter = notAfter;
@@ -236,9 +226,8 @@ public class MockOrder extends MockResource {
     /**
      * Sets the {@link Problem} that has caused this order to fail.
      *
-     * @param error
-     *         {@link Problem} that caused the failure, or {@code null} if there was no
-     *         error.
+     * @param error {@link Problem} that caused the failure, or {@code null} if there was no
+     *              error.
      */
     public void setError(@Nullable Problem error) {
         this.error = error;
@@ -255,9 +244,8 @@ public class MockOrder extends MockResource {
     /**
      * Sets the CSR from order finalization.
      *
-     * @param csr
-     *         encoded PKCS#10 certification request, or {@code null} if the order has not
-     *         been finalized yet
+     * @param csr encoded PKCS#10 certification request, or {@code null} if the order has not
+     *            been finalized yet
      */
     public void setCertificateSigningRequest(@Nullable byte[] csr) {
         encodedCsr = csr != null ? csr.clone() : null;
@@ -275,10 +263,9 @@ public class MockOrder extends MockResource {
     /**
      * Sets the certificate chain after this order has been finalized.
      *
-     * @param certificate
-     *         {@link List} of {@link X509Certificate}, with the end entity certificate
-     *         being the first entry, and each parent certificate in the next entries.
-     *         {@code null} if the order is not finalized.
+     * @param certificate {@link List} of {@link X509Certificate}, with the end entity certificate
+     *                    being the first entry, and each parent certificate in the next entries.
+     *                    {@code null} if the order is not finalized.
      */
     public void setCertificate(@Nullable List<X509Certificate> certificate) {
         this.certificate = certificate;

@@ -13,9 +13,8 @@
  */
 package org.shredzone.acme4j;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.Test;
+import org.shredzone.acme4j.toolbox.TestUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -23,8 +22,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 
-import org.junit.Test;
-import org.shredzone.acme4j.toolbox.TestUtils;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Unit tests for {@link AcmeResource}.
@@ -81,7 +81,7 @@ public class AcmeResourceTest {
         // Deserialize to new object
         DummyResource restored;
         try (ByteArrayInputStream bais = new ByteArrayInputStream(serialized);
-                ObjectInputStream in = new ObjectInputStream(bais)) {
+             ObjectInputStream in = new ObjectInputStream(bais)) {
             Object obj = in.readObject();
             assertThat(obj, instanceOf(DummyResource.class));
             restored = (DummyResource) obj;
@@ -123,6 +123,7 @@ public class AcmeResourceTest {
      */
     private static class DummyResource extends AcmeResource {
         private static final long serialVersionUID = 7188822681353082472L;
+
         public DummyResource(Login login, URL location) {
             super(login, location);
         }

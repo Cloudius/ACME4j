@@ -13,11 +13,13 @@
  */
 package org.shredzone.acme4j;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.*;
-import static org.shredzone.acme4j.toolbox.TestUtils.*;
+import org.junit.Test;
+import org.mockito.ArgumentMatchers;
+import org.shredzone.acme4j.connector.Resource;
+import org.shredzone.acme4j.exception.AcmeException;
+import org.shredzone.acme4j.provider.AcmeProvider;
+import org.shredzone.acme4j.provider.GenericAcmeProvider;
+import org.shredzone.acme4j.toolbox.TestUtils;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -29,13 +31,11 @@ import java.security.KeyPair;
 import java.time.Duration;
 import java.time.Instant;
 
-import org.junit.Test;
-import org.mockito.ArgumentMatchers;
-import org.shredzone.acme4j.connector.Resource;
-import org.shredzone.acme4j.exception.AcmeException;
-import org.shredzone.acme4j.provider.AcmeProvider;
-import org.shredzone.acme4j.provider.GenericAcmeProvider;
-import org.shredzone.acme4j.toolbox.TestUtils;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.*;
+import static org.shredzone.acme4j.toolbox.TestUtils.*;
 
 /**
  * Unit test for {@link Session}.
@@ -133,8 +133,8 @@ public class SessionTest {
 
         final AcmeProvider mockProvider = mock(AcmeProvider.class);
         when(mockProvider.directory(
-                        ArgumentMatchers.any(Session.class),
-                        ArgumentMatchers.eq(serverUri)))
+                ArgumentMatchers.any(Session.class),
+                ArgumentMatchers.eq(serverUri)))
                 .thenReturn(getJSON("directory"));
 
         Session session = new Session(serverUri) {
@@ -148,8 +148,8 @@ public class SessionTest {
 
         // Make sure directory is only read once!
         verify(mockProvider, times(1)).directory(
-                        ArgumentMatchers.any(Session.class),
-                        ArgumentMatchers.any(URI.class));
+                ArgumentMatchers.any(Session.class),
+                ArgumentMatchers.any(URI.class));
 
         // Simulate a cache expiry
         session.directoryCacheExpiry = Instant.now();
@@ -157,8 +157,8 @@ public class SessionTest {
         // Make sure directory is read once again
         assertSession(session);
         verify(mockProvider, times(2)).directory(
-                        ArgumentMatchers.any(Session.class),
-                        ArgumentMatchers.any(URI.class));
+                ArgumentMatchers.any(Session.class),
+                ArgumentMatchers.any(URI.class));
     }
 
     /**
@@ -170,8 +170,8 @@ public class SessionTest {
 
         final AcmeProvider mockProvider = mock(AcmeProvider.class);
         when(mockProvider.directory(
-                        ArgumentMatchers.any(Session.class),
-                        ArgumentMatchers.eq(serverUri)))
+                ArgumentMatchers.any(Session.class),
+                ArgumentMatchers.eq(serverUri)))
                 .thenReturn(getJSON("directoryNoMeta"));
 
         Session session = new Session(serverUri) {
@@ -182,11 +182,11 @@ public class SessionTest {
         };
 
         assertThat(session.resourceUrl(Resource.NEW_ACCOUNT),
-                        is(new URL("https://example.com/acme/new-account")));
+                is(new URL("https://example.com/acme/new-account")));
         assertThat(session.resourceUrl(Resource.NEW_AUTHZ),
-                        is(new URL("https://example.com/acme/new-authz")));
+                is(new URL("https://example.com/acme/new-authz")));
         assertThat(session.resourceUrl(Resource.NEW_ORDER),
-                        is(new URL("https://example.com/acme/new-order")));
+                is(new URL("https://example.com/acme/new-order")));
 
         Metadata meta = session.getMetadata();
         assertThat(meta, not(nullValue()));
@@ -203,16 +203,15 @@ public class SessionTest {
      * Asserts that the {@link Session} returns correct
      * {@link Session#resourceUrl(Resource)} and {@link Session#getMetadata()}.
      *
-     * @param session
-     *            {@link Session} to assert
+     * @param session {@link Session} to assert
      */
     private void assertSession(Session session) throws AcmeException, IOException {
         assertThat(session.resourceUrl(Resource.NEW_ACCOUNT),
-                        is(new URL("https://example.com/acme/new-account")));
+                is(new URL("https://example.com/acme/new-account")));
         assertThat(session.resourceUrl(Resource.NEW_AUTHZ),
-                        is(new URL("https://example.com/acme/new-authz")));
+                is(new URL("https://example.com/acme/new-authz")));
         assertThat(session.resourceUrl(Resource.NEW_ORDER),
-                        is(new URL("https://example.com/acme/new-order")));
+                is(new URL("https://example.com/acme/new-order")));
 
         try {
             session.resourceUrl(Resource.REVOKE_CERT);

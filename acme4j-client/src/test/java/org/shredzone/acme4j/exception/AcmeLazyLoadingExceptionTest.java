@@ -13,16 +13,16 @@
  */
 package org.shredzone.acme4j.exception;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-
-import java.net.URL;
-
 import org.junit.Test;
 import org.shredzone.acme4j.AcmeResource;
 import org.shredzone.acme4j.Login;
 import org.shredzone.acme4j.toolbox.TestUtils;
+
+import java.net.URL;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 /**
  * Unit tests for {@link AcmeLazyLoadingException}.

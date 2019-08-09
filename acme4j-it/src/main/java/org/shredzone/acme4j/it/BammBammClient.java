@@ -13,12 +13,6 @@
  */
 package org.shredzone.acme4j.it;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Objects;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
@@ -29,6 +23,11 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * The BammBamm client connects to the pebble-challtestsrv.
@@ -42,8 +41,7 @@ public class BammBammClient {
     /**
      * Creates a new BammBamm client.
      *
-     * @param baseUrl
-     *            Base URL of the pebble-challtestsrv server to connect to.
+     * @param baseUrl Base URL of the pebble-challtestsrv server to connect to.
      */
     public BammBammClient(String baseUrl) {
         this.baseUrl = Objects.requireNonNull(baseUrl) + '/';
@@ -52,10 +50,8 @@ public class BammBammClient {
     /**
      * Adds a HTTP token.
      *
-     * @param token
-     *            Token to add
-     * @param challenge
-     *            Challenge to respond with
+     * @param token     Token to add
+     * @param challenge Challenge to respond with
      */
     public void httpAddToken(String token, String challenge) throws IOException {
         JSONBuilder jb = new JSONBuilder();
@@ -67,8 +63,7 @@ public class BammBammClient {
     /**
      * Removes a HTTP token.
      *
-     * @param token
-     *            Token to remove
+     * @param token Token to remove
      */
     public void httpRemoveToken(String token) throws IOException {
         JSONBuilder jb = new JSONBuilder();
@@ -80,11 +75,9 @@ public class BammBammClient {
      * Adds an A Record to the DNS. Only one A Record is supported per domain. If another
      * A Record is set, it will replace the existing one.
      *
-     * @param domain
-     *            Domain of the A Record
-     * @param ip
-     *            IP address or domain name. If a domain name is used, it will be resolved
-     *            and the IP will be used.
+     * @param domain Domain of the A Record
+     * @param ip     IP address or domain name. If a domain name is used, it will be resolved
+     *               and the IP will be used.
      */
     public void dnsAddARecord(String domain, String ip) throws IOException {
         JSONBuilder jb = new JSONBuilder();
@@ -96,8 +89,7 @@ public class BammBammClient {
     /**
      * Removes an A Record from the DNS.
      *
-     * @param domain
-     *            Domain to remove the A Record from
+     * @param domain Domain to remove the A Record from
      */
     public void dnsRemoveARecord(String domain) throws IOException {
         JSONBuilder jb = new JSONBuilder();
@@ -109,10 +101,8 @@ public class BammBammClient {
      * Adds a TXT Record to the DNS. Only one TXT Record is supported per domain. If
      * another TXT Record is set, it will replace the existing one.
      *
-     * @param domain
-     *            Domain to add the TXT Record to
-     * @param txt
-     *            TXT record to add
+     * @param domain Domain to add the TXT Record to
+     * @param txt    TXT record to add
      */
     public void dnsAddTxtRecord(String domain, String txt) throws IOException {
         JSONBuilder jb = new JSONBuilder();
@@ -124,8 +114,7 @@ public class BammBammClient {
     /**
      * Removes a TXT Record from the DNS.
      *
-     * @param domain
-     *            Domain to remove the TXT Record from
+     * @param domain Domain to remove the TXT Record from
      */
     public void dnsRemoveTxtRecord(String domain) throws IOException {
         JSONBuilder jb = new JSONBuilder();
@@ -136,10 +125,8 @@ public class BammBammClient {
     /**
      * Adds a certificate for TLS-ALPN tests.
      *
-     * @param domain
-     *            Certificate domain to be added
-     * @param keyauth
-     *            Key authorization to be used for validation
+     * @param domain  Certificate domain to be added
+     * @param keyauth Key authorization to be used for validation
      */
     public void tlsAlpnAddCertificate(String domain, String keyauth) throws IOException {
         JSONBuilder jb = new JSONBuilder();
@@ -151,8 +138,7 @@ public class BammBammClient {
     /**
      * Removes a certificate.
      *
-     * @param domain
-     *            Certificate domain to be removed
+     * @param domain Certificate domain to be removed
      */
     public void tlsAlpnRemoveCertificate(String domain) throws IOException {
         JSONBuilder jb = new JSONBuilder();
@@ -163,10 +149,8 @@ public class BammBammClient {
     /**
      * Sends a request to the pebble-challtestsrv.
      *
-     * @param call
-     *            Endpoint to be called
-     * @param body
-     *            JSON body
+     * @param call Endpoint to be called
+     * @param body JSON body
      */
     private void sendRequest(String call, String body) throws IOException {
         try {

@@ -13,27 +13,22 @@
  */
 package org.shredzone.acme4j.provider;
 
+import org.shredzone.acme4j.Login;
+import org.shredzone.acme4j.Session;
+import org.shredzone.acme4j.challenge.*;
+import org.shredzone.acme4j.connector.Connection;
+import org.shredzone.acme4j.connector.DefaultConnection;
+import org.shredzone.acme4j.connector.HttpConnector;
+import org.shredzone.acme4j.exception.AcmeException;
+import org.shredzone.acme4j.toolbox.JSON;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiFunction;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
-import org.shredzone.acme4j.Login;
-import org.shredzone.acme4j.Session;
-import org.shredzone.acme4j.challenge.Challenge;
-import org.shredzone.acme4j.challenge.Dns01Challenge;
-import org.shredzone.acme4j.challenge.Http01Challenge;
-import org.shredzone.acme4j.challenge.TlsAlpn01Challenge;
-import org.shredzone.acme4j.challenge.TokenChallenge;
-import org.shredzone.acme4j.connector.Connection;
-import org.shredzone.acme4j.connector.DefaultConnection;
-import org.shredzone.acme4j.connector.HttpConnector;
-import org.shredzone.acme4j.exception.AcmeException;
-import org.shredzone.acme4j.toolbox.JSON;
 
 /**
  * Abstract implementation of {@link AcmeProvider}. It consists of a challenge

@@ -13,11 +13,6 @@
  */
 package org.shredzone.acme4j;
 
-import java.net.URL;
-import java.util.Objects;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.connector.Connection;
 import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.exception.AcmeLazyLoadingException;
@@ -25,6 +20,10 @@ import org.shredzone.acme4j.exception.AcmeRetryAfterException;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.util.Objects;
 
 /**
  * An ACME resource that stores its state in a JSON structure.
@@ -39,10 +38,8 @@ public abstract class AcmeJsonResource extends AcmeResource {
     /**
      * Create a new {@link AcmeJsonResource}.
      *
-     * @param login
-     *            {@link Login} the resource is bound with
-     * @param location
-     *            Location {@link URL} of this resource
+     * @param login    {@link Login} the resource is bound with
+     * @param location Location {@link URL} of this resource
      */
     protected AcmeJsonResource(Login login, URL location) {
         super(login, location);
@@ -74,8 +71,7 @@ public abstract class AcmeJsonResource extends AcmeResource {
     /**
      * Sets the JSON representation of the resource data.
      *
-     * @param data
-     *            New {@link JSON} data, must not be {@code null}.
+     * @param data New {@link JSON} data, must not be {@code null}.
      */
     protected void setJSON(JSON data) {
         this.data = Objects.requireNonNull(data, "data");
@@ -85,8 +81,8 @@ public abstract class AcmeJsonResource extends AcmeResource {
      * Checks if this resource is valid.
      *
      * @return {@code true} if the resource state has been loaded from the server. If
-     *         {@code false}, {@link #getJSON()} would implicitly call {@link #update()}
-     *         to fetch the current state from the server.
+     * {@code false}, {@link #getJSON()} would implicitly call {@link #update()}
+     * to fetch the current state from the server.
      */
     protected boolean isValid() {
         return data != null;
@@ -103,14 +99,12 @@ public abstract class AcmeJsonResource extends AcmeResource {
     /**
      * Updates this resource, by fetching the current resource data from the server.
      *
-     * @throws AcmeException
-     *             if the resource could not be fetched.
-     * @throws AcmeRetryAfterException
-     *             the resource is still being processed, and the server returned an
-     *             estimated date when the process will be completed. If you are polling
-     *             for the resource to complete, you should wait for the date given in
-     *             {@link AcmeRetryAfterException#getRetryAfter()}. Note that the status
-     *             of the resource is updated even if this exception was thrown.
+     * @throws AcmeException           if the resource could not be fetched.
+     * @throws AcmeRetryAfterException the resource is still being processed, and the server returned an
+     *                                 estimated date when the process will be completed. If you are polling
+     *                                 for the resource to complete, you should wait for the date given in
+     *                                 {@link AcmeRetryAfterException#getRetryAfter()}. Note that the status
+     *                                 of the resource is updated even if this exception was thrown.
      */
     public void update() throws AcmeException {
         String resourceType = getClass().getSimpleName();

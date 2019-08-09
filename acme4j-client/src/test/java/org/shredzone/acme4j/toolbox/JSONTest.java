@@ -13,18 +13,13 @@
  */
 package org.shredzone.acme4j.toolbox;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
+import org.junit.Test;
+import org.shredzone.acme4j.Problem;
+import org.shredzone.acme4j.Status;
+import org.shredzone.acme4j.exception.AcmeProtocolException;
+import org.shredzone.acme4j.toolbox.JSON.Value;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -32,18 +27,14 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
-import org.shredzone.acme4j.Problem;
-import org.shredzone.acme4j.Status;
-import org.shredzone.acme4j.exception.AcmeProtocolException;
-import org.shredzone.acme4j.toolbox.JSON.Value;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
 
 /**
  * Unit test for {@link JSON}.
@@ -104,8 +95,8 @@ public class JSONTest {
         JSON json = TestUtils.getJSON("datatypes");
 
         assertThat(json.keySet(), containsInAnyOrder(
-                    "text", "number", "boolean", "uri", "url", "date", "array",
-                    "collect", "status", "binary", "duration", "problem", "encoded"));
+                "text", "number", "boolean", "uri", "url", "date", "array",
+                "collect", "status", "binary", "duration", "problem", "encoded"));
         assertThat(json.contains("text"), is(true));
         assertThat(json.contains("music"), is(false));
         assertThat(json.get("text"), is(notNullValue()));

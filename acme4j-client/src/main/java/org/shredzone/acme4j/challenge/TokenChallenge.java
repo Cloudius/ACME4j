@@ -13,17 +13,16 @@
  */
 package org.shredzone.acme4j.challenge;
 
-import static org.shredzone.acme4j.toolbox.AcmeUtils.base64UrlEncode;
-
-import java.security.PublicKey;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.Login;
 import org.shredzone.acme4j.exception.AcmeProtocolException;
 import org.shredzone.acme4j.toolbox.AcmeUtils;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JoseUtils;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.security.PublicKey;
+
+import static org.shredzone.acme4j.toolbox.AcmeUtils.base64UrlEncode;
 
 /**
  * An extension of {@link Challenge} that handles challenges with a {@code token} and
@@ -38,10 +37,8 @@ public class TokenChallenge extends Challenge {
     /**
      * Creates a new generic {@link TokenChallenge} object.
      *
-     * @param login
-     *            {@link Login} the resource is bound with
-     * @param data
-     *            {@link JSON} challenge data
+     * @param login {@link Login} the resource is bound with
+     * @param data  {@link JSON} challenge data
      */
     public TokenChallenge(Login login, JSON data) {
         super(login, data);

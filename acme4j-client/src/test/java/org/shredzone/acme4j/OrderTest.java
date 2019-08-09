@@ -13,12 +13,11 @@
  */
 package org.shredzone.acme4j;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.shredzone.acme4j.toolbox.AcmeUtils.parseTimestamp;
-import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
+import org.junit.Test;
+import org.shredzone.acme4j.provider.TestableConnectionProvider;
+import org.shredzone.acme4j.toolbox.JSON;
+import org.shredzone.acme4j.toolbox.JSONBuilder;
+import org.shredzone.acme4j.toolbox.TestUtils;
 
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -27,11 +26,12 @@ import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.junit.Test;
-import org.shredzone.acme4j.provider.TestableConnectionProvider;
-import org.shredzone.acme4j.toolbox.JSON;
-import org.shredzone.acme4j.toolbox.JSONBuilder;
-import org.shredzone.acme4j.toolbox.TestUtils;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.shredzone.acme4j.toolbox.AcmeUtils.parseTimestamp;
+import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
 
 /**
  * Unit tests for {@link Order}.
@@ -74,8 +74,8 @@ public class OrderTest {
         assertThat(order.getLocation(), is(locationUrl));
 
         assertThat(order.getIdentifiers(), containsInAnyOrder(
-                    Identifier.dns("example.com"),
-                    Identifier.dns("www.example.com")));
+                Identifier.dns("example.com"),
+                Identifier.dns("www.example.com")));
         assertThat(order.getNotBefore(), is(parseTimestamp("2016-01-01T00:00:00Z")));
         assertThat(order.getNotAfter(), is(parseTimestamp("2016-01-08T00:00:00Z")));
         assertThat(order.getCertificate().getLocation(), is(url("https://example.com/acme/cert/1234")));
@@ -96,8 +96,8 @@ public class OrderTest {
         assertThat(auths.size(), is(2));
         assertThat(auths.stream().map(Authorization::getLocation)::iterator,
                 containsInAnyOrder(
-                    url("https://example.com/acme/authz/1234"),
-                    url("https://example.com/acme/authz/2345")));
+                        url("https://example.com/acme/authz/1234"),
+                        url("https://example.com/acme/authz/2345")));
 
         provider.close();
     }
@@ -193,8 +193,8 @@ public class OrderTest {
         assertThat(order.getLocation(), is(locationUrl));
 
         assertThat(order.getIdentifiers(), containsInAnyOrder(
-                        Identifier.dns("example.com"),
-                        Identifier.dns("www.example.com")));
+                Identifier.dns("example.com"),
+                Identifier.dns("www.example.com")));
         assertThat(order.getNotBefore(), is(parseTimestamp("2016-01-01T00:00:00Z")));
         assertThat(order.getNotAfter(), is(parseTimestamp("2016-01-08T00:00:00Z")));
         assertThat(order.getCertificate().getLocation(), is(url("https://example.com/acme/cert/1234")));
@@ -205,8 +205,8 @@ public class OrderTest {
         assertThat(auths.size(), is(2));
         assertThat(auths.stream().map(Authorization::getLocation)::iterator,
                 containsInAnyOrder(
-                    url("https://example.com/acme/authz/1234"),
-                    url("https://example.com/acme/authz/2345")));
+                        url("https://example.com/acme/authz/1234"),
+                        url("https://example.com/acme/authz/2345")));
 
         provider.close();
     }

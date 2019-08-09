@@ -13,20 +13,19 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import java.net.URI;
-import java.net.URL;
-import java.security.PublicKey;
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.mock.MockAcmeServer;
 import org.shredzone.acme4j.mock.connection.MockError;
 import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.mock.model.MockAccount;
 import org.shredzone.acme4j.toolbox.JSON;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URI;
+import java.net.URL;
+import java.security.PublicKey;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * A {@link Controller} that processes {@code newAccount} requests.
@@ -40,8 +39,7 @@ public class NewAccountController implements Controller {
     /**
      * Creates a new {@link NewAccountController}.
      *
-     * @param server
-     *         {@link MockAcmeServer} that is used for creating new accounts
+     * @param server {@link MockAcmeServer} that is used for creating new accounts
      */
     public NewAccountController(MockAcmeServer server) {
         this.server = server;
@@ -49,7 +47,7 @@ public class NewAccountController implements Controller {
 
     /**
      * Creates a new account.
-     *
+     * <p>
      * {@inheritDoc}
      */
     @Override

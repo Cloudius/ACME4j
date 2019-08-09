@@ -13,18 +13,6 @@
  */
 package org.shredzone.acme4j;
 
-import static java.util.Objects.requireNonNull;
-
-import java.net.URI;
-import java.net.URL;
-import java.security.KeyPair;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-
 import org.shredzone.acme4j.connector.Connection;
 import org.shredzone.acme4j.connector.Resource;
 import org.shredzone.acme4j.exception.AcmeException;
@@ -35,6 +23,17 @@ import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.shredzone.acme4j.toolbox.JoseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.URL;
+import java.security.KeyPair;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * A builder for registering a new account.
@@ -53,8 +52,7 @@ public class AccountBuilder {
     /**
      * Add a contact URI to the list of contacts.
      *
-     * @param contact
-     *            Contact URI
+     * @param contact Contact URI
      * @return itself
      */
     public AccountBuilder addContact(URI contact) {
@@ -68,11 +66,9 @@ public class AccountBuilder {
      * <p>
      * This is a convenience call for {@link #addContact(URI)}.
      *
-     * @param contact
-     *            Contact URI as string
-     * @throws IllegalArgumentException
-     *             if there is a syntax error in the URI string
+     * @param contact Contact URI as string
      * @return itself
+     * @throws IllegalArgumentException if there is a syntax error in the URI string
      */
     public AccountBuilder addContact(String contact) {
         addContact(URI.create(contact));
@@ -85,11 +81,9 @@ public class AccountBuilder {
      * This is a convenience call for {@link #addContact(String)} that doesn't
      * require from you attach "mailto" scheme before email address.
      *
-     * @param email
-     *             Contact email without "mailto" scheme (e.g. test@gmail.com)
-     * @throws IllegalArgumentException
-     *             if there is a syntax error in the URI string
+     * @param email Contact email without "mailto" scheme (e.g. test@gmail.com)
      * @return itself
+     * @throws IllegalArgumentException if there is a syntax error in the URI string
      */
     public AccountBuilder addEmail(String email) {
         addContact("mailto:" + email);
@@ -121,8 +115,7 @@ public class AccountBuilder {
     /**
      * Sets the {@link KeyPair} to be used for this account.
      *
-     * @param keyPair
-     *            Account's {@link KeyPair}
+     * @param keyPair Account's {@link KeyPair}
      * @return itself
      */
     public AccountBuilder useKeyPair(KeyPair keyPair) {
@@ -134,10 +127,8 @@ public class AccountBuilder {
      * Sets a Key Identifier and MAC key provided by the CA. Use this if your CA requires
      * an individual account identification, e.g. your customer number.
      *
-     * @param kid
-     *            Key Identifier
-     * @param macKey
-     *            MAC key
+     * @param kid    Key Identifier
+     * @param macKey MAC key
      * @return itself
      */
     public AccountBuilder withKeyIdentifier(String kid, SecretKey macKey) {
@@ -153,10 +144,8 @@ public class AccountBuilder {
      * Sets a Key Identifier and MAC key provided by the CA. Use this if your CA requires
      * an individual account identification, e.g. your customer number.
      *
-     * @param kid
-     *            Key Identifier
-     * @param encodedMacKey
-     *            Base64url encoded MAC key. It will be decoded for your convenience.
+     * @param kid           Key Identifier
+     * @param encodedMacKey Base64url encoded MAC key. It will be decoded for your convenience.
      * @return itself
      */
     public AccountBuilder withKeyIdentifier(String kid, String encodedMacKey) {
@@ -167,8 +156,7 @@ public class AccountBuilder {
     /**
      * Creates a new account.
      *
-     * @param session
-     *            {@link Session} to be used for registration
+     * @param session {@link Session} to be used for registration
      * @return {@link Account} referring to the new account
      */
     public Account create(Session session) throws AcmeException {
@@ -180,8 +168,7 @@ public class AccountBuilder {
      * <p>
      * This method returns a ready to use {@link Login} for the new {@link Account}.
      *
-     * @param session
-     *            {@link Session} to be used for registration
+     * @param session {@link Session} to be used for registration
      * @return {@link Login} referring to the new account
      */
     public Login createLogin(Session session) throws AcmeException {

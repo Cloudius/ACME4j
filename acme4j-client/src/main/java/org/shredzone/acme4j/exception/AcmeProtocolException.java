@@ -28,8 +28,7 @@ public class AcmeProtocolException extends RuntimeException {
     /**
      * Creates a new {@link AcmeProtocolException}.
      *
-     * @param msg
-     *            Reason of the exception
+     * @param msg Reason of the exception
      */
     public AcmeProtocolException(String msg) {
         super(msg);
@@ -38,10 +37,8 @@ public class AcmeProtocolException extends RuntimeException {
     /**
      * Creates a new {@link AcmeProtocolException}.
      *
-     * @param msg
-     *            Reason of the exception
-     * @param cause
-     *            Cause
+     * @param msg   Reason of the exception
+     * @param cause Cause
      */
     public AcmeProtocolException(String msg, Throwable cause) {
         super(msg, cause);

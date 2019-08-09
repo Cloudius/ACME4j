@@ -13,11 +13,10 @@
  */
 package org.shredzone.acme4j.provider;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-
-import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * A generic {@link AcmeProvider}. It should be working for all ACME servers complying to
@@ -31,7 +30,7 @@ public class GenericAcmeProvider extends AbstractAcmeProvider {
     @Override
     public boolean accepts(URI serverUri) {
         return "http".equals(serverUri.getScheme())
-                        || "https".equals(serverUri.getScheme());
+                || "https".equals(serverUri.getScheme());
     }
 
     @Override

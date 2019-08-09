@@ -13,29 +13,6 @@
  */
 package org.shredzone.acme4j.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Date;
-import java.util.Objects;
-import java.util.function.Function;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.WillClose;
-
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.DEROctetString;
@@ -59,6 +36,24 @@ import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequest;
 import org.shredzone.acme4j.Identifier;
 import org.shredzone.acme4j.challenge.TlsAlpn01Challenge;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.WillClose;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Date;
+import java.util.Objects;
+import java.util.function.Function;
+
 /**
  * Utility class offering convenience methods for certificates.
  * <p>
@@ -73,7 +68,7 @@ public final class CertificateUtils {
      * @since 2.1
      */
     public static final ASN1ObjectIdentifier ACME_VALIDATION =
-                    new ASN1ObjectIdentifier(TlsAlpn01Challenge.ACME_VALIDATION_OID).intern();
+            new ASN1ObjectIdentifier(TlsAlpn01Challenge.ACME_VALIDATION_OID).intern();
 
     private CertificateUtils() {
         // utility class without constructor
@@ -82,9 +77,8 @@ public final class CertificateUtils {
     /**
      * Reads a CSR PEM file.
      *
-     * @param in
-     *            {@link InputStream} to read the CSR from. The {@link InputStream} is
-     *            closed after use.
+     * @param in {@link InputStream} to read the CSR from. The {@link InputStream} is
+     *           closed after use.
      * @return CSR that was read
      */
     public static PKCS10CertificationRequest readCSR(@WillClose InputStream in) throws IOException {
@@ -101,18 +95,15 @@ public final class CertificateUtils {
      * Creates a self-signed {@link X509Certificate} that can be used for the
      * {@link TlsAlpn01Challenge}. The certificate is valid for 7 days.
      *
-     * @param keypair
-     *            A domain {@link KeyPair} to be used for the challenge
-     * @param id
-     *            The {@link Identifier} that is to be validated
-     * @param acmeValidation
-     *            The value that is returned by
-     *            {@link TlsAlpn01Challenge#getAcmeValidation()}
+     * @param keypair        A domain {@link KeyPair} to be used for the challenge
+     * @param id             The {@link Identifier} that is to be validated
+     * @param acmeValidation The value that is returned by
+     *                       {@link TlsAlpn01Challenge#getAcmeValidation()}
      * @return Created certificate
      * @since 2.6
      */
     public static X509Certificate createTlsAlpn01Certificate(KeyPair keypair, Identifier id, byte[] acmeValidation)
-                throws IOException {
+            throws IOException {
         Objects.requireNonNull(keypair, "keypair");
         Objects.requireNonNull(id, "id");
         if (acmeValidation == null || acmeValidation.length != 32) {
@@ -127,8 +118,8 @@ public final class CertificateUtils {
         Instant notAfter = notBefore.plus(Duration.ofDays(7));
 
         JcaX509v3CertificateBuilder certBuilder = new JcaX509v3CertificateBuilder(
-                    issuer, serial, Date.from(notBefore), Date.from(notAfter),
-                    issuer, keypair.getPublic());
+                issuer, serial, Date.from(notBefore), Date.from(notAfter),
+                issuer, keypair.getPublic());
 
         GeneralName[] gns = new GeneralName[1];
 
@@ -155,19 +146,15 @@ public final class CertificateUtils {
      * <p>
      * The generated certificate is only meant for testing purposes!
      *
-     * @param subject
-     *         This certificate's subject X.500 name.
-     * @param notBefore
-     *         {@link Instant} before which the certificate is not valid.
-     * @param notAfter
-     *         {@link Instant} after which the certificate is not valid.
-     * @param keypair
-     *         {@link KeyPair} that is to be used for this certificate.
+     * @param subject   This certificate's subject X.500 name.
+     * @param notBefore {@link Instant} before which the certificate is not valid.
+     * @param notAfter  {@link Instant} after which the certificate is not valid.
+     * @param keypair   {@link KeyPair} that is to be used for this certificate.
      * @return Generated {@link X509Certificate}
      * @since 2.8
      */
     public static X509Certificate createTestRootCertificate(String subject,
-            Instant notBefore, Instant notAfter, KeyPair keypair) {
+                                                            Instant notBefore, Instant notAfter, KeyPair keypair) {
         Objects.requireNonNull(subject, "subject");
         Objects.requireNonNull(notBefore, "notBefore");
         Objects.requireNonNull(notAfter, "notAfter");
@@ -190,25 +177,19 @@ public final class CertificateUtils {
      * <p>
      * The generated certificate is only meant for testing purposes!
      *
-     * @param subject
-     *         This certificate's subject X.500 name.
-     * @param notBefore
-     *         {@link Instant} before which the certificate is not valid.
-     * @param notAfter
-     *         {@link Instant} after which the certificate is not valid.
-     * @param intermediatePublicKey
-     *         {@link PublicKey} of this certificate
-     * @param issuer
-     *         The issuer's {@link X509Certificate}.
-     * @param issuerPrivateKey
-     *         {@link PrivateKey} of the issuer. This is not the private key of this
-     *         intermediate certificate.
+     * @param subject               This certificate's subject X.500 name.
+     * @param notBefore             {@link Instant} before which the certificate is not valid.
+     * @param notAfter              {@link Instant} after which the certificate is not valid.
+     * @param intermediatePublicKey {@link PublicKey} of this certificate
+     * @param issuer                The issuer's {@link X509Certificate}.
+     * @param issuerPrivateKey      {@link PrivateKey} of the issuer. This is not the private key of this
+     *                              intermediate certificate.
      * @return Generated {@link X509Certificate}
      * @since 2.8
      */
     public static X509Certificate createTestIntermediateCertificate(String subject,
-            Instant notBefore, Instant notAfter, PublicKey intermediatePublicKey,
-            X509Certificate issuer, PrivateKey issuerPrivateKey) {
+                                                                    Instant notBefore, Instant notAfter, PublicKey intermediatePublicKey,
+                                                                    X509Certificate issuer, PrivateKey issuerPrivateKey) {
         Objects.requireNonNull(subject, "subject");
         Objects.requireNonNull(notBefore, "notBefore");
         Objects.requireNonNull(notAfter, "notAfter");
@@ -238,22 +219,17 @@ public final class CertificateUtils {
      * discretion of the CA which distinguished names, validity dates, extensions and
      * other parameters are transferred from the CSR to the generated certificate.
      *
-     * @param csr
-     *         CSR to create the certificate from
-     * @param notBefore
-     *         {@link Instant} before which the certificate is not valid.
-     * @param notAfter
-     *         {@link Instant} after which the certificate is not valid.
-     * @param issuer
-     *         The issuer's {@link X509Certificate}.
-     * @param issuerPrivateKey
-     *         {@link PrivateKey} of the issuer. This is not the private key the CSR was
-     *         signed with.
+     * @param csr              CSR to create the certificate from
+     * @param notBefore        {@link Instant} before which the certificate is not valid.
+     * @param notAfter         {@link Instant} after which the certificate is not valid.
+     * @param issuer           The issuer's {@link X509Certificate}.
+     * @param issuerPrivateKey {@link PrivateKey} of the issuer. This is not the private key the CSR was
+     *                         signed with.
      * @return Generated {@link X509Certificate}
      * @since 2.8
      */
     public static X509Certificate createTestCertificate(PKCS10CertificationRequest csr,
-            Instant notBefore, Instant notAfter, X509Certificate issuer, PrivateKey issuerPrivateKey) {
+                                                        Instant notBefore, Instant notAfter, X509Certificate issuer, PrivateKey issuerPrivateKey) {
         Objects.requireNonNull(csr, "csr");
         Objects.requireNonNull(notBefore, "notBefore");
         Objects.requireNonNull(notAfter, "notAfter");
@@ -289,11 +265,9 @@ public final class CertificateUtils {
     /**
      * Build a {@link X509Certificate} from a builder.
      *
-     * @param builder
-     *         Builder method that receives a {@link ContentSigner} and returns a {@link
-     *         X509CertificateHolder}.
-     * @param privateKey
-     *         {@link PrivateKey} to sign the certificate with
+     * @param builder    Builder method that receives a {@link ContentSigner} and returns a {@link
+     *                   X509CertificateHolder}.
+     * @param privateKey {@link PrivateKey} to sign the certificate with
      * @return The generated {@link X509Certificate}
      */
     private static X509Certificate buildCertificate(Function<ContentSigner, X509CertificateHolder> builder, PrivateKey privateKey) {

@@ -13,13 +13,9 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
-import static java.util.Collections.singletonList;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
+import org.junit.Test;
+import org.shredzone.acme4j.mock.model.MockResource;
+import org.shredzone.acme4j.toolbox.JSON;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,9 +24,13 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import org.junit.Test;
-import org.shredzone.acme4j.mock.model.MockResource;
-import org.shredzone.acme4j.toolbox.JSON;
+import static java.util.Collections.singletonList;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
 
 /**
  * Unit tests for {@link Result}.

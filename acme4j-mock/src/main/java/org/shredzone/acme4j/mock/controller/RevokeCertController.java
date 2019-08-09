@@ -13,12 +13,12 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import java.net.URL;
-import java.security.PublicKey;
-
 import org.shredzone.acme4j.mock.MockAcmeServer;
 import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.toolbox.JSON;
+
+import java.net.URL;
+import java.security.PublicKey;
 
 /**
  * A {@link Controller} that handles certificate revocations.
@@ -30,8 +30,7 @@ public class RevokeCertController implements Controller {
     /**
      * Creates a new {@link RevokeCertController}.
      *
-     * @param server
-     *         {@link MockAcmeServer} that is used
+     * @param server {@link MockAcmeServer} that is used
      */
     public RevokeCertController(MockAcmeServer server) {
         // intentionally left blank
@@ -39,7 +38,7 @@ public class RevokeCertController implements Controller {
 
     /**
      * Revokes a certificate.
-     *
+     * <p>
      * {@inheritDoc}
      */
     @Override

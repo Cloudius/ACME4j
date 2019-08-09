@@ -13,15 +13,14 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import java.net.URL;
-import java.security.PublicKey;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.mock.connection.MockError;
 import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.toolbox.JSON;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.security.PublicKey;
 
 /**
  * Processes an ACME request to a defined {@link URL} and gives a {@link Result}.
@@ -36,8 +35,7 @@ public interface Controller {
     /**
      * Processes a simple and unauthorized GET request.
      *
-     * @param requestUrl
-     *         Request {@link URL}
+     * @param requestUrl Request {@link URL}
      * @return {@link Result} to be returned to the client
      */
     default Result doSimpleRequest(URL requestUrl) throws AcmeException {
@@ -47,10 +45,8 @@ public interface Controller {
     /**
      * Processes an authorized POST-as-GET request.
      *
-     * @param requestUrl
-     *         Request {@link URL}
-     * @param publicKey
-     *         The account's public key the request is signed with
+     * @param requestUrl Request {@link URL}
+     * @param publicKey  The account's public key the request is signed with
      * @return {@link Result} to be returned to the client
      */
     default Result doPostAsGetRequest(URL requestUrl, PublicKey publicKey)
@@ -61,12 +57,9 @@ public interface Controller {
     /**
      * Processes an authorized POST request.
      *
-     * @param requestUrl
-     *         Request {@link URL}
-     * @param payload
-     *         {@link JSON} payload that was POSTed to the ACME server
-     * @param publicKey
-     *         The account's public key the request is signed with
+     * @param requestUrl Request {@link URL}
+     * @param payload    {@link JSON} payload that was POSTed to the ACME server
+     * @param publicKey  The account's public key the request is signed with
      * @return {@link Result} to be returned to the client
      */
     default Result doPostRequest(URL requestUrl, JSON payload, PublicKey publicKey)

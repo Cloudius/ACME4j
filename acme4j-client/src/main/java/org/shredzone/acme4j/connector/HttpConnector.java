@@ -13,17 +13,16 @@
  */
 package org.shredzone.acme4j.connector;
 
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.concurrent.ThreadSafe;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.Proxy;
 import java.net.URL;
 import java.util.Properties;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.concurrent.ThreadSafe;
-
-import org.slf4j.LoggerFactory;
 
 /**
  * A generic HTTP connector. It connects to the given URL with a 10 seconds connection and
@@ -67,10 +66,8 @@ public class HttpConnector {
     /**
      * Opens a {@link HttpURLConnection} to the given {@link URL}.
      *
-     * @param url
-     *            {@link URL} to connect to
-     * @param proxy
-     *            {@link Proxy} to be used
+     * @param url   {@link URL} to connect to
+     * @param proxy {@link Proxy} to be used
      * @return {@link HttpURLConnection} connected to the {@link URL}
      */
     public HttpURLConnection openConnection(URL url, Proxy proxy) throws IOException {
@@ -85,8 +82,7 @@ public class HttpConnector {
      * This implementation sets reasonable timeouts, forbids caching, and sets an user
      * agent.
      *
-     * @param conn
-     *            {@link HttpURLConnection} to configure.
+     * @param conn {@link HttpURLConnection} to configure.
      */
     protected void configure(HttpURLConnection conn) {
         conn.setConnectTimeout(TIMEOUT);

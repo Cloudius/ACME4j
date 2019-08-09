@@ -34,8 +34,7 @@ public class AcmeException extends Exception {
     /**
      * Creates a generic {@link AcmeException}.
      *
-     * @param msg
-     *            Description
+     * @param msg Description
      */
     public AcmeException(String msg) {
         super(msg);
@@ -44,10 +43,8 @@ public class AcmeException extends Exception {
     /**
      * Creates a generic {@link AcmeException}.
      *
-     * @param msg
-     *            Description
-     * @param cause
-     *            {@link Throwable} that caused this exception
+     * @param msg   Description
+     * @param cause {@link Throwable} that caused this exception
      */
     public AcmeException(String msg, Throwable cause) {
         super(msg, cause);

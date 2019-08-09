@@ -13,19 +13,18 @@
  */
 package org.shredzone.acme4j;
 
-import static java.util.stream.Collectors.toList;
+import org.shredzone.acme4j.toolbox.JSON;
+import org.shredzone.acme4j.toolbox.JSON.Value;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.concurrent.Immutable;
 import java.net.URI;
 import java.net.URL;
 import java.time.Duration;
 import java.util.Collection;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.concurrent.Immutable;
-
-import org.shredzone.acme4j.toolbox.JSON;
-import org.shredzone.acme4j.toolbox.JSON.Value;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Contains metadata related to the provider.
@@ -39,8 +38,7 @@ public class Metadata {
     /**
      * Creates a new {@link Metadata} instance.
      *
-     * @param meta
-     *            JSON map of metadata
+     * @param meta JSON map of metadata
      */
     public Metadata(JSON meta) {
         this.meta = meta;

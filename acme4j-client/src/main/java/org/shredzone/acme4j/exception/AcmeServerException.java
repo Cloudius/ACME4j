@@ -13,13 +13,12 @@
  */
 package org.shredzone.acme4j.exception;
 
-import java.net.URI;
-import java.util.Objects;
+import org.shredzone.acme4j.Problem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.Immutable;
-
-import org.shredzone.acme4j.Problem;
+import java.net.URI;
+import java.util.Objects;
 
 /**
  * An exception that is thrown when the ACME server returned an error. It contains
@@ -35,8 +34,7 @@ public class AcmeServerException extends AcmeException {
     /**
      * Creates a new {@link AcmeServerException}.
      *
-     * @param problem
-     *            {@link Problem} that caused the exception
+     * @param problem {@link Problem} that caused the exception
      */
     public AcmeServerException(Problem problem) {
         super(Objects.requireNonNull(problem).toString());

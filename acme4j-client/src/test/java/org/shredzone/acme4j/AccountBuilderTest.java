@@ -13,28 +13,23 @@
  */
 package org.shredzone.acme4j;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.KeyPair;
-
-import javax.crypto.SecretKey;
-
 import org.jose4j.jwx.CompactSerializer;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.shredzone.acme4j.connector.Resource;
 import org.shredzone.acme4j.provider.TestableConnectionProvider;
-import org.shredzone.acme4j.toolbox.AcmeUtils;
-import org.shredzone.acme4j.toolbox.JSON;
-import org.shredzone.acme4j.toolbox.JSONBuilder;
-import org.shredzone.acme4j.toolbox.JoseUtilsTest;
-import org.shredzone.acme4j.toolbox.TestUtils;
+import org.shredzone.acme4j.toolbox.*;
+
+import javax.crypto.SecretKey;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.KeyPair;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
 
 /**
  * Unit tests for {@link AccountBuilder}.
@@ -122,8 +117,8 @@ public class AccountBuilderTest {
                 assertThat(keypair, is(accountKey));
 
                 JSON binding = claims.toJSON()
-                                .get("externalAccountBinding")
-                                .asObject();
+                        .get("externalAccountBinding")
+                        .asObject();
 
                 String encodedHeader = binding.get("protected").asString();
                 String encodedSignature = binding.get("signature").asString();

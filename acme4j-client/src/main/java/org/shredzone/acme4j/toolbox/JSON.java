@@ -13,41 +13,6 @@
  */
 package org.shredzone.acme4j.toolbox;
 
-import static java.util.stream.Collectors.joining;
-import static org.shredzone.acme4j.toolbox.AcmeUtils.parseTimestamp;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.WillClose;
-import javax.annotation.concurrent.Immutable;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.jose4j.json.JsonUtil;
 import org.jose4j.lang.JoseException;
@@ -55,6 +20,26 @@ import org.shredzone.acme4j.Identifier;
 import org.shredzone.acme4j.Problem;
 import org.shredzone.acme4j.Status;
 import org.shredzone.acme4j.exception.AcmeProtocolException;
+
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.WillClose;
+import javax.annotation.concurrent.Immutable;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
+import static java.util.stream.Collectors.joining;
+import static org.shredzone.acme4j.toolbox.AcmeUtils.parseTimestamp;
 
 /**
  * A model containing a JSON result. The content is immutable.
@@ -74,8 +59,7 @@ public final class JSON implements Serializable {
     /**
      * Creates a new {@link JSON} root object.
      *
-     * @param data
-     *            {@link Map} containing the parsed JSON data
+     * @param data {@link Map} containing the parsed JSON data
      */
     private JSON(Map<String, Object> data) {
         this("", data);
@@ -84,10 +68,8 @@ public final class JSON implements Serializable {
     /**
      * Creates a new {@link JSON} branch object.
      *
-     * @param path
-     *            Path leading to this branch.
-     * @param data
-     *            {@link Map} containing the parsed JSON data
+     * @param path Path leading to this branch.
+     * @param data {@link Map} containing the parsed JSON data
      */
     private JSON(String path, Map<String, Object> data) {
         this.path = path;
@@ -97,8 +79,7 @@ public final class JSON implements Serializable {
     /**
      * Parses JSON from an {@link InputStream}.
      *
-     * @param in
-     *            {@link InputStream} to read from. Will be closed after use.
+     * @param in {@link InputStream} to read from. Will be closed after use.
      * @return {@link JSON} of the read content.
      */
     public static JSON parse(@WillClose InputStream in) throws IOException {
@@ -111,8 +92,7 @@ public final class JSON implements Serializable {
     /**
      * Parses JSON from a String.
      *
-     * @param json
-     *            JSON string
+     * @param json JSON string
      * @return {@link JSON} of the read content.
      */
     public static JSON parse(String json) {
@@ -144,8 +124,7 @@ public final class JSON implements Serializable {
     /**
      * Checks if this object contains the given key.
      *
-     * @param key
-     *            Name of the key to check
+     * @param key Name of the key to check
      * @return {@code true} if the key is present
      */
     public boolean contains(String key) {
@@ -155,8 +134,7 @@ public final class JSON implements Serializable {
     /**
      * Returns the {@link Value} of the given key.
      *
-     * @param key
-     *            Key to read
+     * @param key Key to read
      * @return {@link Value} of the key
      */
     public Value get(String key) {
@@ -178,7 +156,7 @@ public final class JSON implements Serializable {
      *
      * @since 2.8
      */
-    public Map<String,Object> toMap() {
+    public Map<String, Object> toMap() {
         return Collections.unmodifiableMap(data);
     }
 
@@ -214,10 +192,8 @@ public final class JSON implements Serializable {
         /**
          * Creates a new {@link Array} object.
          *
-         * @param path
-         *            JSON path to this array.
-         * @param data
-         *            Array data
+         * @param path JSON path to this array.
+         * @param data Array data
          */
         private Array(String path, List<Object> data) {
             this.path = path;
@@ -243,8 +219,7 @@ public final class JSON implements Serializable {
         /**
          * Gets the {@link Value} at the given index.
          *
-         * @param index
-         *            Array index to read from
+         * @param index Array index to read from
          * @return {@link Value} at this index
          */
         public Value get(int index) {
@@ -284,10 +259,8 @@ public final class JSON implements Serializable {
         /**
          * Creates a new {@link Value}.
          *
-         * @param path
-         *            JSON path to this value
-         * @param val
-         *            Value, may be {@code null}
+         * @param path JSON path to this value
+         * @param val  Value, may be {@code null}
          */
         private Value(String path, @Nullable Object val) {
             this.path = path;
@@ -307,7 +280,7 @@ public final class JSON implements Serializable {
          * Returns this value as {@link Optional}, for further mapping and filtering.
          *
          * @return {@link Optional} of this value, or {@link Optional#empty()} if this
-         *         value is {@code null}.
+         * value is {@code null}.
          * @see #map(Function)
          */
         public Optional<Value> optional() {
@@ -318,13 +291,12 @@ public final class JSON implements Serializable {
          * Returns this value as an {@link Optional} of the desired type, for further
          * mapping and filtering.
          *
-         * @param mapper
-         *            A {@link Function} that converts a {@link Value} to the desired type
+         * @param mapper A {@link Function} that converts a {@link Value} to the desired type
          * @return {@link Optional} of this value, or {@link Optional#empty()} if this
-         *         value is {@code null}.
+         * value is {@code null}.
          * @see #optional()
          */
-        public <T> Optional<T> map(Function <Value, T> mapper) {
+        public <T> Optional<T> map(Function<Value, T> mapper) {
             return optional().map(mapper);
         }
 
@@ -366,8 +338,7 @@ public final class JSON implements Serializable {
         /**
          * Returns the value as {@link Problem}.
          *
-         * @param baseUrl
-         *            Base {@link URL} to resolve relative links against
+         * @param baseUrl Base {@link URL} to resolve relative links against
          */
         public Problem asProblem(URL baseUrl) {
             required();

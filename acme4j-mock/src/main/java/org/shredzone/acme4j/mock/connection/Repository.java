@@ -13,6 +13,11 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
+import org.shredzone.acme4j.mock.controller.Controller;
+import org.shredzone.acme4j.mock.controller.ControllerWrapper;
+import org.shredzone.acme4j.mock.model.MockResource;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -20,12 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
-import org.shredzone.acme4j.mock.controller.Controller;
-import org.shredzone.acme4j.mock.controller.ControllerWrapper;
-import org.shredzone.acme4j.mock.model.MockResource;
 
 /**
  * This is a repository of all {@link Controller} and {@link MockResource} instances of
@@ -42,10 +41,8 @@ public class Repository {
     /**
      * Adds a generic {@link Controller} to this repository.
      *
-     * @param address
-     *         {@link URL} to be added
-     * @param controller
-     *         {@link Controller} instance to be invoked
+     * @param address    {@link URL} to be added
+     * @param controller {@link Controller} instance to be invoked
      */
     public void addController(URL address, Controller controller) {
         URI uri = safeToURI(address);
@@ -58,8 +55,7 @@ public class Repository {
     /**
      * Returns the {@link Controller} instance for the given {@link URL}.
      *
-     * @param url
-     *         Resource {@link URL} to get the {@link Controller} instance of.
+     * @param url Resource {@link URL} to get the {@link Controller} instance of.
      * @return Controller
      */
     public Optional<Controller> getController(URL url) {
@@ -70,12 +66,10 @@ public class Repository {
      * Wraps an existing controller. The wrapping controller will be invoked instead of
      * the original controller.
      *
-     * @param url
-     *         {@link URL} of the resource to be wrapped
-     * @param wrapperFactory
-     *         A {@link Function} that receives the {@link Controller} that is currently
-     *         registered, and returns a new {@link Controller} instance that is to
-     *         be used instead.
+     * @param url            {@link URL} of the resource to be wrapped
+     * @param wrapperFactory A {@link Function} that receives the {@link Controller} that is currently
+     *                       registered, and returns a new {@link Controller} instance that is to
+     *                       be used instead.
      * @see ControllerWrapper
      */
     public void wrapController(URL url, Function<Controller, Controller> wrapperFactory) {
@@ -90,10 +84,8 @@ public class Repository {
     /**
      * Adds a {@link MockResource} to this repository.
      *
-     * @param resource
-     *         {@link MockResource} to be added
-     * @param builder
-     *         A {@link Function} that creates a {@link Controller} for this resource
+     * @param resource {@link MockResource} to be added
+     * @param builder  A {@link Function} that creates a {@link Controller} for this resource
      */
     public <R extends MockResource> void addResource(R resource, Function<R, Controller> builder) {
         addController(resource.getLocation(), builder.apply(resource));
@@ -103,10 +95,8 @@ public class Repository {
     /**
      * Gets the {@link MockResource} of the given type, for the given {@link URL}.
      *
-     * @param url
-     *         {@link URL} of the {@link MockResource}
-     * @param type
-     *         Expected {@link MockResource} type
+     * @param url  {@link URL} of the {@link MockResource}
+     * @param type Expected {@link MockResource} type
      * @return The {@link MockResource} behind the {@link URL}
      */
     public <R extends MockResource> Optional<R> getResourceOfType(URL url, Class<R> type) {
@@ -118,8 +108,7 @@ public class Repository {
     /**
      * Safely converts an {@link URL} to an {@link URI}.
      *
-     * @param url
-     *         {@link URL} to convert
+     * @param url {@link URL} to convert
      * @return Converted {@link URI}
      */
     private static URI safeToURI(URL url) {

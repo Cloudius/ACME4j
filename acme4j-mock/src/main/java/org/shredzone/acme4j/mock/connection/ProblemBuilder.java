@@ -13,19 +13,18 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
-import static java.util.stream.Collectors.toList;
+import org.shredzone.acme4j.Identifier;
+import org.shredzone.acme4j.Problem;
+import org.shredzone.acme4j.toolbox.JSON;
+import org.shredzone.acme4j.toolbox.JSONBuilder;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
-import org.shredzone.acme4j.Identifier;
-import org.shredzone.acme4j.Problem;
-import org.shredzone.acme4j.toolbox.JSON;
-import org.shredzone.acme4j.toolbox.JSONBuilder;
+import static java.util.stream.Collectors.toList;
 
 /**
  * A builder for {@link Problem} instances.
@@ -45,9 +44,8 @@ public class ProblemBuilder {
     /**
      * Creates a new {@link ProblemBuilder}.
      *
-     * @param baseUrl
-     *         Base {@link URL}, usually the request {@link URL} that has lead to this
-     *         problem.
+     * @param baseUrl Base {@link URL}, usually the request {@link URL} that has lead to this
+     *                problem.
      */
     public ProblemBuilder(URL baseUrl) {
         this.baseUrl = baseUrl;
@@ -56,8 +54,7 @@ public class ProblemBuilder {
     /**
      * Problem type.
      *
-     * @param type
-     *         Generic type of the problem (e.g. {@code "urn:ietf:params:acme:error:badCSR"}).
+     * @param type Generic type of the problem (e.g. {@code "urn:ietf:params:acme:error:badCSR"}).
      */
     public ProblemBuilder type(URI type) {
         json.put("type", type);
@@ -68,8 +65,7 @@ public class ProblemBuilder {
      * ACME specific type of the problem. This is a convenience call for {@link
      * #type(URI)} which prepends the ACME namespace to the error.
      *
-     * @param error
-     *         ACME specific error (e.g. {@code "badCSR"}).
+     * @param error ACME specific error (e.g. {@code "badCSR"}).
      */
     public ProblemBuilder error(String error) {
         return type(URI.create(error.startsWith("urn:") ? error : ACME_NAMESPACE + error));
@@ -78,8 +74,7 @@ public class ProblemBuilder {
     /**
      * Human-readable short summary of the problem.
      *
-     * @param detail
-     *         Detail
+     * @param detail Detail
      */
     public ProblemBuilder detail(String detail) {
         json.put("detail", detail);
@@ -89,8 +84,7 @@ public class ProblemBuilder {
     /**
      * An instance URL.
      *
-     * @param instance
-     *         Instance {@link URL}
+     * @param instance Instance {@link URL}
      */
     public ProblemBuilder instance(URL instance) {
         json.put("instance", instance);
@@ -101,8 +95,7 @@ public class ProblemBuilder {
      * The {@link Identifier} this problem is related to. The identifier should only be
      * used in subproblems.
      *
-     * @param identifier
-     *         {@link Identifier} this problem is related to
+     * @param identifier {@link Identifier} this problem is related to
      */
     public ProblemBuilder identifier(Identifier identifier) {
         json.put("identifier", identifier.toMap());
@@ -112,8 +105,7 @@ public class ProblemBuilder {
     /**
      * Appends a subproblem to this problem.
      *
-     * @param sub
-     *         Sub {@link Problem} to append
+     * @param sub Sub {@link Problem} to append
      */
     public ProblemBuilder sub(Problem sub) {
         subproblems.add(sub);

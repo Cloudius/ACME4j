@@ -13,10 +13,10 @@
  */
 package org.shredzone.acme4j.exception;
 
+import org.shredzone.acme4j.Problem;
+
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.Immutable;
-
-import org.shredzone.acme4j.Problem;
 
 /**
  * An exception that is thrown when the client is not authorized. The details will give
@@ -30,8 +30,7 @@ public class AcmeUnauthorizedException extends AcmeServerException {
     /**
      * Creates a new {@link AcmeUnauthorizedException}.
      *
-     * @param problem
-     *            {@link Problem} that caused the exception
+     * @param problem {@link Problem} that caused the exception
      */
     public AcmeUnauthorizedException(Problem problem) {
         super(problem);

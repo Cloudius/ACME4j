@@ -13,16 +13,15 @@
  */
 package org.shredzone.acme4j.exception;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
+import org.shredzone.acme4j.Problem;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.Immutable;
-
-import org.shredzone.acme4j.Problem;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 
 /**
  * An exception that is thrown when the user is required to take action as indicated.
@@ -40,10 +39,8 @@ public class AcmeUserActionRequiredException extends AcmeServerException {
     /**
      * Creates a new {@link AcmeUserActionRequiredException}.
      *
-     * @param problem
-     *            {@link Problem} that caused the exception
-     * @param tosUri
-     *            {@link URI} of the terms-of-service document to accept
+     * @param problem {@link Problem} that caused the exception
+     * @param tosUri  {@link URI} of the terms-of-service document to accept
      */
     public AcmeUserActionRequiredException(Problem problem, @Nullable URI tosUri) {
         super(problem);

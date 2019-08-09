@@ -13,24 +13,6 @@
  */
 package org.shredzone.acme4j;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-import java.security.KeyPair;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.jwx.CompactSerializer;
 import org.jose4j.lang.JoseException;
@@ -46,13 +28,31 @@ import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.shredzone.acme4j.toolbox.TestUtils;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.security.KeyPair;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
+
 /**
  * Unit tests for {@link Account}.
  */
 public class AccountTest {
 
-    private URL resourceUrl  = url("http://example.com/acme/resource");
-    private URL locationUrl  = url(TestUtils.ACCOUNT_URL);
+    private URL resourceUrl = url("http://example.com/acme/resource");
+    private URL locationUrl = url(TestUtils.ACCOUNT_URL);
     private URL agreementUrl = url("http://example.com/agreement.pdf");
 
     /**
@@ -76,8 +76,8 @@ public class AccountTest {
             public int sendSignedPostAsGetRequest(URL url, Login login) {
                 if (url("https://example.com/acme/acct/1/orders").equals(url)) {
                     jsonResponse = new JSONBuilder()
-                                .array("orders", Arrays.asList("https://example.com/acme/order/1"))
-                                .toJSON();
+                            .array("orders", Arrays.asList("https://example.com/acme/order/1"))
+                            .toJSON();
                 } else {
                     jsonResponse = getJSON("updateAccountResponse");
                 }
@@ -153,9 +153,11 @@ public class AccountTest {
 
             @Override
             public Collection<URL> getLinks(String relation) {
-                switch(relation) {
-                    case "termsOfService": return Arrays.asList(agreementUrl);
-                    default: return null;
+                switch (relation) {
+                    case "termsOfService":
+                        return Arrays.asList(agreementUrl);
+                    default:
+                        return null;
                 }
             }
 
@@ -223,8 +225,8 @@ public class AccountTest {
         assertThat(auth.getLocation(), is(locationUrl));
 
         assertThat(auth.getChallenges(), containsInAnyOrder(
-                        provider.getChallenge(Http01Challenge.TYPE),
-                        provider.getChallenge(Dns01Challenge.TYPE)));
+                provider.getChallenge(Http01Challenge.TYPE),
+                provider.getChallenge(Dns01Challenge.TYPE)));
 
         provider.close();
     }

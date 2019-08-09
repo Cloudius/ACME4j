@@ -13,14 +13,6 @@
  */
 package org.shredzone.acme4j.mock.model;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
-
-import java.net.URI;
-import java.security.PublicKey;
-import java.util.Collections;
-
 import org.junit.Test;
 import org.shredzone.acme4j.Identifier;
 import org.shredzone.acme4j.Status;
@@ -31,6 +23,14 @@ import org.shredzone.acme4j.mock.controller.AccountOrdersController;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.shredzone.acme4j.util.KeyPairUtils;
+
+import java.net.URI;
+import java.security.PublicKey;
+import java.util.Collections;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
 
 /**
  * Unit tests for {@link MockAccount}.

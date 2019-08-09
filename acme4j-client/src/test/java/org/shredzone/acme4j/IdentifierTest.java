@@ -13,17 +13,17 @@
  */
 package org.shredzone.acme4j;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.Test;
+import org.shredzone.acme4j.exception.AcmeProtocolException;
+import org.shredzone.acme4j.toolbox.JSONBuilder;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
 
-import org.junit.Test;
-import org.shredzone.acme4j.exception.AcmeProtocolException;
-import org.shredzone.acme4j.toolbox.JSONBuilder;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Unit tests for {@link Identifier}.

@@ -13,17 +13,17 @@
  */
 package org.shredzone.acme4j.challenge;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
-
 import org.junit.Test;
 import org.shredzone.acme4j.Login;
 import org.shredzone.acme4j.Status;
 import org.shredzone.acme4j.exception.AcmeProtocolException;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.shredzone.acme4j.toolbox.TestUtils;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
 
 /**
  * Unit tests for {@link Http01Challenge}.

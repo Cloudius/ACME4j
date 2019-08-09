@@ -13,21 +13,6 @@
  */
 package org.shredzone.acme4j;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.shredzone.acme4j.toolbox.AcmeUtils.parseTimestamp;
-import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
-
-import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.URL;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Arrays;
-
 import org.junit.Test;
 import org.shredzone.acme4j.connector.Resource;
 import org.shredzone.acme4j.exception.AcmeException;
@@ -36,13 +21,28 @@ import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.shredzone.acme4j.toolbox.TestUtils;
 
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.URL;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Arrays;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.shredzone.acme4j.toolbox.AcmeUtils.parseTimestamp;
+import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
+
 /**
  * Unit tests for {@link OrderBuilder}.
  */
 public class OrderBuilderTest {
 
-    private URL resourceUrl  = url("http://example.com/acme/resource");
-    private URL locationUrl  = url(TestUtils.ACCOUNT_URL);
+    private URL resourceUrl = url("http://example.com/acme/resource");
+    private URL locationUrl = url(TestUtils.ACCOUNT_URL);
 
     /**
      * Test that a new {@link Order} can be created.
@@ -78,26 +78,26 @@ public class OrderBuilderTest {
 
         Account account = new Account(login);
         Order order = account.newOrder()
-                        .domains("example.com", "www.example.com")
-                        .domain("example.org")
-                        .domains(Arrays.asList("m.example.com", "m.example.org"))
-                        .identifier(Identifier.dns("d.example.com"))
-                        .identifiers(Arrays.asList(
-                                    Identifier.dns("d2.example.com"),
-                                    Identifier.ip(InetAddress.getByName("192.168.1.2"))))
-                        .notBefore(notBefore)
-                        .notAfter(notAfter)
-                        .create();
+                .domains("example.com", "www.example.com")
+                .domain("example.org")
+                .domains(Arrays.asList("m.example.com", "m.example.org"))
+                .identifier(Identifier.dns("d.example.com"))
+                .identifiers(Arrays.asList(
+                        Identifier.dns("d2.example.com"),
+                        Identifier.ip(InetAddress.getByName("192.168.1.2"))))
+                .notBefore(notBefore)
+                .notAfter(notAfter)
+                .create();
 
         assertThat(order.getIdentifiers(), containsInAnyOrder(
-                        Identifier.dns("example.com"),
-                        Identifier.dns("www.example.com"),
-                        Identifier.dns("example.org"),
-                        Identifier.dns("m.example.com"),
-                        Identifier.dns("m.example.org"),
-                        Identifier.dns("d.example.com"),
-                        Identifier.dns("d2.example.com"),
-                        Identifier.ip(InetAddress.getByName("192.168.1.2"))));
+                Identifier.dns("example.com"),
+                Identifier.dns("www.example.com"),
+                Identifier.dns("example.org"),
+                Identifier.dns("m.example.com"),
+                Identifier.dns("m.example.org"),
+                Identifier.dns("d.example.com"),
+                Identifier.dns("d2.example.com"),
+                Identifier.ip(InetAddress.getByName("192.168.1.2"))));
         assertThat(order.getNotBefore(), is(parseTimestamp("2016-01-01T00:10:00Z")));
         assertThat(order.getNotAfter(), is(parseTimestamp("2016-01-08T00:10:00Z")));
         assertThat(order.getExpires(), is(parseTimestamp("2016-01-10T00:00:00Z")));
@@ -146,14 +146,14 @@ public class OrderBuilderTest {
 
         Account account = new Account(login);
         Order order = account.newOrder()
-                        .domain("example.org")
-                        .recurrent()
-                        .recurrentStart(recurrentStart)
-                        .recurrentEnd(recurrentEnd)
-                        .recurrentCertificateValidity(validity)
-                        .recurrentCertificatePredate(predate)
-                        .recurrentEnableGet()
-                        .create();
+                .domain("example.org")
+                .recurrent()
+                .recurrentStart(recurrentStart)
+                .recurrentEnd(recurrentEnd)
+                .recurrentCertificateValidity(validity)
+                .recurrentCertificatePredate(predate)
+                .recurrentEnableGet()
+                .create();
 
         assertThat(order.getIdentifiers(), containsInAnyOrder(Identifier.dns("example.org")));
         assertThat(order.getNotBefore(), is(nullValue()));
@@ -181,9 +181,9 @@ public class OrderBuilderTest {
 
         Account account = new Account(login);
         account.newOrder()
-                        .domain("example.org")
-                        .recurrent()
-                        .create();
+                .domain("example.org")
+                .recurrent()
+                .create();
 
         provider.close();
     }

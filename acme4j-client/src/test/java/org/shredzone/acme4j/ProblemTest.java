@@ -13,20 +13,20 @@
  */
 package org.shredzone.acme4j;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
+import org.junit.Test;
+import org.shredzone.acme4j.toolbox.JSON;
+import org.shredzone.acme4j.toolbox.JSONBuilder;
+import org.shredzone.acme4j.toolbox.TestUtils;
 
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
 
-import org.junit.Test;
-import org.shredzone.acme4j.toolbox.JSON;
-import org.shredzone.acme4j.toolbox.JSONBuilder;
-import org.shredzone.acme4j.toolbox.TestUtils;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
 
 /**
  * Unit tests for {@link Problem}.
@@ -48,8 +48,8 @@ public class ProblemTest {
         assertThat(problem.asJSON().toString(), is(sameJSONAs(original.toString())));
         assertThat(problem.toString(), is(
                 "Identifier \"abc12_\" is malformed ("
-                + "Invalid underscore in DNS name \"_example.com\" ‒ "
-                + "This CA will not issue for \"example.net\")"));
+                        + "Invalid underscore in DNS name \"_example.com\" ‒ "
+                        + "This CA will not issue for \"example.net\")"));
 
         List<Problem> subs = problem.getSubProblems();
         assertThat(subs, not(nullValue()));

@@ -13,21 +13,6 @@
  */
 package org.shredzone.acme4j;
 
-import static java.util.stream.Collectors.toList;
-
-import java.net.URI;
-import java.net.URL;
-import java.security.KeyPair;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.connector.Connection;
 import org.shredzone.acme4j.connector.Resource;
 import org.shredzone.acme4j.connector.ResourceIterator;
@@ -41,6 +26,15 @@ import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.shredzone.acme4j.toolbox.JoseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URI;
+import java.net.URL;
+import java.security.KeyPair;
+import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Represents an account at the ACME server.
@@ -64,7 +58,7 @@ public class Account extends AcmeJsonResource {
      * Returns if the user agreed to the terms of service.
      *
      * @return {@code true} if the user agreed to the terms of service. May be
-     *         {@code null} if the server did not provide such an information.
+     * {@code null} if the server did not provide such an information.
      */
     @CheckForNull
     public Boolean getTermsOfServiceAgreed() {
@@ -76,10 +70,10 @@ public class Account extends AcmeJsonResource {
      */
     public List<URI> getContacts() {
         return Collections.unmodifiableList(getJSON().get(KEY_CONTACT)
-                    .asArray()
-                    .stream()
-                    .map(JSON.Value::asURI)
-                    .collect(toList()));
+                .asArray()
+                .stream()
+                .map(JSON.Value::asURI)
+                .collect(toList()));
     }
 
     /**
@@ -122,10 +116,10 @@ public class Account extends AcmeJsonResource {
      * Using the iterator will initiate one or more requests to the ACME server.
      *
      * @return {@link Iterator} instance that returns {@link Order} objects in no specific
-     *         order. {@link Iterator#hasNext()} and {@link Iterator#next()} may throw
-     *         {@link AcmeProtocolException} if a batch of authorization URIs could not be
-     *         fetched from the server. Each {@link Iterator} instance may provide the
-     *         {@link Order} objects in a different order.
+     * order. {@link Iterator#hasNext()} and {@link Iterator#next()} may throw
+     * {@link AcmeProtocolException} if a batch of authorization URIs could not be
+     * fetched from the server. Each {@link Iterator} instance may provide the
+     * {@link Order} objects in a different order.
      */
     public Iterator<Order> getOrders() {
         URL ordersUrl = getJSON().get(KEY_ORDERS).asURL();
@@ -149,15 +143,12 @@ public class Account extends AcmeJsonResource {
      * <p>
      * It is not possible to pre-authorize wildcard domains.
      *
-     * @param domain
-     *            Domain name to be pre-authorized. IDN names are accepted and will be ACE
-     *            encoded automatically.
+     * @param domain Domain name to be pre-authorized. IDN names are accepted and will be ACE
+     *               encoded automatically.
      * @return {@link Authorization} object for this domain
-     * @throws AcmeException
-     *             if the server does not allow pre-authorization
-     * @throws AcmeServerException
-     *             if the server allows pre-authorization, but will refuse to issue a
-     *             certificate for this domain
+     * @throws AcmeException       if the server does not allow pre-authorization
+     * @throws AcmeServerException if the server allows pre-authorization, but will refuse to issue a
+     *                             certificate for this domain
      */
     public Authorization preAuthorizeDomain(String domain) throws AcmeException {
         Objects.requireNonNull(domain, "domain");
@@ -175,14 +166,11 @@ public class Account extends AcmeJsonResource {
      * <p>
      * It is not possible to pre-authorize wildcard domains.
      *
-     * @param identifier
-     *            {@link Identifier} to be pre-authorized.
+     * @param identifier {@link Identifier} to be pre-authorized.
      * @return {@link Authorization} object for this identifier
-     * @throws AcmeException
-     *             if the server does not allow pre-authorization
-     * @throws AcmeServerException
-     *             if the server allows pre-authorization, but will refuse to issue a
-     *             certificate for this identifier
+     * @throws AcmeException       if the server does not allow pre-authorization
+     * @throws AcmeServerException if the server allows pre-authorization, but will refuse to issue a
+     *                             certificate for this identifier
      * @since 2.3
      */
     public Authorization preAuthorize(Identifier identifier) throws AcmeException {
@@ -217,13 +205,12 @@ public class Account extends AcmeJsonResource {
      * After a successful call, the new key pair is used in the bound {@link Session},
      * and the old key pair can be disposed of.
      *
-     * @param newKeyPair
-     *            new {@link KeyPair} to be used for identifying this account
+     * @param newKeyPair new {@link KeyPair} to be used for identifying this account
      */
     public void changeKey(KeyPair newKeyPair) throws AcmeException {
         Objects.requireNonNull(newKeyPair, "newKeyPair");
         if (Arrays.equals(getLogin().getKeyPair().getPrivate().getEncoded(),
-                        newKeyPair.getPrivate().getEncoded())) {
+                newKeyPair.getPrivate().getEncoded())) {
             throw new IllegalArgumentException("newKeyPair must actually be a new key pair");
         }
 
@@ -297,8 +284,7 @@ public class Account extends AcmeJsonResource {
         /**
          * Adds a new Contact to the account.
          *
-         * @param contact
-         *            Contact URI
+         * @param contact Contact URI
          * @return itself
          */
         public EditableAccount addContact(URI contact) {
@@ -312,8 +298,7 @@ public class Account extends AcmeJsonResource {
          * <p>
          * This is a convenience call for {@link #addContact(URI)}.
          *
-         * @param contact
-         *            Contact URI as string
+         * @param contact Contact URI as string
          * @return itself
          */
         public EditableAccount addContact(String contact) {
@@ -327,8 +312,7 @@ public class Account extends AcmeJsonResource {
          * This is a convenience call for {@link #addContact(String)} hat doesn't
          * require from you attach "mailto" scheme before email address.
          *
-         * @param email
-         *            Contact email without "mailto" scheme (e.g. test@gmail.com)
+         * @param email Contact email without "mailto" scheme (e.g. test@gmail.com)
          * @return itself
          */
         public EditableAccount addEmail(String email) {

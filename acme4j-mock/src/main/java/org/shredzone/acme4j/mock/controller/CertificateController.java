@@ -13,17 +13,16 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import java.net.URL;
-import java.security.PublicKey;
-import java.security.cert.X509Certificate;
-import java.util.List;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.mock.connection.MockError;
 import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.mock.model.MockOrder;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.security.PublicKey;
+import java.security.cert.X509Certificate;
+import java.util.List;
 
 /**
  * A {@link Controller} that handles certificate requests.
@@ -37,8 +36,7 @@ public class CertificateController implements Controller {
     /**
      * Creates a new {@link CertificateController}.
      *
-     * @param order
-     *         {@link MockOrder} that contains the certificate to be returned
+     * @param order {@link MockOrder} that contains the certificate to be returned
      */
     public CertificateController(MockOrder order) {
         this.order = order;
@@ -46,7 +44,7 @@ public class CertificateController implements Controller {
 
     /**
      * Returns the certificate chain, if set.
-     *
+     * <p>
      * {@inheritDoc}
      */
     @Override

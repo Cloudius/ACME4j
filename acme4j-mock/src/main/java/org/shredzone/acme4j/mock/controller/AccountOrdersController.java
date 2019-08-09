@@ -13,17 +13,16 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import static java.util.stream.Collectors.toList;
-
-import java.net.URL;
-import java.security.PublicKey;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.mock.model.MockAccount;
 import org.shredzone.acme4j.mock.model.MockOrder;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.security.PublicKey;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * A {@link Controller} that lists all orders known to an account.
@@ -37,8 +36,7 @@ public class AccountOrdersController implements Controller {
     /**
      * Creates a new {@link AccountOrdersController}.
      *
-     * @param account
-     *         {@link MockAccount} to get the list of orders from
+     * @param account {@link MockAccount} to get the list of orders from
      */
     public AccountOrdersController(MockAccount account) {
         this.account = account;
@@ -46,7 +44,7 @@ public class AccountOrdersController implements Controller {
 
     /**
      * Returns a list of {@link URL} of all orders of this account.
-     *
+     * <p>
      * {@inheritDoc}
      */
     @Override

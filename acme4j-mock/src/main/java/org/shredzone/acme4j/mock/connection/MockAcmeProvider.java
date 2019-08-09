@@ -13,15 +13,14 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
-import java.net.URI;
-import java.net.URL;
-import java.util.function.Function;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.connector.Connection;
 import org.shredzone.acme4j.mock.MockAcmeServer;
 import org.shredzone.acme4j.provider.AbstractAcmeProvider;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URI;
+import java.net.URL;
+import java.util.function.Function;
 
 /**
  * A mock {@link org.shredzone.acme4j.provider.AcmeProvider} that immediately
@@ -39,10 +38,8 @@ public class MockAcmeProvider extends AbstractAcmeProvider {
     /**
      * Creates a new {@link MockAcmeProvider}.
      *
-     * @param directoryUrl
-     *         {@link URL} of the directory
-     * @param connectionFactory
-     *         A {@link Function} that creates a new {@link Connection} instance
+     * @param directoryUrl      {@link URL} of the directory
+     * @param connectionFactory A {@link Function} that creates a new {@link Connection} instance
      */
     public MockAcmeProvider(URL directoryUrl, Function<URI, Connection> connectionFactory) {
         this.directoryUrl = directoryUrl;

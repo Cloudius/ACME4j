@@ -13,10 +13,9 @@
  */
 package org.shredzone.acme4j;
 
-import java.util.Arrays;
-
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.Immutable;
+import java.util.Arrays;
 
 /**
  * Status codes of challenges and authorizations.
@@ -83,10 +82,9 @@ public enum Status {
     /**
      * Parses the string and returns a corresponding Status object.
      *
-     * @param str
-     *            String to parse
+     * @param str String to parse
      * @return {@link Status} matching the string, or {@link Status#UNKNOWN} if there was
-     *         no match
+     * no match
      */
     public static Status parse(String str) {
         String check = str.toUpperCase();

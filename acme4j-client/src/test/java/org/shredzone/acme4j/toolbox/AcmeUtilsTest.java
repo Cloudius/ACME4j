@@ -13,17 +13,15 @@
  */
 package org.shredzone.acme4j.toolbox;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.shredzone.acme4j.toolbox.AcmeUtils.*;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.shredzone.acme4j.exception.AcmeProtocolException;
+import org.shredzone.acme4j.toolbox.AcmeUtils.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.net.URI;
@@ -36,13 +34,11 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.shredzone.acme4j.exception.AcmeProtocolException;
-import org.shredzone.acme4j.toolbox.AcmeUtils.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.shredzone.acme4j.toolbox.AcmeUtils.*;
 
 /**
  * Unit tests for {@link AcmeUtils}.
@@ -130,7 +126,7 @@ public class AcmeUtilsTest {
 
         // Test ACE encoded domains, they must not change
         assertThat(toAce("xn--exmle-hra7p.xn--m-7ba6w"),
-                                  is("xn--exmle-hra7p.xn--m-7ba6w"));
+                is("xn--exmle-hra7p.xn--m-7ba6w"));
     }
 
     /**
@@ -245,19 +241,19 @@ public class AcmeUtilsTest {
     public void testGetContentType() {
         assertThat(AcmeUtils.getContentType(null), is(nullValue()));
         assertThat(AcmeUtils.getContentType("application/json"),
-                        is("application/json"));
+                is("application/json"));
         assertThat(AcmeUtils.getContentType("Application/Problem+JSON"),
-                        is("application/problem+json"));
+                is("application/problem+json"));
         assertThat(AcmeUtils.getContentType("application/json; charset=utf-8"),
-                        is("application/json"));
+                is("application/json"));
         assertThat(AcmeUtils.getContentType("application/json; charset=utf-8 (Plain text)"),
-                        is("application/json"));
+                is("application/json"));
         assertThat(AcmeUtils.getContentType("application/json; charset=\"utf-8\""),
-                        is("application/json"));
+                is("application/json"));
         assertThat(AcmeUtils.getContentType("application/json; charset=\"UTF-8\"; foo=4"),
-                        is("application/json"));
+                is("application/json"));
         assertThat(AcmeUtils.getContentType(" application/json ;foo=4"),
-                        is("application/json"));
+                is("application/json"));
 
         try {
             AcmeUtils.getContentType("application/json; charset=\"iso-8859-1\"");
@@ -309,8 +305,8 @@ public class AcmeUtilsTest {
      */
     private InstantMatcher isDate(int year, int month, int dom, int hour, int minute, int second, int ms) {
         Instant cmp = ZonedDateTime.of(
-                    year, month, dom, hour, minute, second, ms * 1_000_000,
-                    ZoneId.of("UTC")).toInstant();
+                year, month, dom, hour, minute, second, ms * 1_000_000,
+                ZoneId.of("UTC")).toInstant();
         return new InstantMatcher(cmp);
     }
 

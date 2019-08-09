@@ -13,21 +13,8 @@
  */
 package org.shredzone.acme4j.mock.example;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-
-import java.io.IOException;
-import java.security.KeyPair;
-import java.security.cert.X509Certificate;
-import java.util.List;
-
 import org.junit.Test;
-import org.shredzone.acme4j.Account;
-import org.shredzone.acme4j.Authorization;
-import org.shredzone.acme4j.Certificate;
-import org.shredzone.acme4j.Login;
-import org.shredzone.acme4j.Order;
-import org.shredzone.acme4j.Status;
+import org.shredzone.acme4j.*;
 import org.shredzone.acme4j.challenge.Dns01Challenge;
 import org.shredzone.acme4j.challenge.Http01Challenge;
 import org.shredzone.acme4j.exception.AcmeException;
@@ -38,6 +25,14 @@ import org.shredzone.acme4j.mock.model.MockChallenge;
 import org.shredzone.acme4j.mock.model.MockOrder;
 import org.shredzone.acme4j.util.CSRBuilder;
 import org.shredzone.acme4j.util.KeyPairUtils;
+
+import java.io.IOException;
+import java.security.KeyPair;
+import java.security.cert.X509Certificate;
+import java.util.List;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * This unit test simulates a certificate order, starting at account creation and ending

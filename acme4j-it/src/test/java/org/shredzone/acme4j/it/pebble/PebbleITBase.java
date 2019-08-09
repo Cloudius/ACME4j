@@ -13,16 +13,6 @@
  */
 package org.shredzone.acme4j.it.pebble;
 
-import static org.hamcrest.Matchers.*;
-
-import static org.junit.Assert.assertThat;
-
-import java.net.URI;
-import java.net.URL;
-import java.security.KeyPair;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.shredzone.acme4j.Authorization;
@@ -31,6 +21,15 @@ import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.exception.AcmeLazyLoadingException;
 import org.shredzone.acme4j.it.BammBammClient;
 import org.shredzone.acme4j.util.KeyPairUtils;
+
+import java.net.URI;
+import java.net.URL;
+import java.security.KeyPair;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Superclass for all Pebble related integration tests.
@@ -95,8 +94,7 @@ public abstract class PebbleITBase {
      * Asserts that the given {@link URL} is not {@code null} and refers to the Pebble
      * server.
      *
-     * @param url
-     *            {@link URL} to assert
+     * @param url {@link URL} to assert
      */
     protected void assertIsPebbleUrl(URL url) {
         assertThat(url, not(nullValue()));
@@ -109,8 +107,7 @@ public abstract class PebbleITBase {
     /**
      * Safely updates the authorization, catching checked exceptions.
      *
-     * @param auth
-     *            {@link Authorization} to update
+     * @param auth {@link Authorization} to update
      */
     protected void updateAuth(Authorization auth) {
         try {
@@ -123,8 +120,7 @@ public abstract class PebbleITBase {
     /**
      * Safely updates the order, catching checked exceptions.
      *
-     * @param order
-     *            {@link Order} to update
+     * @param order {@link Order} to update
      */
     protected void updateOrder(Order order) {
         try {

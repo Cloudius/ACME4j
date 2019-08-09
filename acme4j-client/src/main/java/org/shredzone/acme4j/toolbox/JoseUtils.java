@@ -13,15 +13,6 @@
  */
 package org.shredzone.acme4j.toolbox;
 
-import java.net.URL;
-import java.security.KeyPair;
-import java.security.PublicKey;
-import java.util.Map;
-
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.crypto.SecretKey;
-
 import org.jose4j.jwk.EllipticCurveJsonWebKey;
 import org.jose4j.jwk.JsonWebKey;
 import org.jose4j.jwk.PublicJsonWebKey;
@@ -31,6 +22,14 @@ import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.lang.JoseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.crypto.SecretKey;
+import java.net.URL;
+import java.security.KeyPair;
+import java.security.PublicKey;
+import java.util.Map;
 
 /**
  * Utility class that takes care of all the JOSE stuff.
@@ -49,23 +48,18 @@ public final class JoseUtils {
     /**
      * Creates an ACME JOSE request.
      *
-     * @param url
-     *         {@link URL} of the ACME call
-     * @param keypair
-     *         {@link KeyPair} to sign the request with
-     * @param payload
-     *         ACME JSON payload. If {@code null}, a POST-as-GET request is generated
-     *         instead.
-     * @param nonce
-     *         Nonce to be used. {@code null} if no nonce is to be used in the JOSE
-     *         header.
-     * @param kid
-     *         kid to be used in the JOSE header. If {@code null}, a jwk header of the
-     *         given key is used instead.
+     * @param url     {@link URL} of the ACME call
+     * @param keypair {@link KeyPair} to sign the request with
+     * @param payload ACME JSON payload. If {@code null}, a POST-as-GET request is generated
+     *                instead.
+     * @param nonce   Nonce to be used. {@code null} if no nonce is to be used in the JOSE
+     *                header.
+     * @param kid     kid to be used in the JOSE header. If {@code null}, a jwk header of the
+     *                given key is used instead.
      * @return JSON structure of the JOSE request, ready to be sent.
      */
     public static JSONBuilder createJoseRequest(URL url, KeyPair keypair,
-            @Nullable JSONBuilder payload, @Nullable String nonce, @Nullable String kid) {
+                                                @Nullable JSONBuilder payload, @Nullable String nonce, @Nullable String kid) {
         try {
             PublicJsonWebKey jwk = PublicJsonWebKey.Factory.newPublicJwk(keypair.getPublic());
 
@@ -108,18 +102,14 @@ public final class JoseUtils {
     /**
      * Creates a JSON structure for external account binding.
      *
-     * @param kid
-     *         Key Identifier provided by the CA
-     * @param accountKey
-     *         {@link PublicKey} of the account to register
-     * @param macKey
-     *         {@link SecretKey} to sign the key identifier with
-     * @param resource
-     *         "newAccount" resource URL
+     * @param kid        Key Identifier provided by the CA
+     * @param accountKey {@link PublicKey} of the account to register
+     * @param macKey     {@link SecretKey} to sign the key identifier with
+     * @param resource   "newAccount" resource URL
      * @return Created JSON structure
      */
     public static Map<String, Object> createExternalAccountBinding(String kid,
-            PublicKey accountKey, SecretKey macKey, URL resource) {
+                                                                   PublicKey accountKey, SecretKey macKey, URL resource) {
         try {
             PublicJsonWebKey keyJwk = PublicJsonWebKey.Factory.newPublicJwk(accountKey);
 
@@ -145,8 +135,7 @@ public final class JoseUtils {
     /**
      * Converts a {@link PublicKey} to a JOSE JWK structure.
      *
-     * @param key
-     *         {@link PublicKey} to convert
+     * @param key {@link PublicKey} to convert
      * @return JSON map containing the JWK structure
      */
     public static Map<String, Object> publicKeyToJWK(PublicKey key) {
@@ -161,8 +150,7 @@ public final class JoseUtils {
     /**
      * Converts a JOSE JWK structure to a {@link PublicKey}.
      *
-     * @param jwk
-     *         Map containing a JWK structure
+     * @param jwk Map containing a JWK structure
      * @return the extracted {@link PublicKey}
      */
     public static PublicKey jwkToPublicKey(Map<String, Object> jwk) {
@@ -176,8 +164,7 @@ public final class JoseUtils {
     /**
      * Computes a thumbprint of the given public key.
      *
-     * @param key
-     *         {@link PublicKey} to get the thumbprint of
+     * @param key {@link PublicKey} to get the thumbprint of
      * @return Thumbprint of the key
      */
     public static byte[] thumbprint(PublicKey key) {
@@ -193,11 +180,9 @@ public final class JoseUtils {
      * Analyzes the key used in the {@link JsonWebKey}, and returns the key algorithm
      * identifier for {@link JsonWebSignature}.
      *
-     * @param jwk
-     *         {@link JsonWebKey} to analyze
+     * @param jwk {@link JsonWebKey} to analyze
      * @return algorithm identifier
-     * @throws IllegalArgumentException
-     *         there is no corresponding algorithm identifier for the key
+     * @throws IllegalArgumentException there is no corresponding algorithm identifier for the key
      */
     public static String keyAlgorithm(JsonWebKey jwk) {
         if (jwk instanceof EllipticCurveJsonWebKey) {
@@ -230,11 +215,9 @@ public final class JoseUtils {
      * Analyzes the {@link SecretKey}, and returns the key algorithm identifier for {@link
      * JsonWebSignature}.
      *
-     * @param macKey
-     *         {@link SecretKey} to analyze
+     * @param macKey {@link SecretKey} to analyze
      * @return algorithm identifier
-     * @throws IllegalArgumentException
-     *         there is no corresponding algorithm identifier for the key
+     * @throws IllegalArgumentException there is no corresponding algorithm identifier for the key
      */
     public static String macKeyAlgorithm(SecretKey macKey) {
         if (!"HMAC".equals(macKey.getAlgorithm())) {

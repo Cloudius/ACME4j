@@ -13,16 +13,16 @@
  */
 package org.shredzone.acme4j.provider;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.shredzone.acme4j.connector.Connection;
+import org.shredzone.acme4j.connector.DefaultConnection;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import org.junit.Test;
-import org.shredzone.acme4j.connector.Connection;
-import org.shredzone.acme4j.connector.DefaultConnection;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Unit tests for {@link GenericAcmeProvider}.

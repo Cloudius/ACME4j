@@ -13,22 +13,20 @@
  */
 package org.shredzone.acme4j.it.pebble;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import org.junit.Test;
+import org.shredzone.acme4j.*;
+import org.shredzone.acme4j.exception.AcmeException;
+import org.shredzone.acme4j.exception.AcmeServerException;
+import org.shredzone.acme4j.exception.AcmeUnauthorizedException;
 
 import java.net.URI;
 import java.net.URL;
 import java.security.KeyPair;
 
-import org.junit.Test;
-import org.shredzone.acme4j.Account;
-import org.shredzone.acme4j.AccountBuilder;
-import org.shredzone.acme4j.Login;
-import org.shredzone.acme4j.Session;
-import org.shredzone.acme4j.Status;
-import org.shredzone.acme4j.exception.AcmeException;
-import org.shredzone.acme4j.exception.AcmeServerException;
-import org.shredzone.acme4j.exception.AcmeUnauthorizedException;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Account related integration tests.
@@ -45,10 +43,10 @@ public class AccountIT extends PebbleITBase {
 
         // Register a new user
         Login login = new AccountBuilder()
-                        .addContact("mailto:acme@example.com")
-                        .agreeToTermsOfService()
-                        .useKeyPair(keyPair)
-                        .createLogin(session);
+                .addContact("mailto:acme@example.com")
+                .agreeToTermsOfService()
+                .useKeyPair(keyPair)
+                .createLogin(session);
 
         URL location = login.getAccountLocation();
         assertIsPebbleUrl(location);
@@ -79,10 +77,10 @@ public class AccountIT extends PebbleITBase {
         // Register a new user
         Session session1 = new Session(pebbleURI());
         Login login1 = new AccountBuilder()
-                        .addContact("mailto:acme@example.com")
-                        .agreeToTermsOfService()
-                        .useKeyPair(keyPair)
-                        .createLogin(session1);
+                .addContact("mailto:acme@example.com")
+                .agreeToTermsOfService()
+                .useKeyPair(keyPair)
+                .createLogin(session1);
 
         URL location1 = login1.getAccountLocation();
         assertIsPebbleUrl(location1);
@@ -90,10 +88,10 @@ public class AccountIT extends PebbleITBase {
         // Try to register the same account again
         Session session2 = new Session(pebbleURI());
         Login login2 = new AccountBuilder()
-                        .addContact("mailto:acme@example.com")
-                        .agreeToTermsOfService()
-                        .useKeyPair(keyPair)
-                        .createLogin(session2);
+                .addContact("mailto:acme@example.com")
+                .agreeToTermsOfService()
+                .useKeyPair(keyPair)
+                .createLogin(session2);
 
         URL location2 = login2.getAccountLocation();
         assertIsPebbleUrl(location2);
@@ -110,18 +108,18 @@ public class AccountIT extends PebbleITBase {
 
         Session session1 = new Session(pebbleURI());
         Login login1 = new AccountBuilder()
-                        .agreeToTermsOfService()
-                        .useKeyPair(keyPair)
-                        .createLogin(session1);
+                .agreeToTermsOfService()
+                .useKeyPair(keyPair)
+                .createLogin(session1);
 
         URL location1 = login1.getAccountLocation();
         assertIsPebbleUrl(location1);
 
         Session session2 = new Session(pebbleURI());
         Login login2 = new AccountBuilder()
-                        .onlyExisting()
-                        .useKeyPair(keyPair)
-                        .createLogin(session2);
+                .onlyExisting()
+                .useKeyPair(keyPair)
+                .createLogin(session2);
 
         URL location2 = login2.getAccountLocation();
         assertIsPebbleUrl(location2);
@@ -154,24 +152,24 @@ public class AccountIT extends PebbleITBase {
         Session session = new Session(pebbleURI());
 
         Account acct = new AccountBuilder()
-                        .addContact("mailto:acme@example.com")
-                        .agreeToTermsOfService()
-                        .useKeyPair(keyPair)
-                        .create(session);
+                .addContact("mailto:acme@example.com")
+                .agreeToTermsOfService()
+                .useKeyPair(keyPair)
+                .create(session);
         URL location = acct.getLocation();
         assertIsPebbleUrl(location);
 
         acct.modify().addContact("mailto:acme2@example.com").commit();
 
         assertThat(acct.getContacts(), contains(
-                        URI.create("mailto:acme@example.com"),
-                        URI.create("mailto:acme2@example.com")));
+                URI.create("mailto:acme@example.com"),
+                URI.create("mailto:acme2@example.com")));
 
         // Still the same after updating
         acct.update();
         assertThat(acct.getContacts(), contains(
-                        URI.create("mailto:acme@example.com"),
-                        URI.create("mailto:acme2@example.com")));
+                URI.create("mailto:acme@example.com"),
+                URI.create("mailto:acme2@example.com")));
     }
 
     /**
@@ -183,9 +181,9 @@ public class AccountIT extends PebbleITBase {
         Session session = new Session(pebbleURI());
 
         Account acct = new AccountBuilder()
-                        .agreeToTermsOfService()
-                        .useKeyPair(keyPair)
-                        .create(session);
+                .agreeToTermsOfService()
+                .useKeyPair(keyPair)
+                .create(session);
         URL location = acct.getLocation();
 
         KeyPair newKeyPair = createKeyPair();
@@ -214,9 +212,9 @@ public class AccountIT extends PebbleITBase {
         Session session = new Session(pebbleURI());
 
         Account acct = new AccountBuilder()
-                        .agreeToTermsOfService()
-                        .useKeyPair(keyPair)
-                        .create(session);
+                .agreeToTermsOfService()
+                .useKeyPair(keyPair)
+                .create(session);
         URL location = acct.getLocation();
 
         acct.deactivate();

@@ -13,21 +13,6 @@
  */
 package org.shredzone.acme4j.connector;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.shredzone.acme4j.Authorization;
@@ -35,6 +20,15 @@ import org.shredzone.acme4j.Login;
 import org.shredzone.acme4j.provider.TestableConnectionProvider;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.*;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
 
 /**
  * Unit test for {@link ResourceIterator}.
@@ -101,7 +95,7 @@ public class ResourceIteratorTest {
 
         // don't try this at home, kids...
         try {
-            for (;;) {
+            for (; ; ) {
                 result.add(it.next().getLocation());
             }
         } catch (NoSuchElementException ex) {
@@ -125,8 +119,7 @@ public class ResourceIteratorTest {
     /**
      * Creates a new {@link Iterator} of {@link Authorization} objects.
      *
-     * @param first
-     *            URL of the first page
+     * @param first URL of the first page
      * @return Created {@link Iterator}
      */
     private Iterator<Authorization> createIterator(URL first) throws IOException {

@@ -13,14 +13,13 @@
  */
 package org.shredzone.acme4j.exception;
 
-import static java.util.Objects.requireNonNull;
-
-import java.net.URL;
+import org.shredzone.acme4j.AcmeResource;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.Immutable;
+import java.net.URL;
 
-import org.shredzone.acme4j.AcmeResource;
+import static java.util.Objects.requireNonNull;
 
 /**
  * This runtime exception is thrown when an {@link AcmeException} occured while trying to
@@ -37,14 +36,12 @@ public class AcmeLazyLoadingException extends RuntimeException {
     /**
      * Creates a new {@link AcmeLazyLoadingException}.
      *
-     * @param resource
-     *            {@link AcmeResource} to be loaded
-     * @param cause
-     *            {@link AcmeException} that was raised
+     * @param resource {@link AcmeResource} to be loaded
+     * @param cause    {@link AcmeException} that was raised
      */
     public AcmeLazyLoadingException(AcmeResource resource, AcmeException cause) {
         super(requireNonNull(resource).getClass().getSimpleName() + " "
-            + requireNonNull(resource).getLocation(), requireNonNull(cause));
+                + requireNonNull(resource).getLocation(), requireNonNull(cause));
         type = resource.getClass();
         location = resource.getLocation();
     }

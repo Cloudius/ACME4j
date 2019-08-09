@@ -13,17 +13,17 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import org.junit.Test;
+import org.shredzone.acme4j.exception.AcmeException;
+import org.shredzone.acme4j.toolbox.JSON;
+import org.shredzone.acme4j.util.KeyPairUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.PublicKey;
 
-import org.junit.Test;
-import org.shredzone.acme4j.exception.AcmeException;
-import org.shredzone.acme4j.toolbox.JSON;
-import org.shredzone.acme4j.util.KeyPairUtils;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 /**
  * Unit tests for {@link ControllerWrapper}.
@@ -37,7 +37,8 @@ public class ControllerWrapperTest {
 
         Controller controller = mock(Controller.class);
 
-        ControllerWrapper<Controller> wrapper = new ControllerWrapper<Controller>(controller) {};
+        ControllerWrapper<Controller> wrapper = new ControllerWrapper<Controller>(controller) {
+        };
         wrapper.doSimpleRequest(requestUrl);
 
         verify(controller).doSimpleRequest(eq(requestUrl));
@@ -50,7 +51,8 @@ public class ControllerWrapperTest {
 
         Controller controller = mock(Controller.class);
 
-        ControllerWrapper<Controller> wrapper = new ControllerWrapper<Controller>(controller) {};
+        ControllerWrapper<Controller> wrapper = new ControllerWrapper<Controller>(controller) {
+        };
         wrapper.doPostAsGetRequest(requestUrl, publicKey);
 
         verify(controller).doPostAsGetRequest(eq(requestUrl), eq(publicKey));
@@ -64,7 +66,8 @@ public class ControllerWrapperTest {
 
         Controller controller = mock(Controller.class);
 
-        ControllerWrapper<Controller> wrapper = new ControllerWrapper<Controller>(controller) {};
+        ControllerWrapper<Controller> wrapper = new ControllerWrapper<Controller>(controller) {
+        };
         wrapper.doPostRequest(requestUrl, payload, publicKey);
 
         verify(controller).doPostRequest(eq(requestUrl), eq(payload), eq(publicKey));

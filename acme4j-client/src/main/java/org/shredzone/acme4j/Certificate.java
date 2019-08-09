@@ -13,8 +13,19 @@
  */
 package org.shredzone.acme4j;
 
-import static java.util.Collections.unmodifiableList;
+import org.shredzone.acme4j.connector.Connection;
+import org.shredzone.acme4j.connector.Resource;
+import org.shredzone.acme4j.exception.AcmeException;
+import org.shredzone.acme4j.exception.AcmeLazyLoadingException;
+import org.shredzone.acme4j.exception.AcmeProtocolException;
+import org.shredzone.acme4j.toolbox.AcmeUtils;
+import org.shredzone.acme4j.toolbox.JSONBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.WillNotClose;
 import java.io.IOException;
 import java.io.Writer;
 import java.net.URL;
@@ -25,19 +36,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.WillNotClose;
-
-import org.shredzone.acme4j.connector.Connection;
-import org.shredzone.acme4j.connector.Resource;
-import org.shredzone.acme4j.exception.AcmeException;
-import org.shredzone.acme4j.exception.AcmeLazyLoadingException;
-import org.shredzone.acme4j.exception.AcmeProtocolException;
-import org.shredzone.acme4j.toolbox.AcmeUtils;
-import org.shredzone.acme4j.toolbox.JSONBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.util.Collections.unmodifiableList;
 
 /**
  * Represents a certificate and its certificate chain.
@@ -64,8 +63,7 @@ public class Certificate extends AcmeResource {
      * need to invoke this method, unless the download is to be enforced. If the
      * certificate has been downloaded already, nothing will happen.
      *
-     * @throws AcmeException
-     *             if the certificate could not be downloaded
+     * @throws AcmeException if the certificate could not be downloaded
      */
     public void download() throws AcmeException {
         if (certChain == null) {
@@ -92,8 +90,8 @@ public class Certificate extends AcmeResource {
      * Returns the created certificate and issuer chain.
      *
      * @return The created end-entity {@link X509Certificate} and issuer chain. The first
-     *         certificate is always the end-entity certificate, followed by the
-     *         intermediate certificates required to build a path to a trusted root.
+     * certificate is always the end-entity certificate, followed by the
+     * intermediate certificates required to build a path to a trusted root.
      */
     public List<X509Certificate> getCertificateChain() {
         lazyDownload();
@@ -118,8 +116,7 @@ public class Certificate extends AcmeResource {
      * Writes the certificate to the given writer. It is written in PEM format, with the
      * end-entity cert coming first, followed by the intermediate ceritificates.
      *
-     * @param out
-     *            {@link Writer} to write to. The writer is not closed after use.
+     * @param out {@link Writer} to write to. The writer is not closed after use.
      */
     public void writeCertificate(@WillNotClose Writer out) throws IOException {
         try {
@@ -141,10 +138,9 @@ public class Certificate extends AcmeResource {
     /**
      * Revokes this certificate.
      *
-     * @param reason
-     *            {@link RevocationReason} stating the reason of the revocation that is
-     *            used when generating OCSP responses and CRLs. {@code null} to give no
-     *            reason.
+     * @param reason {@link RevocationReason} stating the reason of the revocation that is
+     *               used when generating OCSP responses and CRLs. {@code null} to give no
+     *               reason.
      */
     public void revoke(@Nullable RevocationReason reason) throws AcmeException {
         revoke(getLogin(), getCertificate(), reason);
@@ -154,18 +150,15 @@ public class Certificate extends AcmeResource {
      * Revoke a certificate. This call is meant to be used for revoking certificates if
      * only the account's key pair and the certificate itself is available.
      *
-     * @param login
-     *            {@link Login} to the account
-     * @param cert
-     *            The {@link X509Certificate} to be revoked
-     * @param reason
-     *            {@link RevocationReason} stating the reason of the revocation that is
-     *            used when generating OCSP responses and CRLs. {@code null} to give no
-     *            reason.
+     * @param login  {@link Login} to the account
+     * @param cert   The {@link X509Certificate} to be revoked
+     * @param reason {@link RevocationReason} stating the reason of the revocation that is
+     *               used when generating OCSP responses and CRLs. {@code null} to give no
+     *               reason.
      * @since 2.6
      */
     public static void revoke(Login login, X509Certificate cert, @Nullable RevocationReason reason)
-                throws AcmeException {
+            throws AcmeException {
         LOG.debug("revoke");
 
         Session session = login.getSession();
@@ -192,19 +185,15 @@ public class Certificate extends AcmeResource {
      * Revoke a certificate. This call is meant to be used for revoking certificates if
      * the account's key pair was lost.
      *
-     * @param session
-     *            {@link Session} connected to the ACME server
-     * @param domainKeyPair
-     *            Key pair the CSR was signed with
-     * @param cert
-     *            The {@link X509Certificate} to be revoked
-     * @param reason
-     *            {@link RevocationReason} stating the reason of the revocation that is
-     *            used when generating OCSP responses and CRLs. {@code null} to give no
-     *            reason.
+     * @param session       {@link Session} connected to the ACME server
+     * @param domainKeyPair Key pair the CSR was signed with
+     * @param cert          The {@link X509Certificate} to be revoked
+     * @param reason        {@link RevocationReason} stating the reason of the revocation that is
+     *                      used when generating OCSP responses and CRLs. {@code null} to give no
+     *                      reason.
      */
     public static void revoke(Session session, KeyPair domainKeyPair, X509Certificate cert,
-            @Nullable RevocationReason reason) throws AcmeException {
+                              @Nullable RevocationReason reason) throws AcmeException {
         LOG.debug("revoke using the domain key pair");
 
         URL resUrl = session.resourceUrl(Resource.REVOKE_CERT);

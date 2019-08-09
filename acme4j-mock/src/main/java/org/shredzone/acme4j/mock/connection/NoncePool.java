@@ -13,14 +13,13 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
-import java.util.Random;
-import java.util.Set;
-import java.util.TreeSet;
+import org.shredzone.acme4j.toolbox.AcmeUtils;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.ThreadSafe;
-
-import org.shredzone.acme4j.toolbox.AcmeUtils;
+import java.util.Random;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A nonce pool. This class is thread safe.
@@ -55,8 +54,7 @@ public class NoncePool {
     /**
      * Tests if the given nonce is valid, without consuming it.
      *
-     * @param nonce
-     *         Nonce to test
+     * @param nonce Nonce to test
      * @return {@code true} if it is a valid nonce that was issued by this pool and has
      * not been used yet.
      */
@@ -70,8 +68,7 @@ public class NoncePool {
      * Consumes the nonce. The nonce must have been issued by this {@link NoncePool}, and
      * must not have been used yet.
      *
-     * @param nonce
-     *         Nonce to consume
+     * @param nonce Nonce to consume
      * @return {@code true} if the nonce was issued by this pool, and was not used yet.
      * {@code false} if the nonce is unknown or was already consumed.
      */

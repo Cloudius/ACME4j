@@ -13,15 +13,14 @@
  */
 package org.shredzone.acme4j.provider.letsencrypt;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.exception.AcmeProtocolException;
 import org.shredzone.acme4j.provider.AbstractAcmeProvider;
 import org.shredzone.acme4j.provider.AcmeProvider;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 
 /**
  * An {@link AcmeProvider} for <em>Let's Encrypt</em>.

@@ -13,27 +13,6 @@
  */
 package org.shredzone.acme4j.util;
 
-import static java.util.Objects.requireNonNull;
-import static java.util.stream.Collectors.joining;
-import static org.shredzone.acme4j.toolbox.AcmeUtils.toAce;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.net.InetAddress;
-import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.interfaces.ECKey;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.WillClose;
-
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
@@ -51,6 +30,22 @@ import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequestBuilder;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemWriter;
 import org.shredzone.acme4j.Identifier;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.WillClose;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.InetAddress;
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.interfaces.ECKey;
+import java.util.*;
+
+import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.joining;
+import static org.shredzone.acme4j.toolbox.AcmeUtils.toAce;
 
 /**
  * Generator for a CSR (Certificate Signing Request) suitable for ACME servers.
@@ -76,8 +71,7 @@ public class CSRBuilder {
      * <p>
      * For wildcard certificates, the domain name must be prefixed with {@code "*."}.
      *
-     * @param domain
-     *            Domain name to add
+     * @param domain Domain name to add
      */
     public void addDomain(String domain) {
         String ace = toAce(requireNonNull(domain));
@@ -92,8 +86,7 @@ public class CSRBuilder {
      * <p>
      * IDN domain names are ACE encoded automatically.
      *
-     * @param domains
-     *            Collection of domain names to add
+     * @param domains Collection of domain names to add
      */
     public void addDomains(Collection<String> domains) {
         domains.forEach(this::addDomain);
@@ -104,8 +97,7 @@ public class CSRBuilder {
      * <p>
      * IDN domain names are ACE encoded automatically.
      *
-     * @param domains
-     *            Domain names to add
+     * @param domains Domain names to add
      */
     public void addDomains(String... domains) {
         Arrays.stream(domains).forEach(this::addDomain);
@@ -115,8 +107,7 @@ public class CSRBuilder {
      * Adds an {@link InetAddress}. All IP addresses will be set as iPAddress <em>Subject
      * Alternative Name</em>.
      *
-     * @param address
-     *            {@link InetAddress} to add
+     * @param address {@link InetAddress} to add
      * @since 2.4
      */
     public void addIP(InetAddress address) {
@@ -126,8 +117,7 @@ public class CSRBuilder {
     /**
      * Adds a {@link Collection} of IP addresses.
      *
-     * @param ips
-     *            Collection of IP addresses to add
+     * @param ips Collection of IP addresses to add
      * @since 2.4
      */
     public void addIPs(Collection<InetAddress> ips) {
@@ -137,8 +127,7 @@ public class CSRBuilder {
     /**
      * Adds multiple IP addresses.
      *
-     * @param ips
-     *            IP addresses to add
+     * @param ips IP addresses to add
      * @since 2.4
      */
     public void addIPs(InetAddress... ips) {
@@ -148,8 +137,7 @@ public class CSRBuilder {
     /**
      * Adds an {@link Identifier}. Only DNS and IP types are supported.
      *
-     * @param id
-     *            {@link Identifier} to add
+     * @param id {@link Identifier} to add
      * @since 2.7
      */
     public void addIdentifier(Identifier id) {
@@ -166,8 +154,7 @@ public class CSRBuilder {
     /**
      * Adds a {@link Collection} of {@link Identifier}.
      *
-     * @param ids
-     *            Collection of Identifiers to add
+     * @param ids Collection of Identifiers to add
      * @since 2.7
      */
     public void addIdentifiers(Collection<Identifier> ids) {
@@ -177,8 +164,7 @@ public class CSRBuilder {
     /**
      * Adds multiple {@link Identifier}.
      *
-     * @param ids
-     *            Identifiers to add
+     * @param ids Identifiers to add
      * @since 2.7
      */
     public void addIdentifiers(Identifier... ids) {
@@ -233,8 +219,7 @@ public class CSRBuilder {
     /**
      * Signs the completed CSR.
      *
-     * @param keypair
-     *            {@link KeyPair} to sign the CSR with
+     * @param keypair {@link KeyPair} to sign the CSR with
      */
     public void sign(KeyPair keypair) throws IOException {
         Objects.requireNonNull(keypair, "keypair");
@@ -254,7 +239,7 @@ public class CSRBuilder {
             GeneralNames subjectAltName = new GeneralNames(gns);
 
             PKCS10CertificationRequestBuilder p10Builder =
-                            new JcaPKCS10CertificationRequestBuilder(namebuilder.build(), keypair.getPublic());
+                    new JcaPKCS10CertificationRequestBuilder(namebuilder.build(), keypair.getPublic());
 
             ExtensionsGenerator extensionsGenerator = new ExtensionsGenerator();
             extensionsGenerator.addExtension(Extension.subjectAlternativeName, false, subjectAltName);
@@ -262,7 +247,7 @@ public class CSRBuilder {
 
             PrivateKey pk = keypair.getPrivate();
             JcaContentSignerBuilder csBuilder = new JcaContentSignerBuilder(
-                            pk instanceof ECKey ? EC_SIGNATURE_ALG : SIGNATURE_ALG);
+                    pk instanceof ECKey ? EC_SIGNATURE_ALG : SIGNATURE_ALG);
             ContentSigner signer = csBuilder.build(pk);
 
             csr = p10Builder.build(signer);
@@ -292,9 +277,8 @@ public class CSRBuilder {
     /**
      * Writes the signed certificate request to a {@link Writer}.
      *
-     * @param w
-     *            {@link Writer} to write the PEM file to. The {@link Writer} is closed
-     *            after use.
+     * @param w {@link Writer} to write the PEM file to. The {@link Writer} is closed
+     *          after use.
      */
     public void write(@WillClose Writer w) throws IOException {
         if (csr == null) {
@@ -309,8 +293,7 @@ public class CSRBuilder {
     /**
      * Writes the signed certificate request to an {@link OutputStream}.
      *
-     * @param out
-     *            {@link OutputStream} to write the PEM file to. The {@link OutputStream}
+     * @param out {@link OutputStream} to write the PEM file to. The {@link OutputStream}
      *            is closed after use.
      */
     public void write(@WillClose OutputStream out) throws IOException {
@@ -323,8 +306,8 @@ public class CSRBuilder {
         sb.append(namebuilder.build());
         sb.append(namelist.stream().collect(joining(",DNS=", ",DNS=", "")));
         sb.append(iplist.stream()
-                    .map(InetAddress::getHostAddress)
-                    .collect(joining(",IP=", ",IP=", "")));
+                .map(InetAddress::getHostAddress)
+                .collect(joining(",IP=", ",IP=", "")));
         return sb.toString();
     }
 

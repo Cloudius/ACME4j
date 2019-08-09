@@ -13,25 +13,6 @@
  */
 package org.shredzone.acme4j;
 
-import java.net.Proxy;
-import java.net.URI;
-import java.net.URL;
-import java.security.KeyPair;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.EnumMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.ServiceLoader;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.StreamSupport;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.shredzone.acme4j.connector.Connection;
 import org.shredzone.acme4j.connector.Resource;
 import org.shredzone.acme4j.exception.AcmeException;
@@ -39,6 +20,20 @@ import org.shredzone.acme4j.provider.AcmeProvider;
 import org.shredzone.acme4j.provider.GenericAcmeProvider;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSON.Value;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.concurrent.ThreadSafe;
+import java.net.Proxy;
+import java.net.URI;
+import java.net.URL;
+import java.security.KeyPair;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.StreamSupport;
 
 /**
  * A session stores the ACME server URI. It also tracks communication parameters.
@@ -62,8 +57,7 @@ public class Session {
     /**
      * Creates a new {@link Session}.
      *
-     * @param serverUri
-     *            URI string of the ACME server
+     * @param serverUri URI string of the ACME server
      */
     public Session(String serverUri) {
         this(URI.create(serverUri));
@@ -72,10 +66,8 @@ public class Session {
     /**
      * Creates a new {@link Session}.
      *
-     * @param serverUri
-     *            {@link URI} of the ACME server
-     * @throws IllegalArgumentException
-     *             if no ACME provider was found for the server URI.
+     * @param serverUri {@link URI} of the ACME server
+     * @throws IllegalArgumentException if no ACME provider was found for the server URI.
      */
     public Session(URI serverUri) {
         this.serverUri = Objects.requireNonNull(serverUri, "serverUri");
@@ -89,14 +81,14 @@ public class Session {
 
         Iterable<AcmeProvider> providers = ServiceLoader.load(AcmeProvider.class);
         provider = StreamSupport.stream(providers.spliterator(), false)
-            .filter(p -> p.accepts(localServerUri))
-            .reduce((a, b) -> {
+                .filter(p -> p.accepts(localServerUri))
+                .reduce((a, b) -> {
                     throw new IllegalArgumentException("Both ACME providers "
-                        + a.getClass().getSimpleName() + " and "
-                        + b.getClass().getSimpleName() + " accept "
-                        + localServerUri + ". Please check your classpath.");
+                            + a.getClass().getSimpleName() + " and "
+                            + b.getClass().getSimpleName() + " accept "
+                            + localServerUri + ". Please check your classpath.");
                 })
-            .orElseThrow(() -> new IllegalArgumentException("No ACME provider found for " + localServerUri));
+                .orElseThrow(() -> new IllegalArgumentException("No ACME provider found for " + localServerUri));
     }
 
     /**
@@ -104,10 +96,8 @@ public class Session {
      * <p>
      * This constructor should only be used for testing purposes.
      *
-     * @param serverUri
-     *         {@link URI} of the ACME server
-     * @param provider
-     *         {@link AcmeProvider} to be used
+     * @param serverUri {@link URI} of the ACME server
+     * @param provider  {@link AcmeProvider} to be used
      * @since 2.8
      */
     public Session(URI serverUri, AcmeProvider provider) {
@@ -122,10 +112,8 @@ public class Session {
     /**
      * Logs into an existing account.
      *
-     * @param accountLocation
-     *            Location {@link URL} of the account
-     * @param accountKeyPair
-     *            Account {@link KeyPair}
+     * @param accountLocation Location {@link URL} of the account
+     * @param accountKeyPair  Account {@link KeyPair}
      * @return {@link Login} to this account
      */
     public Login login(URL accountLocation, KeyPair accountKeyPair) {
@@ -206,11 +194,9 @@ public class Session {
      * Gets the {@link URL} of the given {@link Resource}. This may involve connecting to
      * the server and getting a directory. The result is cached.
      *
-     * @param resource
-     *            {@link Resource} to get the {@link URL} of
+     * @param resource {@link Resource} to get the {@link URL} of
      * @return {@link URL} of the resource
-     * @throws AcmeException
-     *             if the server does not offer the {@link Resource}
+     * @throws AcmeException if the server does not offer the {@link Resource}
      */
     public URL resourceUrl(Resource resource) throws AcmeException {
         readDirectory();

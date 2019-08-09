@@ -13,27 +13,22 @@
  */
 package org.shredzone.acme4j.mock.example;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+import org.jose4j.keys.HmacKey;
+import org.junit.Test;
+import org.shredzone.acme4j.*;
+import org.shredzone.acme4j.exception.AcmeException;
+import org.shredzone.acme4j.mock.MockAcmeServer;
+import org.shredzone.acme4j.mock.model.MockAccount;
+import org.shredzone.acme4j.util.KeyPairUtils;
 
+import javax.crypto.SecretKey;
 import java.net.URI;
 import java.net.URL;
 import java.security.KeyPair;
 import java.security.MessageDigest;
 
-import javax.crypto.SecretKey;
-
-import org.jose4j.keys.HmacKey;
-import org.junit.Test;
-import org.shredzone.acme4j.Account;
-import org.shredzone.acme4j.AccountBuilder;
-import org.shredzone.acme4j.Login;
-import org.shredzone.acme4j.Session;
-import org.shredzone.acme4j.Status;
-import org.shredzone.acme4j.exception.AcmeException;
-import org.shredzone.acme4j.mock.MockAcmeServer;
-import org.shredzone.acme4j.mock.model.MockAccount;
-import org.shredzone.acme4j.util.KeyPairUtils;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Some examples for testing account operations.

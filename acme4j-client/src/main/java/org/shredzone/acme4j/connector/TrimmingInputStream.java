@@ -13,10 +13,9 @@
  */
 package org.shredzone.acme4j.connector;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
 import java.io.InputStream;
-
-import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * Normalizes line separators in an InputStream. Converts all line separators to '\n'.
@@ -31,9 +30,8 @@ public class TrimmingInputStream extends InputStream {
     /**
      * Creates a new {@link TrimmingInputStream}.
      *
-     * @param in
-     *            {@link InputStream} to read from. Will be closed when this stream is
-     *            closed.
+     * @param in {@link InputStream} to read from. Will be closed when this stream is
+     *           closed.
      */
     public TrimmingInputStream(InputStream in) {
         this.in = in;

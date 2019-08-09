@@ -13,29 +13,24 @@
  */
 package org.shredzone.acme4j.it.boulder;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.await;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
-import java.net.URI;
-import java.security.KeyPair;
-import java.security.cert.X509Certificate;
-
 import org.junit.Test;
-import org.shredzone.acme4j.Account;
-import org.shredzone.acme4j.AccountBuilder;
-import org.shredzone.acme4j.Authorization;
-import org.shredzone.acme4j.Certificate;
-import org.shredzone.acme4j.Order;
-import org.shredzone.acme4j.Session;
-import org.shredzone.acme4j.Status;
+import org.shredzone.acme4j.*;
 import org.shredzone.acme4j.challenge.Http01Challenge;
 import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.exception.AcmeLazyLoadingException;
 import org.shredzone.acme4j.it.BammBammClient;
 import org.shredzone.acme4j.util.CSRBuilder;
 import org.shredzone.acme4j.util.KeyPairUtils;
+
+import java.net.URI;
+import java.security.KeyPair;
+import java.security.cert.X509Certificate;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Tests a complete certificate order with different challenges.
@@ -57,9 +52,9 @@ public class OrderHttpIT {
         KeyPair keyPair = createKeyPair();
 
         Account account = new AccountBuilder()
-                    .agreeToTermsOfService()
-                    .useKeyPair(keyPair)
-                    .create(session);
+                .agreeToTermsOfService()
+                .useKeyPair(keyPair)
+                .create(session);
 
         KeyPair domainKeyPair = createKeyPair();
 
@@ -74,10 +69,10 @@ public class OrderHttpIT {
             challenge.trigger();
 
             await()
-                .pollInterval(1, SECONDS)
-                .timeout(30, SECONDS)
-                .conditionEvaluationListener(cond -> updateAuth(auth))
-                .until(auth::getStatus, not(isOneOf(Status.PENDING, Status.PROCESSING)));
+                    .pollInterval(1, SECONDS)
+                    .timeout(30, SECONDS)
+                    .conditionEvaluationListener(cond -> updateAuth(auth))
+                    .until(auth::getStatus, not(isOneOf(Status.PENDING, Status.PROCESSING)));
 
             if (auth.getStatus() != Status.VALID) {
                 fail("Authorization failed");
@@ -94,10 +89,10 @@ public class OrderHttpIT {
         order.execute(encodedCsr);
 
         await()
-            .pollInterval(1, SECONDS)
-            .timeout(30, SECONDS)
-            .conditionEvaluationListener(cond -> updateOrder(order))
-            .until(order::getStatus, not(isOneOf(Status.PENDING, Status.PROCESSING)));
+                .pollInterval(1, SECONDS)
+                .timeout(30, SECONDS)
+                .conditionEvaluationListener(cond -> updateOrder(order))
+                .until(order::getStatus, not(isOneOf(Status.PENDING, Status.PROCESSING)));
 
         Certificate certificate = order.getCertificate();
         X509Certificate cert = certificate.getCertificate();
@@ -126,8 +121,7 @@ public class OrderHttpIT {
     /**
      * Safely updates the authorization, catching checked exceptions.
      *
-     * @param auth
-     *            {@link Authorization} to update
+     * @param auth {@link Authorization} to update
      */
     private void updateAuth(Authorization auth) {
         try {
@@ -140,8 +134,7 @@ public class OrderHttpIT {
     /**
      * Safely updates the order, catching checked exceptions.
      *
-     * @param order
-     *            {@link Order} to update
+     * @param order {@link Order} to update
      */
     private void updateOrder(Order order) {
         try {

@@ -13,25 +13,26 @@
  */
 package org.shredzone.acme4j.mock.model;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
-
-import java.net.URL;
-import java.util.Collections;
-import java.util.Map;
-
 import org.junit.Test;
 import org.shredzone.acme4j.mock.connection.Repository;
 import org.shredzone.acme4j.mock.controller.Controller;
 import org.shredzone.acme4j.mock.controller.DirectoryController;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
 
+import java.net.URL;
+import java.util.Collections;
+import java.util.Map;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
+
 /**
  * Unit tests for {@link MockDirectory}.
  */
 public class MockDirectoryTest {
-    private static final Controller NOP_CONTROLLER = new Controller() {};
+    private static final Controller NOP_CONTROLLER = new Controller() {
+    };
     private static final Map<String, Controller> TYPE_MAP = Collections.singletonMap("test", NOP_CONTROLLER);
 
     /**

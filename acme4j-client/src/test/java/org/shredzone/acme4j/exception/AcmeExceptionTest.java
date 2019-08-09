@@ -13,13 +13,13 @@
  */
 package org.shredzone.acme4j.exception;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 
 import java.io.IOException;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 /**
  * Unit tests for {@link AcmeException}.

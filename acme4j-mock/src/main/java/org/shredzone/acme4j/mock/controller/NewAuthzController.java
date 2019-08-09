@@ -13,16 +13,15 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import java.net.URL;
-import java.security.PublicKey;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.Identifier;
 import org.shredzone.acme4j.mock.MockAcmeServer;
 import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.mock.model.MockAuthorization;
 import org.shredzone.acme4j.toolbox.JSON;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.security.PublicKey;
 
 /**
  * A {@link Controller} that handles newAuthz requests.
@@ -36,8 +35,7 @@ public class NewAuthzController implements Controller {
     /**
      * Creates a new {@link NewAuthzController}.
      *
-     * @param server
-     *         {@link MockAcmeServer} that manages authorizations
+     * @param server {@link MockAcmeServer} that manages authorizations
      */
     public NewAuthzController(MockAcmeServer server) {
         this.server = server;
@@ -45,7 +43,7 @@ public class NewAuthzController implements Controller {
 
     /**
      * Creates a new authorization and returns it.
-     *
+     * <p>
      * {@inheritDoc}
      */
     @Override

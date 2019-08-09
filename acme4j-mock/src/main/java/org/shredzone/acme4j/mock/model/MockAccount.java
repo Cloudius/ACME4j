@@ -13,22 +13,21 @@
  */
 package org.shredzone.acme4j.mock.model;
 
-import java.net.URI;
-import java.net.URL;
-import java.security.PublicKey;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.Status;
 import org.shredzone.acme4j.mock.connection.Repository;
 import org.shredzone.acme4j.mock.controller.AccountController;
 import org.shredzone.acme4j.mock.controller.AccountOrdersController;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URI;
+import java.net.URL;
+import java.security.PublicKey;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A mock account.
@@ -57,10 +56,8 @@ public class MockAccount extends MockResource {
     /**
      * Creates a new {@link MockAccount} instance.
      *
-     * @param repository
-     *         {@link Repository} to add the resource to
-     * @param publicKey
-     *         {@link PublicKey} of the new account
+     * @param repository {@link Repository} to add the resource to
+     * @param publicKey  {@link PublicKey} of the new account
      * @return The generated {@link MockAccount}
      */
     public static MockAccount create(Repository repository, PublicKey publicKey) {
@@ -80,8 +77,7 @@ public class MockAccount extends MockResource {
     /**
      * Sets a new public key.
      *
-     * @param publicKey
-     *         new {@link PublicKey}
+     * @param publicKey new {@link PublicKey}
      */
     public void setPublicKey(PublicKey publicKey) {
         this.publicKey = publicKey;
@@ -108,9 +104,8 @@ public class MockAccount extends MockResource {
     /**
      * Sets the current account status.
      *
-     * @param status
-     *         new {@link Status}, or {@code null} to clear the status and let the
-     *         resource decide on its current status automatically.
+     * @param status new {@link Status}, or {@code null} to clear the status and let the
+     *               resource decide on its current status automatically.
      */
     public void setStatus(@Nullable Status status) {
         this.status = status;
@@ -135,8 +130,7 @@ public class MockAccount extends MockResource {
     /**
      * Sets whether the terms of service have been agreed to.
      *
-     * @param termsOfServiceAgreed
-     *         Have the terms of service been agreed to? {@code null} if undefined.
+     * @param termsOfServiceAgreed Have the terms of service been agreed to? {@code null} if undefined.
      */
     public void setTermsOfServiceAgreed(@Nullable Boolean termsOfServiceAgreed) {
         this.termsOfServiceAgreed = termsOfServiceAgreed;
@@ -154,9 +148,8 @@ public class MockAccount extends MockResource {
     /**
      * Sets the external account binding structure.
      *
-     * @param externalAccountBinding
-     *         External account binding structure, or {@code null} if no external account
-     *         binding was performed.
+     * @param externalAccountBinding External account binding structure, or {@code null} if no external account
+     *                               binding was performed.
      */
     public void setExternalAccountBinding(@Nullable JSON externalAccountBinding) {
         this.externalAccountBinding = externalAccountBinding;

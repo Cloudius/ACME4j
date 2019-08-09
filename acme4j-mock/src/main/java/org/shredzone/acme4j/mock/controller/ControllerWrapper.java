@@ -13,16 +13,15 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import java.net.URL;
-import java.security.PublicKey;
-import java.util.function.Function;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.mock.connection.Repository;
 import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.toolbox.JSON;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.security.PublicKey;
+import java.util.function.Function;
 
 /**
  * Wraps an existing {@link Controller} instance, so single methods can be intercepted and
@@ -42,8 +41,7 @@ public abstract class ControllerWrapper<C extends Controller> implements Control
     /**
      * Creates a new {@link ControllerWrapper}.
      *
-     * @param receiver
-     *         Receiving {@link Controller} that is being wrapped.
+     * @param receiver Receiving {@link Controller} that is being wrapped.
      */
     public ControllerWrapper(C receiver) {
         this.receiver = receiver;

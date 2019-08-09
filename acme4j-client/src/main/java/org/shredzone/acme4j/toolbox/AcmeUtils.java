@@ -13,6 +13,13 @@
  */
 package org.shredzone.acme4j.toolbox;
 
+import org.shredzone.acme4j.exception.AcmeProtocolException;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.WillNotClose;
+import javax.annotation.concurrent.Immutable;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -29,14 +36,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.WillNotClose;
-import javax.annotation.concurrent.Immutable;
-
-import org.shredzone.acme4j.exception.AcmeProtocolException;
-
 /**
  * Contains utility methods that are frequently used for the ACME protocol.
  * <p>
@@ -49,23 +48,23 @@ public final class AcmeUtils {
     private static final String ACME_ERROR_PREFIX = "urn:ietf:params:acme:error:";
 
     private static final Pattern DATE_PATTERN = Pattern.compile(
-                    "^(\\d{4})-(\\d{2})-(\\d{2})T"
-                  + "(\\d{2}):(\\d{2}):(\\d{2})"
-                  + "(?:\\.(\\d{1,3})\\d*)?"
-                  + "(Z|[+-]\\d{2}:?\\d{2})$", Pattern.CASE_INSENSITIVE);
+            "^(\\d{4})-(\\d{2})-(\\d{2})T"
+                    + "(\\d{2}):(\\d{2}):(\\d{2})"
+                    + "(?:\\.(\\d{1,3})\\d*)?"
+                    + "(Z|[+-]\\d{2}:?\\d{2})$", Pattern.CASE_INSENSITIVE);
 
     private static final Pattern TZ_PATTERN = Pattern.compile(
-                "([+-])(\\d{2}):?(\\d{2})$");
+            "([+-])(\\d{2}):?(\\d{2})$");
 
     private static final Pattern CONTENT_TYPE_PATTERN = Pattern.compile(
-                "([^;]+)(?:;.*?charset=(\"?)([a-z0-9_-]+)(\\2))?.*", Pattern.CASE_INSENSITIVE);
+            "([^;]+)(?:;.*?charset=(\"?)([a-z0-9_-]+)(\\2))?.*", Pattern.CASE_INSENSITIVE);
 
     private static final Pattern MAIL_PATTERN = Pattern.compile("\\?|@.*,");
 
     private static final Pattern BASE64URL_PATTERN = Pattern.compile("[0-9A-Za-z_-]*");
 
     private static final Base64.Encoder PEM_ENCODER = Base64.getMimeEncoder(64,
-                "\n".getBytes(StandardCharsets.US_ASCII));
+            "\n".getBytes(StandardCharsets.US_ASCII));
     private static final Base64.Encoder URL_ENCODER = Base64.getUrlEncoder().withoutPadding();
     private static final Base64.Decoder URL_DECODER = Base64.getUrlDecoder();
 
@@ -100,8 +99,7 @@ public final class AcmeUtils {
     /**
      * Computes a SHA-256 hash of the given string.
      *
-     * @param z
-     *            String to hash
+     * @param z String to hash
      * @return Hash
      */
     public static byte[] sha256hash(String z) {
@@ -117,8 +115,7 @@ public final class AcmeUtils {
     /**
      * Hex encodes the given byte array.
      *
-     * @param data
-     *            byte array to hex encode
+     * @param data byte array to hex encode
      * @return Hex encoded string of the data (with lower case characters)
      */
     public static String hexEncode(byte[] data) {
@@ -134,8 +131,7 @@ public final class AcmeUtils {
     /**
      * Base64 encodes the given byte array, using URL style encoding.
      *
-     * @param data
-     *            byte array to base64 encode
+     * @param data byte array to base64 encode
      * @return base64 encoded string
      */
     public static String base64UrlEncode(byte[] data) {
@@ -145,8 +141,7 @@ public final class AcmeUtils {
     /**
      * Base64 decodes to a byte array, using URL style encoding.
      *
-     * @param base64
-     *            base64 encoded string
+     * @param base64 base64 encoded string
      * @return decoded data
      */
     public static byte[] base64UrlDecode(String base64) {
@@ -156,11 +151,10 @@ public final class AcmeUtils {
     /**
      * Validates that the given {@link String} is a valid base64url encoded value.
      *
-     * @param base64
-     *            {@link String} to validate
+     * @param base64 {@link String} to validate
      * @return {@code true}: String contains a valid base64url encoded value.
-     *         {@code false} if the {@link String} was {@code null} or contained illegal
-     *         characters.
+     * {@code false} if the {@link String} was {@code null} or contained illegal
+     * characters.
      * @since 2.6
      */
     public static boolean isValidBase64Url(@Nullable String base64) {
@@ -176,8 +170,7 @@ public final class AcmeUtils {
      * <p>
      * It is safe to pass in ACE encoded domains, they will be returned unchanged.
      *
-     * @param domain
-     *            Domain name to encode
+     * @param domain Domain name to encode
      * @return Encoded domain name, white space trimmed and lower cased.
      */
     public static String toAce(String domain) {
@@ -188,11 +181,9 @@ public final class AcmeUtils {
     /**
      * Parses a RFC 3339 formatted date.
      *
-     * @param str
-     *            Date string
+     * @param str Date string
      * @return {@link Instant} that was parsed
-     * @throws IllegalArgumentException
-     *             if the date string was not RFC 3339 formatted
+     * @throws IllegalArgumentException if the date string was not RFC 3339 formatted
      * @see <a href="https://www.ietf.org/rfc/rfc3339.txt">RFC 3339</a>
      */
     public static Instant parseTimestamp(String str) {
@@ -235,8 +226,7 @@ public final class AcmeUtils {
      * For example, for "urn:ietf:params:acme:error:unauthorized", "unauthorized" is
      * returned.
      *
-     * @param type
-     *            Error type to strip the prefix from. {@code null} is safe.
+     * @param type Error type to strip the prefix from. {@code null} is safe.
      * @return Stripped error type, or {@code null} if the prefix was not found.
      */
     @CheckForNull
@@ -251,15 +241,12 @@ public final class AcmeUtils {
     /**
      * Writes an encoded key or certificate to a file in PEM format.
      *
-     * @param encoded
-     *            Encoded data to write
-     * @param label
-     *            {@link PemLabel} to be used
-     * @param out
-     *            {@link Writer} to write to. It will not be closed after use!
+     * @param encoded Encoded data to write
+     * @param label   {@link PemLabel} to be used
+     * @param out     {@link Writer} to write to. It will not be closed after use!
      */
     public static void writeToPem(byte[] encoded, PemLabel label, @WillNotClose Writer out)
-                throws IOException {
+            throws IOException {
         out.append("-----BEGIN ").append(label.toString()).append("-----\n");
         out.append(new String(PEM_ENCODER.encode(encoded), StandardCharsets.US_ASCII));
         out.append("\n-----END ").append(label.toString()).append("-----\n");
@@ -268,11 +255,9 @@ public final class AcmeUtils {
     /**
      * Extracts the content type of a Content-Type header.
      *
-     * @param header
-     *            Content-Type header
+     * @param header Content-Type header
      * @return Content-Type, or {@code null} if the header was invalid or empty
-     * @throws AcmeProtocolException
-     *             if the Content-Type header contains a different charset than "utf-8".
+     * @throws AcmeProtocolException if the Content-Type header contains a different charset than "utf-8".
      */
     @CheckForNull
     public static String getContentType(@Nullable String header) {
@@ -292,10 +277,8 @@ public final class AcmeUtils {
     /**
      * Validates a contact {@link URI}.
      *
-     * @param contact
-     *            Contact {@link URI} to validate
-     * @throws IllegalArgumentException
-     *             if the contact {@link URI} is not suitable for account contacts.
+     * @param contact Contact {@link URI} to validate
+     * @throws IllegalArgumentException if the contact {@link URI} is not suitable for account contacts.
      */
     public static void validateContact(URI contact) {
         if ("mailto".equalsIgnoreCase(contact.getScheme())) {

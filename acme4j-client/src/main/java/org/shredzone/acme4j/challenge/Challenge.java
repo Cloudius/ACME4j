@@ -13,11 +13,6 @@
  */
 package org.shredzone.acme4j.challenge;
 
-import java.time.Instant;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.AcmeJsonResource;
 import org.shredzone.acme4j.Login;
 import org.shredzone.acme4j.Problem;
@@ -30,6 +25,10 @@ import org.shredzone.acme4j.toolbox.JSON.Value;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.time.Instant;
 
 /**
  * A generic challenge. It can be used as a base class for actual challenge
@@ -54,10 +53,8 @@ public class Challenge extends AcmeJsonResource {
     /**
      * Creates a new generic {@link Challenge} object.
      *
-     * @param login
-     *            {@link Login} the resource is bound with
-     * @param data
-     *            {@link JSON} challenge data
+     * @param login {@link Login} the resource is bound with
+     * @param data  {@link JSON} challenge data
      */
     public Challenge(Login login, JSON data) {
         super(login, data.get(KEY_URL).asURL());
@@ -97,15 +94,14 @@ public class Challenge extends AcmeJsonResource {
     @CheckForNull
     public Problem getError() {
         return getJSON().get(KEY_ERROR)
-                    .map(it -> it.asProblem(getLocation()))
-                    .orElse(null);
+                .map(it -> it.asProblem(getLocation()))
+                .orElse(null);
     }
 
     /**
      * Exports the response state, as preparation for triggering the challenge.
      *
-     * @param response
-     *            {@link JSONBuilder} to write the response to
+     * @param response {@link JSONBuilder} to write the response to
      */
     protected void prepareResponse(JSONBuilder response) {
         // Do nothing here...
@@ -114,8 +110,7 @@ public class Challenge extends AcmeJsonResource {
     /**
      * Checks if the type is acceptable to this challenge.
      *
-     * @param type
-     *            Type to check
+     * @param type Type to check
      * @return {@code true} if acceptable, {@code false} if not
      */
     protected boolean acceptable(String type) {

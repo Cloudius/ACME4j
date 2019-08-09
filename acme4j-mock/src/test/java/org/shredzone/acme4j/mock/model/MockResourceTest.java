@@ -13,13 +13,13 @@
  */
 package org.shredzone.acme4j.mock.model;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.shredzone.acme4j.toolbox.JSON;
 
 import java.net.URL;
 
-import org.junit.Test;
-import org.shredzone.acme4j.toolbox.JSON;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Unit tests for {@link MockResource}.

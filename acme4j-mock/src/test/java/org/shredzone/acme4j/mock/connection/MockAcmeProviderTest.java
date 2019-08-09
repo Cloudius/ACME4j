@@ -13,17 +13,17 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
+import org.junit.Test;
+import org.shredzone.acme4j.connector.Connection;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.function.Function;
 
-import org.junit.Test;
-import org.shredzone.acme4j.connector.Connection;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 /**
  * Unit tests for {@link MockAcmeProvider}.

@@ -13,15 +13,15 @@
  */
 package org.shredzone.acme4j.provider.letsencrypt;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
+import org.junit.Test;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
 
 /**
  * Unit tests for {@link LetsEncryptAcmeProvider}.

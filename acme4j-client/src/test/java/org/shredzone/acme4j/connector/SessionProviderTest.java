@@ -13,19 +13,19 @@
  */
 package org.shredzone.acme4j.connector;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-
-import java.net.URI;
-import java.net.URL;
-import java.util.ServiceLoader;
-
 import org.junit.Test;
 import org.shredzone.acme4j.Login;
 import org.shredzone.acme4j.Session;
 import org.shredzone.acme4j.challenge.Challenge;
 import org.shredzone.acme4j.provider.AcmeProvider;
 import org.shredzone.acme4j.toolbox.JSON;
+
+import java.net.URI;
+import java.net.URL;
+import java.util.ServiceLoader;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Unit tests for {@link Session#provider()}. Requires that both enclosed
@@ -73,7 +73,7 @@ public class SessionProviderTest {
         public boolean accepts(URI serverUri) {
             return "acme".equals(serverUri.getScheme())
                     && ("example.com".equals(serverUri.getHost())
-                           || "example.net".equals(serverUri.getHost()));
+                    || "example.net".equals(serverUri.getHost()));
         }
 
         @Override

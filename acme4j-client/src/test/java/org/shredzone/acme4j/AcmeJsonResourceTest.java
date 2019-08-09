@@ -13,17 +13,17 @@
  */
 package org.shredzone.acme4j;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
-
-import java.net.URL;
-
 import org.junit.Test;
 import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.TestUtils;
+
+import java.net.URL;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
 
 /**
  * Unit tests for {@link AcmeJsonResource}.
@@ -104,10 +104,8 @@ public class AcmeJsonResourceTest {
      * Assert that {@link AcmeJsonResource#update()} has been invoked a given number of
      * times.
      *
-     * @param resource
-     *            {@link AcmeJsonResource} to test
-     * @param count
-     *            Expected number of times
+     * @param resource {@link AcmeJsonResource} to test
+     * @param count    Expected number of times
      */
     private static void assertUpdateInvoked(AcmeJsonResource resource, int count) {
         DummyJsonResource dummy = (DummyJsonResource) resource;

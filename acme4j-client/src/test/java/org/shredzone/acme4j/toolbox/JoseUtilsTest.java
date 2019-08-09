@@ -13,13 +13,13 @@
  */
 package org.shredzone.acme4j.toolbox;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
+import org.jose4j.jwk.PublicJsonWebKey;
+import org.jose4j.jws.JsonWebSignature;
+import org.jose4j.jwx.CompactSerializer;
+import org.jose4j.lang.JoseException;
+import org.junit.Test;
 
+import javax.crypto.SecretKey;
 import java.net.URL;
 import java.security.KeyPair;
 import java.security.PublicKey;
@@ -27,13 +27,12 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.crypto.SecretKey;
-
-import org.jose4j.jwk.PublicJsonWebKey;
-import org.jose4j.jws.JsonWebSignature;
-import org.jose4j.jwx.CompactSerializer;
-import org.jose4j.lang.JoseException;
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
 
 /**
  * Unit tests for {@link JoseUtils}.
@@ -277,14 +276,10 @@ public class JoseUtilsTest {
      * Asserts that the serialized external account binding is valid. Unit test fails if
      * the account binding is invalid.
      *
-     * @param serialized
-     *         Serialized external account binding JOSE structure
-     * @param resourceUrl
-     *         Expected resource {@link URL}
-     * @param keyIdentifier
-     *         Expected key identifier
-     * @param macKey
-     *         Expected {@link SecretKey}
+     * @param serialized    Serialized external account binding JOSE structure
+     * @param resourceUrl   Expected resource {@link URL}
+     * @param keyIdentifier Expected key identifier
+     * @param macKey        Expected {@link SecretKey}
      */
     public static void assertExternalAccountBinding(String serialized, URL resourceUrl,
                                                     String keyIdentifier, SecretKey macKey) {

@@ -13,9 +13,9 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.Test;
+import org.shredzone.acme4j.util.CSRBuilder;
+import org.shredzone.acme4j.util.KeyPairUtils;
 
 import java.security.KeyPair;
 import java.security.PublicKey;
@@ -25,9 +25,9 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import org.junit.Test;
-import org.shredzone.acme4j.util.CSRBuilder;
-import org.shredzone.acme4j.util.KeyPairUtils;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Unit tests for {@link MockCertificateAuthority}

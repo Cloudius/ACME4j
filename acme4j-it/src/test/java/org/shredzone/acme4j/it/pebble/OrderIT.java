@@ -13,28 +13,8 @@
  */
 package org.shredzone.acme4j.it.pebble;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.await;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
-import java.net.URI;
-import java.security.KeyPair;
-import java.security.cert.X509Certificate;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-
 import org.junit.Test;
-import org.shredzone.acme4j.Account;
-import org.shredzone.acme4j.AccountBuilder;
-import org.shredzone.acme4j.Authorization;
-import org.shredzone.acme4j.Certificate;
-import org.shredzone.acme4j.Login;
-import org.shredzone.acme4j.Order;
-import org.shredzone.acme4j.RevocationReason;
-import org.shredzone.acme4j.Session;
-import org.shredzone.acme4j.Status;
+import org.shredzone.acme4j.*;
 import org.shredzone.acme4j.challenge.Challenge;
 import org.shredzone.acme4j.challenge.Dns01Challenge;
 import org.shredzone.acme4j.challenge.Http01Challenge;
@@ -43,6 +23,19 @@ import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.exception.AcmeServerException;
 import org.shredzone.acme4j.it.BammBammClient;
 import org.shredzone.acme4j.util.CSRBuilder;
+
+import java.net.URI;
+import java.security.KeyPair;
+import java.security.cert.X509Certificate;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Tests a complete certificate order with different challenges.
@@ -103,8 +96,8 @@ public class OrderIT extends PebbleITBase {
             assertThat(challenge, is(notNullValue()));
 
             client.tlsAlpnAddCertificate(
-                        auth.getIdentifier().getDomain(),
-                        challenge.getAuthorization());
+                    auth.getIdentifier().getDomain(),
+                    challenge.getAuthorization());
 
             cleanup(() -> client.tlsAlpnRemoveCertificate(auth.getIdentifier().getDomain()));
 
@@ -134,13 +127,10 @@ public class OrderIT extends PebbleITBase {
     /**
      * Runs the complete process of ordering a certificate.
      *
-     * @param domain
-     *            Name of the domain to order a certificate for
-     * @param validator
-     *            {@link Validator} that finds and prepares a {@link Challenge} for domain
-     *            validation
-     * @param revoker
-     *            {@link Revoker} that finally revokes the certificate
+     * @param domain    Name of the domain to order a certificate for
+     * @param validator {@link Validator} that finds and prepares a {@link Challenge} for domain
+     *                  validation
+     * @param revoker   {@link Revoker} that finally revokes the certificate
      */
     private void orderCertificate(String domain, Validator validator, Revoker revoker)
             throws Exception {
@@ -148,9 +138,9 @@ public class OrderIT extends PebbleITBase {
         Session session = new Session(pebbleURI());
 
         Account account = new AccountBuilder()
-                    .agreeToTermsOfService()
-                    .useKeyPair(keyPair)
-                    .create(session);
+                .agreeToTermsOfService()
+                .useKeyPair(keyPair)
+                .create(session);
 
         KeyPair domainKeyPair = createKeyPair();
 
@@ -158,10 +148,10 @@ public class OrderIT extends PebbleITBase {
         Instant notAfter = notBefore.plus(Duration.ofDays(20L));
 
         Order order = account.newOrder()
-                    .domain(domain)
-                    .notBefore(notBefore)
-                    .notAfter(notAfter)
-                    .create();
+                .domain(domain)
+                .notBefore(notBefore)
+                .notAfter(notAfter)
+                .create();
         assertThat(order.getNotBefore(), is(notBefore));
         assertThat(order.getNotAfter(), is(notAfter));
         assertThat(order.getStatus(), is(Status.PENDING));
@@ -178,10 +168,10 @@ public class OrderIT extends PebbleITBase {
             challenge.trigger();
 
             await()
-                .pollInterval(1, SECONDS)
-                .timeout(30, SECONDS)
-                .conditionEvaluationListener(cond -> updateAuth(auth))
-                .until(auth::getStatus, not(isOneOf(Status.PENDING, Status.PROCESSING)));
+                    .pollInterval(1, SECONDS)
+                    .timeout(30, SECONDS)
+                    .conditionEvaluationListener(cond -> updateAuth(auth))
+                    .until(auth::getStatus, not(isOneOf(Status.PENDING, Status.PROCESSING)));
 
             if (auth.getStatus() != Status.VALID) {
                 fail("Authorization failed");
@@ -196,10 +186,10 @@ public class OrderIT extends PebbleITBase {
         order.execute(encodedCsr);
 
         await()
-            .pollInterval(1, SECONDS)
-            .timeout(30, SECONDS)
-            .conditionEvaluationListener(cond -> updateOrder(order))
-            .until(order::getStatus, not(isOneOf(Status.PENDING, Status.PROCESSING, Status.READY)));
+                .pollInterval(1, SECONDS)
+                .timeout(30, SECONDS)
+                .conditionEvaluationListener(cond -> updateOrder(order))
+                .until(order::getStatus, not(isOneOf(Status.PENDING, Status.PROCESSING, Status.READY)));
 
         if (order.getStatus() != Status.VALID) {
             fail("Order failed");
@@ -212,7 +202,7 @@ public class OrderIT extends PebbleITBase {
         assertThat(cert.getNotBefore(), not(nullValue()));
         assertThat(cert.getSubjectX500Principal().getName(), containsString("CN=" + domain));
 
-        for (Authorization auth :  order.getAuthorizations()) {
+        for (Authorization auth : order.getAuthorizations()) {
             assertThat(auth.getStatus(), is(Status.VALID));
             auth.deactivate();
             assertThat(auth.getStatus(), is(Status.DEACTIVATED));
@@ -244,7 +234,7 @@ public class OrderIT extends PebbleITBase {
      * This is the standard way to revoke a certificate.
      */
     private static void standardRevoker(Session session, Certificate certificate,
-            KeyPair keyPair, KeyPair domainKeyPair) throws Exception {
+                                        KeyPair keyPair, KeyPair domainKeyPair) throws Exception {
         certificate.revoke(RevocationReason.KEY_COMPROMISE);
     }
 
@@ -254,7 +244,7 @@ public class OrderIT extends PebbleITBase {
      * This way can be used when the account key was lost.
      */
     private static void domainKeyRevoker(Session session, Certificate certificate,
-            KeyPair keyPair, KeyPair domainKeyPair) throws Exception {
+                                         KeyPair keyPair, KeyPair domainKeyPair) throws Exception {
         Certificate.revoke(session, domainKeyPair, certificate.getCertificate(),
                 RevocationReason.KEY_COMPROMISE);
     }
@@ -267,7 +257,7 @@ public class OrderIT extends PebbleITBase {
     @FunctionalInterface
     private static interface Revoker {
         void revoke(Session session, Certificate certificate, KeyPair keyPair,
-            KeyPair domainKeyPair) throws Exception;
+                    KeyPair domainKeyPair) throws Exception;
     }
 
 }

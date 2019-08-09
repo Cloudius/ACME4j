@@ -13,12 +13,11 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import java.net.URL;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.mock.model.MockDirectory;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
 
 /**
  * A {@link Controller} that returns the directory structure.
@@ -32,8 +31,7 @@ public class DirectoryController implements Controller {
     /**
      * Creates a new {@link DirectoryController}.
      *
-     * @param directory
-     *         {@link MockDirectory} this controller is bound to
+     * @param directory {@link MockDirectory} this controller is bound to
      */
     public DirectoryController(MockDirectory directory) {
         this.directory = directory;
@@ -41,7 +39,7 @@ public class DirectoryController implements Controller {
 
     /**
      * Returns the directory structure.
-     *
+     * <p>
      * {@inheritDoc}
      */
     @Override

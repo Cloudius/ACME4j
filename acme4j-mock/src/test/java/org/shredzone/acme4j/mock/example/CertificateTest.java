@@ -13,24 +13,19 @@
  */
 package org.shredzone.acme4j.mock.example;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.shredzone.acme4j.*;
+import org.shredzone.acme4j.mock.MockAcmeServer;
+import org.shredzone.acme4j.mock.connection.ProblemBuilder;
+import org.shredzone.acme4j.mock.model.MockOrder;
+import org.shredzone.acme4j.util.KeyPairUtils;
 
 import java.security.KeyPair;
 import java.security.cert.X509Certificate;
 import java.util.List;
 
-import org.junit.Test;
-import org.shredzone.acme4j.Certificate;
-import org.shredzone.acme4j.Identifier;
-import org.shredzone.acme4j.Login;
-import org.shredzone.acme4j.Order;
-import org.shredzone.acme4j.Problem;
-import org.shredzone.acme4j.Status;
-import org.shredzone.acme4j.mock.MockAcmeServer;
-import org.shredzone.acme4j.mock.connection.ProblemBuilder;
-import org.shredzone.acme4j.mock.model.MockOrder;
-import org.shredzone.acme4j.util.KeyPairUtils;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * This test shows how to prepare a mock server for a unit test.
@@ -50,8 +45,7 @@ public class CertificateTest {
      * This is the method to be unit tested. It receives an {@link Order} and downloads
      * the certificate chain.
      *
-     * @param order
-     *         A valid {@link Order} to download the certificate from
+     * @param order A valid {@link Order} to download the certificate from
      * @return A list of {@link X509Certificate} that was downloaded
      */
     public List<X509Certificate> downloadCertificate(Order order) {

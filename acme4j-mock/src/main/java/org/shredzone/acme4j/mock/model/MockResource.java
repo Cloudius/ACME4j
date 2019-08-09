@@ -13,14 +13,13 @@
  */
 package org.shredzone.acme4j.mock.model;
 
+import org.shredzone.acme4j.toolbox.JSON;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.UUID;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
-import org.shredzone.acme4j.toolbox.JSON;
 
 /**
  * A generic mock resource.
@@ -56,14 +55,13 @@ public abstract class MockResource {
 
     @Override
     public String toString() {
-        return getLocation() + ": " +toJSON();
+        return getLocation() + ": " + toJSON();
     }
 
     /**
      * Builds an {@link URL} from the given path components.
      *
-     * @param path
-     *         Elements of the URL path
+     * @param path Elements of the URL path
      * @return Fake https URL that refers to a mock server and contains the path elements
      */
     protected static URL buildUrl(String... path) {

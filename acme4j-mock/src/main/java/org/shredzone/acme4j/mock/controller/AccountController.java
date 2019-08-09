@@ -13,20 +13,19 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import java.net.URI;
-import java.net.URL;
-import java.security.PublicKey;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.Status;
 import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.mock.connection.MockError;
 import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.mock.model.MockAccount;
 import org.shredzone.acme4j.toolbox.JSON;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URI;
+import java.net.URL;
+import java.security.PublicKey;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A {@link Controller} that handles account related requests.
@@ -40,8 +39,7 @@ public class AccountController implements Controller {
     /**
      * Creates a new {@link AccountController}.
      *
-     * @param account
-     *         {@link MockAccount} this controller is bound to
+     * @param account {@link MockAccount} this controller is bound to
      */
     public AccountController(MockAccount account) {
         this.account = account;
@@ -49,7 +47,7 @@ public class AccountController implements Controller {
 
     /**
      * Just return the current state of the account.
-     *
+     * <p>
      * {@inheritDoc}
      */
     @Override
@@ -59,7 +57,7 @@ public class AccountController implements Controller {
 
     /**
      * Modifies the account, then returns the new state.
-     *
+     * <p>
      * {@inheritDoc}
      */
     @Override

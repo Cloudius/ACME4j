@@ -13,16 +13,6 @@
  */
 package org.shredzone.acme4j;
 
-import static java.util.stream.Collectors.toList;
-
-import java.net.URL;
-import java.time.Instant;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.challenge.Challenge;
 import org.shredzone.acme4j.connector.Connection;
 import org.shredzone.acme4j.exception.AcmeException;
@@ -33,6 +23,15 @@ import org.shredzone.acme4j.toolbox.JSON.Value;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.time.Instant;
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Represents an authorization request at the ACME server.
@@ -76,9 +75,9 @@ public class Authorization extends AcmeJsonResource {
     @CheckForNull
     public Instant getExpires() {
         return getJSON().get("expires")
-                    .map(Value::asString)
-                    .map(AcmeUtils::parseTimestamp)
-                    .orElse(null);
+                .map(Value::asString)
+                .map(AcmeUtils::parseTimestamp)
+                .orElse(null);
     }
 
     /**
@@ -87,8 +86,8 @@ public class Authorization extends AcmeJsonResource {
      */
     public boolean isWildcard() {
         return getJSON().get("wildcard")
-                    .map(Value::asBoolean)
-                    .orElse(false);
+                .map(Value::asBoolean)
+                .orElse(false);
     }
 
     /**
@@ -98,11 +97,11 @@ public class Authorization extends AcmeJsonResource {
         Login login = getLogin();
 
         return Collections.unmodifiableList(getJSON().get("challenges")
-                    .asArray()
-                    .stream()
-                    .map(Value::asObject)
-                    .map(login::createChallenge)
-                    .collect(toList()));
+                .asArray()
+                .stream()
+                .map(Value::asObject)
+                .map(login::createChallenge)
+                .collect(toList()));
     }
 
     /**
@@ -112,18 +111,18 @@ public class Authorization extends AcmeJsonResource {
      * {@link Authorization#findChallenge(Class)} should be preferred, as this variant
      * is not type safe.
      *
-     * @param type
-     *            Challenge name (e.g. "http-01")
+     * @param type Challenge name (e.g. "http-01")
      * @return {@link Challenge} matching that name, or {@code null} if there is no such
-     *         challenge, or if the challenge alone is not sufficient for authorization.
-     * @throws ClassCastException
-     *             if the type does not match the expected Challenge class type
+     * challenge, or if the challenge alone is not sufficient for authorization.
+     * @throws ClassCastException if the type does not match the expected Challenge class type
      */
     @CheckForNull
     public <T extends Challenge> T findChallenge(final String type) {
         return (T) getChallenges().stream()
                 .filter(ch -> type.equals(ch.getType()))
-                .reduce((a, b) -> {throw new AcmeProtocolException("Found more than one challenge of type " + type);})
+                .reduce((a, b) -> {
+                    throw new AcmeProtocolException("Found more than one challenge of type " + type);
+                })
                 .orElse(null);
     }
 
@@ -131,8 +130,7 @@ public class Authorization extends AcmeJsonResource {
      * Finds a {@link Challenge} of the given class type. Responding to this {@link
      * Challenge} is sufficient for authorization.
      *
-     * @param type
-     *         Challenge type (e.g. "Http01Challenge.class")
+     * @param type Challenge type (e.g. "Http01Challenge.class")
      * @return {@link Challenge} of that type, or {@code null} if there is no such
      * challenge, or if the challenge alone is not sufficient for authorization.
      * @since 2.8
@@ -142,7 +140,9 @@ public class Authorization extends AcmeJsonResource {
         return getChallenges().stream()
                 .filter(type::isInstance)
                 .map(type::cast)
-                .reduce((a, b) -> {throw new AcmeProtocolException("Found more than one challenge of type " + type.getName());})
+                .reduce((a, b) -> {
+                    throw new AcmeProtocolException("Found more than one challenge of type " + type.getName());
+                })
                 .orElse(null);
     }
 

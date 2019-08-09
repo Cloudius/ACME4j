@@ -5,8 +5,23 @@
   "uri": "mailto:foo@example.com",
   "url": "http://example.com",
   "date": "2016-01-08T00:00:00Z",
-  "array": ["foo", 987, [1, 2, 3], {"test": "ok"}],
-  "collect": ["foo", "bar", "barfoo"],
+  "array": [
+    "foo",
+    987,
+    [
+      1,
+      2,
+      3
+    ],
+    {
+      "test": "ok"
+    }
+  ],
+  "collect": [
+    "foo",
+    "bar",
+    "barfoo"
+  ],
   "status": "VALID",
   "binary": "Q2hhaW5zYXc",
   "duration": 86400,

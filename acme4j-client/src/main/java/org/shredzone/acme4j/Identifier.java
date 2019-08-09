@@ -13,20 +13,19 @@
  */
 package org.shredzone.acme4j;
 
-import static java.util.Objects.requireNonNull;
-import static org.shredzone.acme4j.toolbox.AcmeUtils.toAce;
+import org.shredzone.acme4j.exception.AcmeProtocolException;
+import org.shredzone.acme4j.toolbox.JSON;
+import org.shredzone.acme4j.toolbox.JSONBuilder;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.concurrent.Immutable;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.concurrent.Immutable;
-
-import org.shredzone.acme4j.exception.AcmeProtocolException;
-import org.shredzone.acme4j.toolbox.JSON;
-import org.shredzone.acme4j.toolbox.JSONBuilder;
+import static java.util.Objects.requireNonNull;
+import static org.shredzone.acme4j.toolbox.AcmeUtils.toAce;
 
 /**
  * Represents an identifier.
@@ -70,10 +69,8 @@ public class Identifier implements Serializable {
      * Note that for DNS identifiers, no ASCII encoding of unicode domain takes place
      * here. Use {@link #dns(String)} instead.
      *
-     * @param type
-     *            Identifier type
-     * @param value
-     *            Identifier value
+     * @param type  Identifier type
+     * @param value Identifier value
      */
     public Identifier(String type, String value) {
         this.type = requireNonNull(type, KEY_TYPE);
@@ -83,8 +80,7 @@ public class Identifier implements Serializable {
     /**
      * Creates a new {@link Identifier} from the given {@link JSON} structure.
      *
-     * @param json
-     *            {@link JSON} containing the identifier data
+     * @param json {@link JSON} containing the identifier data
      */
     public Identifier(JSON json) {
         this(json.get(KEY_TYPE).asString(), json.get(KEY_VALUE).asString());
@@ -93,8 +89,7 @@ public class Identifier implements Serializable {
     /**
      * Creates a new DNS identifier for the given domain name.
      *
-     * @param domain
-     *            Domain name. Unicode domains are automatically ASCII encoded.
+     * @param domain Domain name. Unicode domains are automatically ASCII encoded.
      * @return New {@link Identifier}
      */
     public static Identifier dns(String domain) {
@@ -104,8 +99,7 @@ public class Identifier implements Serializable {
     /**
      * Creates a new IP identifier for the given {@link InetAddress}.
      *
-     * @param ip
-     *            {@link InetAddress}
+     * @param ip {@link InetAddress}
      * @return New {@link Identifier}
      */
     public static Identifier ip(InetAddress ip) {
@@ -115,8 +109,7 @@ public class Identifier implements Serializable {
     /**
      * Creates a new IP identifier for the given {@link InetAddress}.
      *
-     * @param ip
-     *            IP address as {@link String}
+     * @param ip IP address as {@link String}
      * @return New {@link Identifier}
      * @since 2.7
      */
@@ -146,8 +139,7 @@ public class Identifier implements Serializable {
      * Returns the domain name if this is a DNS identifier.
      *
      * @return Domain name. Unicode domains are ASCII encoded.
-     * @throws AcmeProtocolException
-     *             if this is not a DNS identifier.
+     * @throws AcmeProtocolException if this is not a DNS identifier.
      */
     public String getDomain() {
         if (!TYPE_DNS.equals(type)) {
@@ -160,8 +152,7 @@ public class Identifier implements Serializable {
      * Returns the IP address if this is an IP identifier.
      *
      * @return {@link InetAddress}
-     * @throws AcmeProtocolException
-     *             if this is not a DNS identifier.
+     * @throws AcmeProtocolException if this is not a DNS identifier.
      */
     public InetAddress getIP() {
         if (!TYPE_IP.equals(type)) {

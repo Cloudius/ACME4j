@@ -13,19 +13,6 @@
  */
 package org.shredzone.acme4j;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.net.URI;
-import java.security.KeyPair;
-import java.security.Security;
-import java.util.Arrays;
-import java.util.Collection;
-
-import javax.swing.JOptionPane;
-
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.shredzone.acme4j.challenge.Challenge;
 import org.shredzone.acme4j.challenge.Dns01Challenge;
@@ -35,6 +22,14 @@ import org.shredzone.acme4j.util.CSRBuilder;
 import org.shredzone.acme4j.util.KeyPairUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.io.*;
+import java.net.URI;
+import java.security.KeyPair;
+import java.security.Security;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * A simple client test tool.
@@ -62,14 +57,13 @@ public class ClientTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ClientTest.class);
 
-    private enum ChallengeType { HTTP, DNS }
+    private enum ChallengeType {HTTP, DNS}
 
     /**
      * Generates a certificate for the given domains. Also takes care for the registration
      * process.
      *
-     * @param domains
-     *            Domains to get a common certificate for
+     * @param domains Domains to get a common certificate for
      */
     public void fetchCertificate(Collection<String> domains) throws IOException, AcmeException {
         // Load the user key file. If there is no key file, create a new one.
@@ -199,8 +193,7 @@ public class ClientTest {
      * access to your account later, reconnect to it via
      * {@link Account#bind(Session, URI)} by using the stored location.
      *
-     * @param session
-     *            {@link Session} to bind with
+     * @param session {@link Session} to bind with
      * @return {@link Login} that is connected to your account
      */
     private Account findOrRegisterAccount(Session session, KeyPair accountKey) throws AcmeException {
@@ -211,9 +204,9 @@ public class ClientTest {
         }
 
         Account account = new AccountBuilder()
-                        .agreeToTermsOfService()
-                        .useKeyPair(accountKey)
-                        .create(session);
+                .agreeToTermsOfService()
+                .useKeyPair(accountKey)
+                .create(session);
         LOG.info("Registered a new user, URL: {}", account.getLocation());
 
         return account;
@@ -223,8 +216,7 @@ public class ClientTest {
      * Authorize a domain. It will be associated with your account, so you will be able to
      * retrieve a signed certificate for the domain later.
      *
-     * @param auth
-     *            {@link Authorization} to perform
+     * @param auth {@link Authorization} to perform
      */
     private void authorize(Authorization auth) throws AcmeException {
         LOG.info("Authorization for domain {}", auth.getIdentifier().getDomain());
@@ -298,8 +290,7 @@ public class ClientTest {
      * production environment, you would rather generate this file automatically, or maybe
      * use a servlet that returns {@link Http01Challenge#getAuthorization()}.
      *
-     * @param auth
-     *            {@link Authorization} to find the challenge in
+     * @param auth {@link Authorization} to find the challenge in
      * @return {@link Challenge} to verify
      */
     public Challenge httpChallenge(Authorization auth) throws AcmeException {
@@ -312,7 +303,7 @@ public class ClientTest {
         // Output the challenge, wait for acknowledge...
         LOG.info("Please create a file in your web server's base directory.");
         LOG.info("It must be reachable at: http://{}/.well-known/acme-challenge/{}",
-                    auth.getIdentifier().getDomain(), challenge.getToken());
+                auth.getIdentifier().getDomain(), challenge.getToken());
         LOG.info("File name: {}", challenge.getToken());
         LOG.info("Content: {}", challenge.getAuthorization());
         LOG.info("The file must not contain any leading or trailing whitespaces or line breaks!");
@@ -321,10 +312,10 @@ public class ClientTest {
         StringBuilder message = new StringBuilder();
         message.append("Please create a file in your web server's base directory.\n\n");
         message.append("http://")
-                    .append(auth.getIdentifier().getDomain())
-                    .append("/.well-known/acme-challenge/")
-                    .append(challenge.getToken())
-                    .append("\n\n");
+                .append(auth.getIdentifier().getDomain())
+                .append("/.well-known/acme-challenge/")
+                .append(challenge.getToken())
+                .append("\n\n");
         message.append("Content:\n\n");
         message.append(challenge.getAuthorization());
         acceptChallenge(message.toString());
@@ -340,8 +331,7 @@ public class ClientTest {
      * This example outputs instructions that need to be executed manually. In a
      * production environment, you would rather configure your DNS automatically.
      *
-     * @param auth
-     *            {@link Authorization} to find the challenge in
+     * @param auth {@link Authorization} to find the challenge in
      * @return {@link Challenge} to verify
      */
     public Challenge dnsChallenge(Authorization auth) throws AcmeException {
@@ -354,15 +344,15 @@ public class ClientTest {
         // Output the challenge, wait for acknowledge...
         LOG.info("Please create a TXT record:");
         LOG.info("_acme-challenge.{}. IN TXT {}",
-                    auth.getIdentifier().getDomain(), challenge.getDigest());
+                auth.getIdentifier().getDomain(), challenge.getDigest());
         LOG.info("If you're ready, dismiss the dialog...");
 
         StringBuilder message = new StringBuilder();
         message.append("Please create a TXT record:\n\n");
         message.append("_acme-challenge.")
-                    .append(auth.getIdentifier().getDomain())
-                    .append(". IN TXT ")
-                    .append(challenge.getDigest());
+                .append(auth.getIdentifier().getDomain())
+                .append(". IN TXT ")
+                .append(challenge.getDigest());
         acceptChallenge(message.toString());
 
         return challenge;
@@ -372,14 +362,13 @@ public class ClientTest {
      * Presents the instructions for preparing the challenge validation, and waits for
      * dismissal. If the user cancelled the dialog, an exception is thrown.
      *
-     * @param message
-     *            Instructions to be shown in the dialog
+     * @param message Instructions to be shown in the dialog
      */
     public void acceptChallenge(String message) throws AcmeException {
         int option = JOptionPane.showConfirmDialog(null,
-                        message,
-                        "Prepare Challenge",
-                        JOptionPane.OK_CANCEL_OPTION);
+                message,
+                "Prepare Challenge",
+                JOptionPane.OK_CANCEL_OPTION);
         if (option == JOptionPane.CANCEL_OPTION) {
             throw new AcmeException("User cancelled the challenge");
         }
@@ -389,28 +378,26 @@ public class ClientTest {
      * Presents the instructions for removing the challenge validation, and waits for
      * dismissal.
      *
-     * @param message
-     *            Instructions to be shown in the dialog
+     * @param message Instructions to be shown in the dialog
      */
     public void completeChallenge(String message) throws AcmeException {
         JOptionPane.showMessageDialog(null,
-                        message,
-                        "Complete Challenge",
-                        JOptionPane.INFORMATION_MESSAGE);
+                message,
+                "Complete Challenge",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
      * Presents the user a link to the Terms of Service, and asks for confirmation. If the
      * user denies confirmation, an exception is thrown.
      *
-     * @param agreement
-     *            {@link URI} of the Terms of Service
+     * @param agreement {@link URI} of the Terms of Service
      */
     public void acceptAgreement(URI agreement) throws AcmeException {
         int option = JOptionPane.showConfirmDialog(null,
-                        "Do you accept the Terms of Service?\n\n" + agreement,
-                        "Accept ToS",
-                        JOptionPane.YES_NO_OPTION);
+                "Do you accept the Terms of Service?\n\n" + agreement,
+                "Accept ToS",
+                JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.NO_OPTION) {
             throw new AcmeException("User did not accept Terms of Service");
         }
@@ -419,8 +406,7 @@ public class ClientTest {
     /**
      * Invokes this example.
      *
-     * @param args
-     *            Domains to get a certificate for
+     * @param args Domains to get a certificate for
      */
     public static void main(String... args) {
         if (args.length == 0) {

@@ -13,12 +13,12 @@
  */
 package org.shredzone.acme4j;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
+import org.junit.Test;
+import org.shredzone.acme4j.connector.Resource;
+import org.shredzone.acme4j.exception.AcmeException;
+import org.shredzone.acme4j.provider.TestableConnectionProvider;
+import org.shredzone.acme4j.toolbox.JSONBuilder;
+import org.shredzone.acme4j.toolbox.TestUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,12 +33,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Test;
-import org.shredzone.acme4j.connector.Resource;
-import org.shredzone.acme4j.exception.AcmeException;
-import org.shredzone.acme4j.provider.TestableConnectionProvider;
-import org.shredzone.acme4j.toolbox.JSONBuilder;
-import org.shredzone.acme4j.toolbox.TestUtils;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
 
 /**
  * Unit tests for {@link Certificate}.
@@ -92,16 +92,16 @@ public class CertificateTest {
         byte[] writtenPem;
         byte[] originalPem;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                OutputStreamWriter w = new OutputStreamWriter(baos)) {
+             OutputStreamWriter w = new OutputStreamWriter(baos)) {
             cert.writeCertificate(w);
             w.flush();
             writtenPem = baos.toByteArray();
         }
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                InputStream in = getClass().getResourceAsStream("/cert.pem")) {
+             InputStream in = getClass().getResourceAsStream("/cert.pem")) {
             int len;
             byte[] buffer = new byte[2048];
-            while((len = in.read(buffer)) >= 0) {
+            while ((len = in.read(buffer)) >= 0) {
                 baos.write(buffer, 0, len);
             }
             originalPem = baos.toByteArray();

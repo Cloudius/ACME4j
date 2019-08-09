@@ -13,15 +13,14 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import java.net.URL;
-import java.security.PublicKey;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.Status;
 import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.mock.model.MockChallenge;
 import org.shredzone.acme4j.toolbox.JSON;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.security.PublicKey;
 
 /**
  * A {@link Controller} that handles challenge requests.
@@ -35,8 +34,7 @@ public class ChallengeController implements Controller {
     /**
      * Creates a new {@link ChallengeController}.
      *
-     * @param challenge
-     *         {@link MockChallenge} bound to this controller
+     * @param challenge {@link MockChallenge} bound to this controller
      */
     public ChallengeController(MockChallenge challenge) {
         this.challenge = challenge;
@@ -44,7 +42,7 @@ public class ChallengeController implements Controller {
 
     /**
      * Returns the current state of the challenge.
-     *
+     * <p>
      * {@inheritDoc}
      */
     @Override
@@ -54,7 +52,7 @@ public class ChallengeController implements Controller {
 
     /**
      * Triggers the challenge.
-     *
+     * <p>
      * {@inheritDoc}
      */
     @Override

@@ -13,17 +13,16 @@
  */
 package org.shredzone.acme4j;
 
-import java.util.Arrays;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.Immutable;
+import java.util.Arrays;
 
 /**
  * Enumeration of revocation reasons.
  *
  * @see <a href="https://tools.ietf.org/html/rfc5280#section-5.3.1">RFC 5280 Section
- *      5.3.1</a>
+ * 5.3.1</a>
  */
 @ParametersAreNonnullByDefault
 @Immutable
@@ -56,8 +55,7 @@ public enum RevocationReason {
     /**
      * Returns the {@link RevocationReason} that matches the reason code.
      *
-     * @param reasonCode
-     *            Reason code as defined in RFC 5280
+     * @param reasonCode Reason code as defined in RFC 5280
      * @return Matching {@link RevocationReason}, or {@code null} if not known
      */
     @CheckForNull

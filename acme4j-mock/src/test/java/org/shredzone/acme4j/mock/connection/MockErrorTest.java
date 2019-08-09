@@ -13,28 +13,19 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
-import static java.util.Collections.singleton;
-import static java.util.stream.Collectors.toList;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.shredzone.acme4j.exception.*;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.net.*;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 
-import org.junit.Test;
-import org.shredzone.acme4j.exception.AcmeException;
-import org.shredzone.acme4j.exception.AcmeNetworkException;
-import org.shredzone.acme4j.exception.AcmeRateLimitedException;
-import org.shredzone.acme4j.exception.AcmeServerException;
-import org.shredzone.acme4j.exception.AcmeUnauthorizedException;
-import org.shredzone.acme4j.exception.AcmeUserActionRequiredException;
+import static java.util.Collections.singleton;
+import static java.util.stream.Collectors.toList;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Unit tests for {@link MockError}.

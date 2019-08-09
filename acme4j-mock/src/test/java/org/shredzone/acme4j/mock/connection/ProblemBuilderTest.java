@@ -13,17 +13,17 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.shredzone.acme4j.Identifier;
+import org.shredzone.acme4j.Problem;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import org.junit.Test;
-import org.shredzone.acme4j.Identifier;
-import org.shredzone.acme4j.Problem;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Unit tests for {@link ProblemBuilder}.

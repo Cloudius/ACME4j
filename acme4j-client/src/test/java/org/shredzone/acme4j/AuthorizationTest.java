@@ -13,20 +13,6 @@
  */
 package org.shredzone.acme4j;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.shredzone.acme4j.toolbox.AcmeUtils.parseTimestamp;
-import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.junit.Test;
 import org.shredzone.acme4j.challenge.Challenge;
 import org.shredzone.acme4j.challenge.Dns01Challenge;
@@ -38,6 +24,20 @@ import org.shredzone.acme4j.exception.AcmeRetryAfterException;
 import org.shredzone.acme4j.provider.TestableConnectionProvider;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.shredzone.acme4j.toolbox.AcmeUtils.parseTimestamp;
+import static org.shredzone.acme4j.toolbox.TestUtils.getJSON;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
 
 /**
  * Unit tests for {@link Authorization}.
@@ -149,9 +149,9 @@ public class AuthorizationTest {
         assertThat(auth.getLocation(), is(locationUrl));
 
         assertThat(auth.getChallenges(), containsInAnyOrder(
-                        provider.getChallenge(Http01Challenge.TYPE),
-                        provider.getChallenge(Dns01Challenge.TYPE),
-                        provider.getChallenge(TlsAlpn01Challenge.TYPE)));
+                provider.getChallenge(Http01Challenge.TYPE),
+                provider.getChallenge(Dns01Challenge.TYPE),
+                provider.getChallenge(TlsAlpn01Challenge.TYPE)));
 
         provider.close();
     }
@@ -193,7 +193,7 @@ public class AuthorizationTest {
         assertThat(auth.getLocation(), is(locationUrl));
 
         assertThat(auth.getChallenges(), containsInAnyOrder(
-                        provider.getChallenge(Dns01Challenge.TYPE)));
+                provider.getChallenge(Dns01Challenge.TYPE)));
 
         provider.close();
     }
@@ -295,9 +295,9 @@ public class AuthorizationTest {
         assertThat(auth.getLocation(), is(locationUrl));
 
         assertThat(auth.getChallenges(), containsInAnyOrder(
-                        provider.getChallenge(Http01Challenge.TYPE),
-                        provider.getChallenge(Dns01Challenge.TYPE),
-                        provider.getChallenge(TlsAlpn01Challenge.TYPE)));
+                provider.getChallenge(Http01Challenge.TYPE),
+                provider.getChallenge(Dns01Challenge.TYPE),
+                provider.getChallenge(TlsAlpn01Challenge.TYPE)));
 
         provider.close();
     }

@@ -13,15 +13,6 @@
  */
 package org.shredzone.acme4j.mock.controller;
 
-import java.net.HttpURLConnection;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.security.PublicKey;
-import java.util.Arrays;
-import java.util.Optional;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.mock.MockAcmeServer;
 import org.shredzone.acme4j.mock.connection.MockError;
@@ -29,6 +20,14 @@ import org.shredzone.acme4j.mock.connection.Result;
 import org.shredzone.acme4j.mock.model.MockAccount;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JoseUtils;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.security.PublicKey;
+import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * A {@link Controller} that handles key change requests.
@@ -42,8 +41,7 @@ public class KeyChangeController implements Controller {
     /**
      * Creates a new {@link KeyChangeController}.
      *
-     * @param server
-     *         {@link MockAcmeServer} that is managing the accounts
+     * @param server {@link MockAcmeServer} that is managing the accounts
      */
     public KeyChangeController(MockAcmeServer server) {
         this.server = server;
@@ -52,13 +50,10 @@ public class KeyChangeController implements Controller {
     /**
      * Changes an account key after validation.
      *
-     * @param requestUrl
-     *         Request {@link URL}
-     * @param payload
-     *         Payload containing an inner payload with the account's location and the
-     *         old key, which is signed by the new key.
-     * @param publicKey
-     *         The current account key.
+     * @param requestUrl Request {@link URL}
+     * @param payload    Payload containing an inner payload with the account's location and the
+     *                   old key, which is signed by the new key.
+     * @param publicKey  The current account key.
      * @return Empty result
      */
     @Override

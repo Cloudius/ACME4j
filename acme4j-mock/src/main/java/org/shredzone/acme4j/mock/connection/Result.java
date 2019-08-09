@@ -13,22 +13,21 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
-import static java.util.Collections.unmodifiableList;
-import static java.util.Objects.requireNonNull;
+import org.shredzone.acme4j.mock.model.MockResource;
+import org.shredzone.acme4j.toolbox.JSON;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.concurrent.Immutable;
 import java.net.URL;
 import java.security.cert.X509Certificate;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.concurrent.Immutable;
-
-import org.shredzone.acme4j.mock.model.MockResource;
-import org.shredzone.acme4j.toolbox.JSON;
+import static java.util.Collections.unmodifiableList;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Contains the result of a request.
@@ -60,8 +59,7 @@ public final class Result {
     /**
      * Creates a new JSON type result for the given {@link MockResource}.
      *
-     * @param resource
-     *         {@link MockResource} to use the JSON body and location URL from
+     * @param resource {@link MockResource} to use the JSON body and location URL from
      */
     public Result(MockResource resource) {
         this(resource.toJSON(), resource.getLocation());
@@ -70,8 +68,7 @@ public final class Result {
     /**
      * Creates a new JSON type result.
      *
-     * @param json
-     *         {@link JSON} result body
+     * @param json {@link JSON} result body
      */
     public Result(JSON json) {
         this(json, null, null);
@@ -80,10 +77,8 @@ public final class Result {
     /**
      * Creates a new JSON type result.
      *
-     * @param json
-     *         {@link JSON} result body
-     * @param location
-     *         Location header
+     * @param json     {@link JSON} result body
+     * @param location Location header
      */
     public Result(JSON json, URL location) {
         this(json, location, null);
@@ -92,12 +87,9 @@ public final class Result {
     /**
      * Creates a new JSON type result.
      *
-     * @param json
-     *         {@link JSON} result body
-     * @param location
-     *         Location header, or {@code null} if there is none
-     * @param retryAfter
-     *         Instant of Retry-After header, or {@code null} if there is none
+     * @param json       {@link JSON} result body
+     * @param location   Location header, or {@code null} if there is none
+     * @param retryAfter Instant of Retry-After header, or {@code null} if there is none
      */
     public Result(JSON json, @Nullable URL location, @Nullable Instant retryAfter) {
         this.json = requireNonNull(json, "json");
@@ -109,8 +101,7 @@ public final class Result {
     /**
      * Creates a Certificate type result.
      *
-     * @param certificate
-     *         Certificate chain
+     * @param certificate Certificate chain
      */
     public Result(List<X509Certificate> certificate) {
         this.certificate = unmodifiableList(new ArrayList<>(requireNonNull(certificate, "certificate")));
@@ -159,8 +150,7 @@ public final class Result {
      * <p>
      * Retry-After headers are only acceptable on JSON results.
      *
-     * @param instant
-     *         {@link Instant} of Retry-After header
+     * @param instant {@link Instant} of Retry-After header
      * @return New {@link Result} with the Retry-After header set.
      */
     public Result withRetryAfter(Instant instant) {

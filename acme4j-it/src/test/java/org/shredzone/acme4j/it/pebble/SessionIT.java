@@ -13,17 +13,17 @@
  */
 package org.shredzone.acme4j.it.pebble;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
-
-import java.net.URI;
-
 import org.junit.Test;
 import org.shredzone.acme4j.Metadata;
 import org.shredzone.acme4j.Session;
 import org.shredzone.acme4j.connector.Resource;
 import org.shredzone.acme4j.exception.AcmeException;
+
+import java.net.URI;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
 
 /**
  * Session related integration tests.
@@ -50,8 +50,8 @@ public class SessionIT extends PebbleITBase {
         assertThat(meta.getWebsite(), is(nullValue()));
         assertThat(meta.getCaaIdentities(), is(empty()));
         assertThat(meta.getJSON().toString(), sameJSONAs("{"
-                        + "'termsOfService': 'data:text/plain,Do%20what%20thou%20wilt'"
-                        + "}"));
+                + "'termsOfService': 'data:text/plain,Do%20what%20thou%20wilt'"
+                + "}"));
     }
 
 }

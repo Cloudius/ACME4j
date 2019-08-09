@@ -13,19 +13,19 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.junit.Test;
 import org.shredzone.acme4j.mock.controller.Controller;
 import org.shredzone.acme4j.mock.controller.ControllerWrapper;
 import org.shredzone.acme4j.mock.model.MockResource;
 import org.shredzone.acme4j.toolbox.JSON;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Unit tests for {@link Repository}.
@@ -38,7 +38,8 @@ public class RepositoryTest {
     @Test
     public void testControllers() throws MalformedURLException {
         URL url = new URL("https://mock.test/nop");
-        Controller controller = new Controller() {};
+        Controller controller = new Controller() {
+        };
 
         Repository repository = new Repository();
 
@@ -63,7 +64,8 @@ public class RepositoryTest {
     @Test
     public void testResources() throws MalformedURLException {
         URL url = new URL("https://mock.test/nop");
-        Controller controller = new Controller() {};
+        Controller controller = new Controller() {
+        };
         MockResource resource = new MockResource() {
             @Override
             public URL getLocation() {
@@ -102,8 +104,10 @@ public class RepositoryTest {
     @Test
     public void testWrapper() throws MalformedURLException {
         URL url = new URL("https://mock.test/nop");
-        Controller controller = new Controller() {};
-        Controller wrapper = new ControllerWrapper<Controller>(controller) {};
+        Controller controller = new Controller() {
+        };
+        Controller wrapper = new ControllerWrapper<Controller>(controller) {
+        };
 
         Repository repository = new Repository();
         repository.addController(url, controller);

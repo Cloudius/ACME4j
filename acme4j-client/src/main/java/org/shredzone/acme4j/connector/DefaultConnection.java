@@ -13,51 +13,35 @@
  */
 package org.shredzone.acme4j.connector;
 
-import static java.util.stream.Collectors.toList;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.security.KeyPair;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.Login;
 import org.shredzone.acme4j.Problem;
 import org.shredzone.acme4j.Session;
-import org.shredzone.acme4j.exception.AcmeException;
-import org.shredzone.acme4j.exception.AcmeNetworkException;
-import org.shredzone.acme4j.exception.AcmeProtocolException;
-import org.shredzone.acme4j.exception.AcmeRateLimitedException;
-import org.shredzone.acme4j.exception.AcmeRetryAfterException;
-import org.shredzone.acme4j.exception.AcmeServerException;
-import org.shredzone.acme4j.exception.AcmeUnauthorizedException;
-import org.shredzone.acme4j.exception.AcmeUserActionRequiredException;
+import org.shredzone.acme4j.exception.*;
 import org.shredzone.acme4j.toolbox.AcmeUtils;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.shredzone.acme4j.toolbox.JoseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyPair;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.time.Instant;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Default implementation of {@link Connection}.
@@ -89,8 +73,7 @@ public class DefaultConnection implements Connection {
     /**
      * Creates a new {@link DefaultConnection}.
      *
-     * @param httpConnector
-     *            {@link HttpConnector} to be used for HTTP connections
+     * @param httpConnector {@link HttpConnector} to be used for HTTP connections
      */
     public DefaultConnection(HttpConnector httpConnector) {
         this.httpConnector = Objects.requireNonNull(httpConnector, "httpConnector");
@@ -156,7 +139,7 @@ public class DefaultConnection implements Connection {
 
     @Override
     public int sendSignedRequest(URL url, JSONBuilder claims, Session session, KeyPair keypair)
-                throws AcmeException {
+            throws AcmeException {
         return sendSignedRequest(url, claims, session, keypair, null, MIME_JSON);
     }
 
@@ -269,12 +252,9 @@ public class DefaultConnection implements Connection {
     /**
      * Sends an unsigned GET request.
      *
-     * @param url
-     *            {@link URL} to send the request to.
-     * @param session
-     *            {@link Session} instance to be used for signing and tracking
-     * @param accept
-     *            Accept header
+     * @param url     {@link URL} to send the request to.
+     * @param session {@link Session} instance to be used for signing and tracking
+     * @param accept  Accept header
      * @return HTTP 200 class status that was returned
      */
     protected int sendRequest(URL url, Session session, String accept) throws AcmeException {
@@ -315,24 +295,18 @@ public class DefaultConnection implements Connection {
     /**
      * Sends a signed POST request.
      *
-     * @param url
-     *            {@link URL} to send the request to.
-     * @param claims
-     *            {@link JSONBuilder} containing claims. {@code null} for POST-as-GET
-     *            request.
-     * @param session
-     *            {@link Session} instance to be used for signing and tracking
-     * @param keypair
-     *            {@link KeyPair} to be used for signing
-     * @param accountLocation
-     *            If set, the account location is set as "kid" header. If {@code null},
-     *            the public key is set as "jwk" header.
-     * @param accept
-     *            Accept header
+     * @param url             {@link URL} to send the request to.
+     * @param claims          {@link JSONBuilder} containing claims. {@code null} for POST-as-GET
+     *                        request.
+     * @param session         {@link Session} instance to be used for signing and tracking
+     * @param keypair         {@link KeyPair} to be used for signing
+     * @param accountLocation If set, the account location is set as "kid" header. If {@code null},
+     *                        the public key is set as "jwk" header.
+     * @param accept          Accept header
      * @return HTTP 200 class status that was returned
      */
     protected int sendSignedRequest(URL url, @Nullable JSONBuilder claims, Session session,
-                KeyPair keypair, @Nullable URL accountLocation, String accept) throws AcmeException {
+                                    KeyPair keypair, @Nullable URL accountLocation, String accept) throws AcmeException {
         Objects.requireNonNull(url, "url");
         Objects.requireNonNull(session, "session");
         Objects.requireNonNull(keypair, "keypair");
@@ -359,25 +333,19 @@ public class DefaultConnection implements Connection {
     /**
      * Performs the POST request.
      *
-     * @param url
-     *            {@link URL} to send the request to.
-     * @param claims
-     *            {@link JSONBuilder} containing claims. {@code null} for POST-as-GET
-     *            request.
-     * @param session
-     *            {@link Session} instance to be used for signing and tracking
-     * @param keypair
-     *            {@link KeyPair} to be used for signing
-     * @param accountLocation
-     *            If set, the account location is set as "kid" header. If {@code null},
-     *            the public key is set as "jwk" header.
-     * @param accept
-     *            Accept header
+     * @param url             {@link URL} to send the request to.
+     * @param claims          {@link JSONBuilder} containing claims. {@code null} for POST-as-GET
+     *                        request.
+     * @param session         {@link Session} instance to be used for signing and tracking
+     * @param keypair         {@link KeyPair} to be used for signing
+     * @param accountLocation If set, the account location is set as "kid" header. If {@code null},
+     *                        the public key is set as "jwk" header.
+     * @param accept          Accept header
      * @return HTTP 200 class status that was returned
      */
     private int performRequest(URL url, @Nullable JSONBuilder claims, Session session,
-                KeyPair keypair, @Nullable URL accountLocation, String accept)
-                throws AcmeException {
+                               KeyPair keypair, @Nullable URL accountLocation, String accept)
+            throws AcmeException {
         try {
             if (session.getNonce() == null) {
                 resetNonce(session);
@@ -520,17 +488,16 @@ public class DefaultConnection implements Connection {
         }
 
         conn.getHeaderFields().forEach((key, headers) ->
-            headers.forEach(value ->
-                LOG.debug("HEADER {}: {}", key, value)
-            )
+                headers.forEach(value ->
+                        LOG.debug("HEADER {}: {}", key, value)
+                )
         );
     }
 
     /**
      * Collects links of the given relation.
      *
-     * @param relation
-     *            Link relation
+     * @param relation Link relation
      * @return Collection of links, unconverted
      */
     private Collection<String> collectLinks(String relation) {
@@ -540,7 +507,7 @@ public class DefaultConnection implements Connection {
 
         List<String> links = conn.getHeaderFields().get(LINK_HEADER);
         if (links != null) {
-            Pattern p = Pattern.compile("<(.*?)>\\s*;\\s*rel=\"?"+ Pattern.quote(relation) + "\"?");
+            Pattern p = Pattern.compile("<(.*?)>\\s*;\\s*rel=\"?" + Pattern.quote(relation) + "\"?");
             for (String link : links) {
                 Matcher m = p.matcher(link);
                 if (m.matches()) {
@@ -557,11 +524,10 @@ public class DefaultConnection implements Connection {
     /**
      * Resolves a relative link against the connection's last URL.
      *
-     * @param link
-     *            Link to resolve. Absolute links are just converted to an URL. May be
-     *            {@code null}.
+     * @param link Link to resolve. Absolute links are just converted to an URL. May be
+     *             {@code null}.
      * @return Absolute URL of the given link, or {@code null} if the link was
-     *         {@code null}.
+     * {@code null}.
      */
     @CheckForNull
     private URL resolveRelative(@Nullable String link) {
@@ -580,10 +546,9 @@ public class DefaultConnection implements Connection {
     /**
      * Resolves a relative URI against the connection's last URL.
      *
-     * @param uri
-     *            URI to resolve
+     * @param uri URI to resolve
      * @return Absolute URI of the given link, or {@code null} if the URI was
-     *         {@code null}.
+     * {@code null}.
      */
     @CheckForNull
     private URI resolveUri(@Nullable String uri) {

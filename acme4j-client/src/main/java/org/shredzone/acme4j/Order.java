@@ -13,17 +13,6 @@
  */
 package org.shredzone.acme4j;
 
-import static java.util.stream.Collectors.toList;
-
-import java.net.URL;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.connector.Connection;
 import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.toolbox.JSON;
@@ -31,6 +20,16 @@ import org.shredzone.acme4j.toolbox.JSON.Value;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Represents a certificate order.
@@ -77,10 +76,10 @@ public class Order extends AcmeJsonResource {
      */
     public List<Identifier> getIdentifiers() {
         return Collections.unmodifiableList(getJSON().get("identifiers")
-                    .asArray()
-                    .stream()
-                    .map(Value::asIdentifier)
-                    .collect(toList()));
+                .asArray()
+                .stream()
+                .map(Value::asIdentifier)
+                .collect(toList()));
     }
 
     /**
@@ -105,11 +104,11 @@ public class Order extends AcmeJsonResource {
     public List<Authorization> getAuthorizations() {
         Login login = getLogin();
         return Collections.unmodifiableList(getJSON().get("authorizations")
-                    .asArray()
-                    .stream()
-                    .map(Value::asURL)
-                    .map(login::bindAuthorization)
-                    .collect(toList()));
+                .asArray()
+                .stream()
+                .map(Value::asURL)
+                .map(login::bindAuthorization)
+                .collect(toList()));
     }
 
     /**
@@ -127,9 +126,9 @@ public class Order extends AcmeJsonResource {
     @CheckForNull
     public Certificate getCertificate() {
         return getJSON().get("certificate")
-                    .map(Value::asURL)
-                    .map(getLogin()::bindCertificate)
-                    .orElse(null);
+                .map(Value::asURL)
+                .map(getLogin()::bindCertificate)
+                .orElse(null);
     }
 
     /**
@@ -141,9 +140,9 @@ public class Order extends AcmeJsonResource {
     @CheckForNull
     public Certificate getStarCertificate() {
         return getJSON().get("star-certificate")
-                    .map(Value::asURL)
-                    .map(getLogin()::bindCertificate)
-                    .orElse(null);
+                .map(Value::asURL)
+                .map(getLogin()::bindCertificate)
+                .orElse(null);
     }
 
     /**
@@ -156,8 +155,7 @@ public class Order extends AcmeJsonResource {
      * called {@link #execute(byte[])} to avoid confusion with the general
      * {@link Object#finalize()} method.
      *
-     * @param csr
-     *            CSR containing the parameters for the certificate being requested, in
+     * @param csr CSR containing the parameters for the certificate being requested, in
      *            DER format
      */
     public void execute(byte[] csr) throws AcmeException {
@@ -178,9 +176,9 @@ public class Order extends AcmeJsonResource {
      */
     public boolean isRecurrent() {
         return getJSON().get("recurrent")
-                    .optional()
-                    .map(Value::asBoolean)
-                    .orElse(false);
+                .optional()
+                .map(Value::asBoolean)
+                .orElse(false);
     }
 
     /**
@@ -192,9 +190,9 @@ public class Order extends AcmeJsonResource {
     @CheckForNull
     public Instant getRecurrentStart() {
         return getJSON().get("recurrent-start-date")
-                    .optional()
-                    .map(Value::asInstant)
-                    .orElse(null);
+                .optional()
+                .map(Value::asInstant)
+                .orElse(null);
     }
 
     /**
@@ -206,9 +204,9 @@ public class Order extends AcmeJsonResource {
     @CheckForNull
     public Instant getRecurrentEnd() {
         return getJSON().get("recurrent-end-date")
-                    .optional()
-                    .map(Value::asInstant)
-                    .orElse(null);
+                .optional()
+                .map(Value::asInstant)
+                .orElse(null);
     }
 
     /**
@@ -219,9 +217,9 @@ public class Order extends AcmeJsonResource {
     @CheckForNull
     public Duration getRecurrentCertificateValidity() {
         return getJSON().get("recurrent-certificate-validity")
-                    .optional()
-                    .map(Value::asDuration)
-                    .orElse(null);
+                .optional()
+                .map(Value::asDuration)
+                .orElse(null);
     }
 
     /**
@@ -245,9 +243,9 @@ public class Order extends AcmeJsonResource {
      */
     public boolean isRecurrentGetEnabled() {
         return getJSON().get("recurrent-certificate-get")
-                    .optional()
-                    .map(Value::asBoolean)
-                    .orElse(false);
+                .optional()
+                .map(Value::asBoolean)
+                .orElse(false);
     }
 
     /**

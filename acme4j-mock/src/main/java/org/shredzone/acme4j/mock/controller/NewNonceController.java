@@ -30,8 +30,7 @@ public class NewNonceController implements Controller {
     /**
      * Creates a new {@link NewNonceController}.
      *
-     * @param server
-     *         {@link MockAcmeServer} that manages the nonces
+     * @param server {@link MockAcmeServer} that manages the nonces
      */
     public NewNonceController(MockAcmeServer server) {
         // intentionally left blank

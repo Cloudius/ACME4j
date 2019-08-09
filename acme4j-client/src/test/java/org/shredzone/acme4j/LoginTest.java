@@ -13,15 +13,6 @@
  */
 package org.shredzone.acme4j;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
-
-import java.io.IOException;
-import java.net.URL;
-import java.security.KeyPair;
-
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.shredzone.acme4j.challenge.Challenge;
@@ -30,6 +21,15 @@ import org.shredzone.acme4j.provider.AcmeProvider;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
 import org.shredzone.acme4j.toolbox.TestUtils;
+
+import java.io.IOException;
+import java.net.URL;
+import java.security.KeyPair;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
 
 /**
  * Unit tests for {@link Login}.
@@ -111,16 +111,16 @@ public class LoginTest {
         URL challengeUrl = url("https://example.com/acme/authz/0");
 
         JSON data = new JSONBuilder()
-                        .put("type", challengeType)
-                        .put("url", challengeUrl)
-                        .toJSON();
+                .put("type", challengeType)
+                .put("url", challengeUrl)
+                .toJSON();
 
         Http01Challenge mockChallenge = mock(Http01Challenge.class);
         final AcmeProvider mockProvider = mock(AcmeProvider.class);
 
         when(mockProvider.createChallenge(
-                        ArgumentMatchers.any(Login.class),
-                        ArgumentMatchers.eq(data)))
+                ArgumentMatchers.any(Login.class),
+                ArgumentMatchers.eq(data)))
                 .thenReturn(mockChallenge);
 
         URL location = url(TestUtils.ACCOUNT_URL);

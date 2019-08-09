@@ -13,15 +13,15 @@
  */
 package org.shredzone.acme4j.challenge;
 
-import static org.junit.Assert.fail;
-
-import java.io.IOException;
-
 import org.junit.Test;
 import org.shredzone.acme4j.Login;
 import org.shredzone.acme4j.exception.AcmeProtocolException;
 import org.shredzone.acme4j.provider.TestableConnectionProvider;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
+
+import java.io.IOException;
+
+import static org.junit.Assert.fail;
 
 /**
  * Unit tests for {@link TokenChallenge}.

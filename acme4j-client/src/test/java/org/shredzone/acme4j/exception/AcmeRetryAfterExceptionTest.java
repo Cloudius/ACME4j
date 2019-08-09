@@ -13,13 +13,13 @@
  */
 package org.shredzone.acme4j.exception;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 
 import java.time.Duration;
 import java.time.Instant;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Unit tests for {@link AcmeRetryAfterException}.

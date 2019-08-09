@@ -13,10 +13,9 @@
  */
 package org.shredzone.acme4j.exception;
 
-import java.io.IOException;
-
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.Immutable;
+import java.io.IOException;
 
 /**
  * This exception is thrown when a network error occured while communicating with the
@@ -30,8 +29,7 @@ public class AcmeNetworkException extends AcmeException {
     /**
      * Create a new {@link AcmeNetworkException}.
      *
-     * @param cause
-     *            {@link IOException} that caused the network error
+     * @param cause {@link IOException} that caused the network error
      */
     public AcmeNetworkException(IOException cause) {
         super("Network error", cause);

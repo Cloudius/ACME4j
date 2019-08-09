@@ -13,19 +13,6 @@
  */
 package org.shredzone.acme4j.util;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.security.KeyPair;
-import java.security.Security;
-import java.util.Arrays;
-
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.DERIA5String;
 import org.bouncycastle.asn1.DEROctetString;
@@ -46,6 +33,20 @@ import org.hamcrest.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.shredzone.acme4j.Identifier;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.security.KeyPair;
+import java.security.Security;
+import java.util.Arrays;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Unit tests for {@link CSRBuilder}.
@@ -90,12 +91,12 @@ public class CSRBuilderTest {
         builder.setState("ABC");
 
         assertThat(builder.toString(), is("CN=abc.de,C=XX,L=Testville,O=Testing Co,"
-                        + "OU=Testunit,ST=ABC,"
-                        + "DNS=abc.de,DNS=fg.hi,DNS=jklm.no,DNS=pqr.st,DNS=uv.wx,DNS=y.z,DNS=*.wild.card,"
-                        + "DNS=ide1.nt,DNS=ide2.nt,DNS=ide3.nt,"
-                        + "IP=192.168.0.1,IP=192.168.0.2,IP=10.0.0.1,IP=10.0.0.2,"
-                        + "IP=fd00:0:0:0:0:0:0:1,IP=fd00:0:0:0:0:0:0:2,"
-                        + "IP=192.168.5.5,IP=192.168.5.6,IP=192.168.5.7"));
+                + "OU=Testunit,ST=ABC,"
+                + "DNS=abc.de,DNS=fg.hi,DNS=jklm.no,DNS=pqr.st,DNS=uv.wx,DNS=y.z,DNS=*.wild.card,"
+                + "DNS=ide1.nt,DNS=ide2.nt,DNS=ide3.nt,"
+                + "IP=192.168.0.1,IP=192.168.0.2,IP=10.0.0.1,IP=10.0.0.2,"
+                + "IP=fd00:0:0:0:0:0:0:1,IP=fd00:0:0:0:0:0:0:2,"
+                + "IP=192.168.5.5,IP=192.168.5.6,IP=192.168.5.7"));
 
         builder.sign(testKey);
 
@@ -134,12 +135,12 @@ public class CSRBuilderTest {
         builder.setState("ABC");
 
         assertThat(builder.toString(), is("CN=abc.de,C=XX,L=Testville,O=Testing Co,"
-                        + "OU=Testunit,ST=ABC,"
-                        + "DNS=abc.de,DNS=fg.hi,DNS=jklm.no,DNS=pqr.st,DNS=uv.wx,DNS=y.z,DNS=*.wild.card,"
-                        + "DNS=ide1.nt,DNS=ide2.nt,DNS=ide3.nt,"
-                        + "IP=192.168.0.1,IP=192.168.0.2,IP=10.0.0.1,IP=10.0.0.2,"
-                        + "IP=fd00:0:0:0:0:0:0:1,IP=fd00:0:0:0:0:0:0:2,"
-                        + "IP=192.168.5.5,IP=192.168.5.6,IP=192.168.5.7"));
+                + "OU=Testunit,ST=ABC,"
+                + "DNS=abc.de,DNS=fg.hi,DNS=jklm.no,DNS=pqr.st,DNS=uv.wx,DNS=y.z,DNS=*.wild.card,"
+                + "DNS=ide1.nt,DNS=ide2.nt,DNS=ide3.nt,"
+                + "IP=192.168.0.1,IP=192.168.0.2,IP=10.0.0.1,IP=10.0.0.2,"
+                + "IP=fd00:0:0:0:0:0:0:1,IP=fd00:0:0:0:0:0:0:2,"
+                + "IP=192.168.5.5,IP=192.168.5.6,IP=192.168.5.7"));
 
         builder.sign(testEcKey);
 
@@ -173,25 +174,25 @@ public class CSRBuilderTest {
         assertThat(extensions.length, is(1));
         GeneralNames names = GeneralNames.fromExtensions((Extensions) extensions[0], Extension.subjectAlternativeName);
         assertThat(names.getNames(), arrayContaining(
-                        new GeneralNameMatcher("abc.de", GeneralName.dNSName),
-                        new GeneralNameMatcher("fg.hi", GeneralName.dNSName),
-                        new GeneralNameMatcher("jklm.no", GeneralName.dNSName),
-                        new GeneralNameMatcher("pqr.st", GeneralName.dNSName),
-                        new GeneralNameMatcher("uv.wx", GeneralName.dNSName),
-                        new GeneralNameMatcher("y.z", GeneralName.dNSName),
-                        new GeneralNameMatcher("*.wild.card", GeneralName.dNSName),
-                        new GeneralNameMatcher("ide1.nt", GeneralName.dNSName),
-                        new GeneralNameMatcher("ide2.nt", GeneralName.dNSName),
-                        new GeneralNameMatcher("ide3.nt", GeneralName.dNSName),
-                        new GeneralNameMatcher("192.168.0.1", GeneralName.iPAddress),
-                        new GeneralNameMatcher("192.168.0.2", GeneralName.iPAddress),
-                        new GeneralNameMatcher("10.0.0.1", GeneralName.iPAddress),
-                        new GeneralNameMatcher("10.0.0.2", GeneralName.iPAddress),
-                        new GeneralNameMatcher("fd00:0:0:0:0:0:0:1", GeneralName.iPAddress),
-                        new GeneralNameMatcher("fd00:0:0:0:0:0:0:2", GeneralName.iPAddress),
-                        new GeneralNameMatcher("192.168.5.5", GeneralName.iPAddress),
-                        new GeneralNameMatcher("192.168.5.6", GeneralName.iPAddress),
-                        new GeneralNameMatcher("192.168.5.7", GeneralName.iPAddress)));
+                new GeneralNameMatcher("abc.de", GeneralName.dNSName),
+                new GeneralNameMatcher("fg.hi", GeneralName.dNSName),
+                new GeneralNameMatcher("jklm.no", GeneralName.dNSName),
+                new GeneralNameMatcher("pqr.st", GeneralName.dNSName),
+                new GeneralNameMatcher("uv.wx", GeneralName.dNSName),
+                new GeneralNameMatcher("y.z", GeneralName.dNSName),
+                new GeneralNameMatcher("*.wild.card", GeneralName.dNSName),
+                new GeneralNameMatcher("ide1.nt", GeneralName.dNSName),
+                new GeneralNameMatcher("ide2.nt", GeneralName.dNSName),
+                new GeneralNameMatcher("ide3.nt", GeneralName.dNSName),
+                new GeneralNameMatcher("192.168.0.1", GeneralName.iPAddress),
+                new GeneralNameMatcher("192.168.0.2", GeneralName.iPAddress),
+                new GeneralNameMatcher("10.0.0.1", GeneralName.iPAddress),
+                new GeneralNameMatcher("10.0.0.2", GeneralName.iPAddress),
+                new GeneralNameMatcher("fd00:0:0:0:0:0:0:1", GeneralName.iPAddress),
+                new GeneralNameMatcher("fd00:0:0:0:0:0:0:2", GeneralName.iPAddress),
+                new GeneralNameMatcher("192.168.5.5", GeneralName.iPAddress),
+                new GeneralNameMatcher("192.168.5.6", GeneralName.iPAddress),
+                new GeneralNameMatcher("192.168.5.7", GeneralName.iPAddress)));
     }
 
     /**
@@ -208,9 +209,9 @@ public class CSRBuilderTest {
 
         // Make sure PEM file is properly formatted
         assertThat(pem, matchesPattern(
-                  "-----BEGIN CERTIFICATE REQUEST-----[\\r\\n]+"
-                + "([a-zA-Z0-9/+=]+[\\r\\n]+)+"
-                + "-----END CERTIFICATE REQUEST-----[\\r\\n]*"));
+                "-----BEGIN CERTIFICATE REQUEST-----[\\r\\n]+"
+                        + "([a-zA-Z0-9/+=]+[\\r\\n]+)+"
+                        + "-----END CERTIFICATE REQUEST-----[\\r\\n]*"));
 
         // Read CSR from PEM
         PKCS10CertificationRequest readCsr;
@@ -371,11 +372,9 @@ public class CSRBuilderTest {
         /**
          * Fetches the {@link InetAddress} from the given iPAddress record.
          *
-         * @param name
-         *            Name to convert
+         * @param name Name to convert
          * @return {@link InetAddress}
-         * @throws IllegalArgumentException
-         *             if the IP address could not be read
+         * @throws IllegalArgumentException if the IP address could not be read
          */
         private InetAddress getIP(ASN1Encodable name) {
             try {

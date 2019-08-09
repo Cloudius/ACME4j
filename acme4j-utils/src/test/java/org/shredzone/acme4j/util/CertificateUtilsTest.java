@@ -13,9 +13,15 @@
  */
 package org.shredzone.acme4j.util;
 
-import static java.time.temporal.ChronoUnit.SECONDS;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+import org.bouncycastle.asn1.ASN1InputStream;
+import org.bouncycastle.asn1.BERTags;
+import org.bouncycastle.asn1.DEROctetString;
+import org.bouncycastle.asn1.x509.GeneralName;
+import org.bouncycastle.pkcs.PKCS10CertificationRequest;
+import org.junit.Test;
+import org.shredzone.acme4j.Identifier;
+import org.shredzone.acme4j.challenge.TlsAlpn01Challenge;
+import org.shredzone.acme4j.toolbox.AcmeUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -37,15 +43,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.bouncycastle.asn1.ASN1InputStream;
-import org.bouncycastle.asn1.BERTags;
-import org.bouncycastle.asn1.DEROctetString;
-import org.bouncycastle.asn1.x509.GeneralName;
-import org.bouncycastle.pkcs.PKCS10CertificationRequest;
-import org.junit.Test;
-import org.shredzone.acme4j.Identifier;
-import org.shredzone.acme4j.challenge.TlsAlpn01Challenge;
-import org.shredzone.acme4j.toolbox.AcmeUtils;
+import static java.time.temporal.ChronoUnit.SECONDS;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Unit tests for {@link CertificateUtils}.
@@ -243,8 +243,7 @@ public class CertificateUtilsTest {
     /**
      * Extracts all DNSName SANs from a certificate.
      *
-     * @param cert
-     *            {@link X509Certificate}
+     * @param cert {@link X509Certificate}
      * @return Set of DNSName
      */
     private Set<String> getSANs(X509Certificate cert) throws CertificateParsingException {
@@ -262,8 +261,7 @@ public class CertificateUtilsTest {
     /**
      * Extracts all IPAddress SANs from a certificate.
      *
-     * @param cert
-     *            {@link X509Certificate}
+     * @param cert {@link X509Certificate}
      * @return Set of IPAddresses
      */
     private Set<InetAddress> getIpSANs(X509Certificate cert) throws CertificateParsingException, UnknownHostException {

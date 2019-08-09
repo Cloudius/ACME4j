@@ -13,56 +13,25 @@
  */
 package org.shredzone.acme4j.mock;
 
-import static java.util.Objects.requireNonNull;
+import org.shredzone.acme4j.*;
+import org.shredzone.acme4j.challenge.Challenge;
+import org.shredzone.acme4j.mock.connection.*;
+import org.shredzone.acme4j.mock.controller.*;
+import org.shredzone.acme4j.mock.model.*;
 
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.net.URL;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-
-import org.shredzone.acme4j.Account;
-import org.shredzone.acme4j.Authorization;
-import org.shredzone.acme4j.Identifier;
-import org.shredzone.acme4j.Login;
-import org.shredzone.acme4j.Order;
-import org.shredzone.acme4j.Session;
-import org.shredzone.acme4j.Status;
-import org.shredzone.acme4j.challenge.Challenge;
-import org.shredzone.acme4j.mock.connection.MockAcmeProvider;
-import org.shredzone.acme4j.mock.connection.MockCertificateAuthority;
-import org.shredzone.acme4j.mock.connection.MockConnection;
-import org.shredzone.acme4j.mock.connection.NoncePool;
-import org.shredzone.acme4j.mock.connection.Repository;
-import org.shredzone.acme4j.mock.controller.Controller;
-import org.shredzone.acme4j.mock.controller.KeyChangeController;
-import org.shredzone.acme4j.mock.controller.NewAccountController;
-import org.shredzone.acme4j.mock.controller.NewAuthzController;
-import org.shredzone.acme4j.mock.controller.NewNonceController;
-import org.shredzone.acme4j.mock.controller.NewOrderController;
-import org.shredzone.acme4j.mock.controller.RevokeCertController;
-import org.shredzone.acme4j.mock.model.MockAccount;
-import org.shredzone.acme4j.mock.model.MockAuthorization;
-import org.shredzone.acme4j.mock.model.MockChallenge;
-import org.shredzone.acme4j.mock.model.MockDirectory;
-import org.shredzone.acme4j.mock.model.MockOrder;
+import static java.util.Objects.requireNonNull;
 
 /**
  * This is the heart of acme4j unit testing. A {@link MockAcmeServer} simulates a simple
@@ -96,11 +65,10 @@ public class MockAcmeServer {
     /**
      * Constructs a new {@link MockAcmeServer} instance.
      *
-     * @param modifier
-     *         This {@link Consumer} is invoked after a map of directory types and
-     *         controller instances have been created. It can make amends to this map,
-     *         adding further types, or removing unwanted types. @{code null} to leave
-     *         the map unchanged.
+     * @param modifier This {@link Consumer} is invoked after a map of directory types and
+     *                 controller instances have been created. It can make amends to this map,
+     *                 adding further types, or removing unwanted types. @{code null} to leave
+     *                 the map unchanged.
      */
     public MockAcmeServer(@Nullable Consumer<Map<String, Controller>> modifier) {
         Map<String, Controller> typeMap = new HashMap<>();
@@ -159,8 +127,7 @@ public class MockAcmeServer {
      * <p>
      * The {@link Session} of this login is available via {@link Login#getSession()}.
      *
-     * @param keyPair
-     *         Account's {@link KeyPair}
+     * @param keyPair Account's {@link KeyPair}
      * @return Login to that account
      */
     public Login createLogin(KeyPair keyPair) {
@@ -216,9 +183,8 @@ public class MockAcmeServer {
     /**
      * Creates a new account.
      *
-     * @param publicKey
-     *         {@link PublicKey} of the new account. Creation will fail if an account with
-     *         this key has already been created before.
+     * @param publicKey {@link PublicKey} of the new account. Creation will fail if an account with
+     *                  this key has already been created before.
      * @return The {@link MockAccount} that was created
      */
     public MockAccount createAccount(PublicKey publicKey) {
@@ -235,8 +201,7 @@ public class MockAcmeServer {
      * Finds the {@link MockAccount} with the given key. Accounts that are not having a
      * {@link Status#VALID} status will be ignored.
      *
-     * @param key
-     *         {@link PublicKey} of the account
+     * @param key {@link PublicKey} of the account
      * @return Valid {@link MockAccount} with that {@link PublicKey}
      */
     public Optional<MockAccount> findAccount(PublicKey key) {
@@ -252,8 +217,7 @@ public class MockAcmeServer {
      * is already a {@link MockAuthorization} for that {@link Identifier}, it is returned
      * instead.
      *
-     * @param identifier
-     *         {@link Identifier} to create a {@link MockAuthorization} for.
+     * @param identifier {@link Identifier} to create a {@link MockAuthorization} for.
      * @return The {@link MockAuthorization} that is used for authorizing the given {@link
      * Identifier}
      */
@@ -264,8 +228,7 @@ public class MockAcmeServer {
     /**
      * Finds a {@link MockAuthorization} that authorizes the given {@link Identifier}.
      *
-     * @param identifier
-     *         {@link Identifier} to find the {@link MockAuthorization} for
+     * @param identifier {@link Identifier} to find the {@link MockAuthorization} for
      * @return The {@link MockAuthorization} that authorizes the given {@link Identifier}
      */
     public Optional<MockAuthorization> findAuthorization(Identifier identifier) {
@@ -275,8 +238,7 @@ public class MockAcmeServer {
     /**
      * Creates a new {@link MockChallenge} instance of the given type.
      *
-     * @param type
-     *         Challenge type (e.g. {@value org.shredzone.acme4j.challenge.Http01Challenge#TYPE}).
+     * @param type Challenge type (e.g. {@value org.shredzone.acme4j.challenge.Http01Challenge#TYPE}).
      * @return The {@link MockChallenge} instance that was created
      */
     public MockChallenge createChallenge(String type) {
@@ -290,8 +252,7 @@ public class MockAcmeServer {
      * This method also automatically generates all necessary {@link MockAuthorization}
      * objects.
      *
-     * @param identifiers
-     *         One or more {@link Identifier} to order a certificate for.
+     * @param identifiers One or more {@link Identifier} to order a certificate for.
      * @return The {@link MockOrder} instance that was created
      */
     public MockOrder createOrder(Identifier... identifiers) {
@@ -304,9 +265,8 @@ public class MockAcmeServer {
      * This method also automatically generates all necessary {@link MockAuthorization}
      * objects.
      *
-     * @param identifiers
-     *         Collection of {@link Identifier} to order a certificate for. Must contain
-     *         at least one identifier. {@code null} values are ignored.
+     * @param identifiers Collection of {@link Identifier} to order a certificate for. Must contain
+     *                    at least one identifier. {@code null} values are ignored.
      * @return The {@link MockOrder} instance that was created
      */
     public MockOrder createOrder(Collection<Identifier> identifiers) {
@@ -325,11 +285,9 @@ public class MockAcmeServer {
      * the order. Use this method if the required set of authorizations do not match the
      * set of identifiers.
      *
-     * @param identifiers
-     *         Collection of {@link Identifier} to order a certificate for.
-     * @param authorizations
-     *         Collection of {@link MockAuthorization} that need to be resolved before the
-     *         order can be finalized.
+     * @param identifiers    Collection of {@link Identifier} to order a certificate for.
+     * @param authorizations Collection of {@link MockAuthorization} that need to be resolved before the
+     *                       order can be finalized.
      * @return The {@link MockOrder} instance that was created
      */
     public MockOrder createOrder(Collection<Identifier> identifiers, Collection<MockAuthorization> authorizations) {
@@ -346,11 +304,9 @@ public class MockAcmeServer {
     /**
      * Returns the {@link MockAccount} that corresponds to the given {@link Account}.
      *
-     * @param account
-     *         {@link Account} to get the matching {@link MockAccount} for
+     * @param account {@link Account} to get the matching {@link MockAccount} for
      * @return MockAccount
-     * @throws NoSuchElementException
-     *         if there is no such mock resource
+     * @throws NoSuchElementException if there is no such mock resource
      */
     public MockAccount getMockOf(Account account) {
         return repository.getResourceOfType(account.getLocation(), MockAccount.class)
@@ -361,11 +317,9 @@ public class MockAcmeServer {
      * Returns the {@link MockAuthorization} that corresponds to the given {@link
      * Authorization}.
      *
-     * @param authorization
-     *         {@link Authorization} to get the matching {@link MockAuthorization} for
+     * @param authorization {@link Authorization} to get the matching {@link MockAuthorization} for
      * @return MockAuthorization
-     * @throws NoSuchElementException
-     *         if there is no such mock resource
+     * @throws NoSuchElementException if there is no such mock resource
      */
     public MockAuthorization getMockOf(Authorization authorization) {
         return repository.getResourceOfType(authorization.getLocation(), MockAuthorization.class)
@@ -375,11 +329,9 @@ public class MockAcmeServer {
     /**
      * Returns the {@link MockChallenge} that corresponds to the given {@link Challenge}.
      *
-     * @param challenge
-     *         {@link Challenge} to get the matching {@link MockChallenge} for
+     * @param challenge {@link Challenge} to get the matching {@link MockChallenge} for
      * @return MockChallenge
-     * @throws NoSuchElementException
-     *         if there is no such mock resource
+     * @throws NoSuchElementException if there is no such mock resource
      */
     public MockChallenge getMockOf(Challenge challenge) {
         return repository.getResourceOfType(challenge.getLocation(), MockChallenge.class)
@@ -389,11 +341,9 @@ public class MockAcmeServer {
     /**
      * Returns the {@link MockOrder} that corresponds to the given {@link Order}.
      *
-     * @param order
-     *         {@link Order} to get the matching {@link MockOrder} for
+     * @param order {@link Order} to get the matching {@link MockOrder} for
      * @return MockOrder
-     * @throws NoSuchElementException
-     *         if there is no such mock resource
+     * @throws NoSuchElementException if there is no such mock resource
      */
     public MockOrder getMockOf(Order order) {
         return repository.getResourceOfType(order.getLocation(), MockOrder.class)
@@ -403,8 +353,7 @@ public class MockAcmeServer {
     /**
      * Tests if the given nonce was issued by this server and is valid.
      *
-     * @param nonce
-     *         Nonce to test
+     * @param nonce Nonce to test
      * @return {@code true} if the nonce is valid and was issued by this server
      */
     public boolean isValidNonce(@Nullable String nonce) {

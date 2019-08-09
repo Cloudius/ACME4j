@@ -13,8 +13,9 @@
  */
 package org.shredzone.acme4j.util;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -26,9 +27,8 @@ import java.security.Security;
 import java.security.interfaces.ECPublicKey;
 import java.security.interfaces.RSAPublicKey;
 
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Unit tests for {@link KeyPairUtils}.
@@ -72,9 +72,9 @@ public class KeyPairUtilsTest {
 
         // Make sure PEM file is properly formatted
         assertThat(pem, matchesPattern(
-                  "-----BEGIN RSA PRIVATE KEY-----[\\r\\n]+"
-                + "([a-zA-Z0-9/+=]+[\\r\\n]+)+"
-                + "-----END RSA PRIVATE KEY-----[\\r\\n]*"));
+                "-----BEGIN RSA PRIVATE KEY-----[\\r\\n]+"
+                        + "([a-zA-Z0-9/+=]+[\\r\\n]+)+"
+                        + "-----END RSA PRIVATE KEY-----[\\r\\n]*"));
 
         // Read keypair from PEM
         KeyPair readPair;
@@ -115,9 +115,9 @@ public class KeyPairUtilsTest {
 
         // Make sure PEM file is properly formatted
         assertThat(pem, matchesPattern(
-                  "-----BEGIN EC PRIVATE KEY-----[\\r\\n]+"
-                + "([a-zA-Z0-9/+=]+[\\r\\n]+)+"
-                + "-----END EC PRIVATE KEY-----[\\r\\n]*"));
+                "-----BEGIN EC PRIVATE KEY-----[\\r\\n]+"
+                        + "([a-zA-Z0-9/+=]+[\\r\\n]+)+"
+                        + "-----END EC PRIVATE KEY-----[\\r\\n]*"));
 
         // Read keypair from PEM
         KeyPair readPair;

@@ -13,22 +13,21 @@
  */
 package org.shredzone.acme4j;
 
-import static java.util.Collections.unmodifiableList;
-import static java.util.stream.Collectors.toList;
+import org.shredzone.acme4j.exception.AcmeProtocolException;
+import org.shredzone.acme4j.toolbox.JSON;
+import org.shredzone.acme4j.toolbox.JSON.Value;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.concurrent.Immutable;
 import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.concurrent.Immutable;
-
-import org.shredzone.acme4j.exception.AcmeProtocolException;
-import org.shredzone.acme4j.toolbox.JSON;
-import org.shredzone.acme4j.toolbox.JSON.Value;
+import static java.util.Collections.unmodifiableList;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Represents a JSON Problem.
@@ -46,10 +45,8 @@ public class Problem implements Serializable {
     /**
      * Creates a new {@link Problem} object.
      *
-     * @param problem
-     *            Problem as JSON structure
-     * @param baseUrl
-     *            Document's base {@link URL} to resolve relative URIs against
+     * @param problem Problem as JSON structure
+     * @param baseUrl Document's base {@link URL} to resolve relative URIs against
      */
     public Problem(JSON problem, URL baseUrl) {
         this.problemJson = problem;
@@ -61,15 +58,15 @@ public class Problem implements Serializable {
      */
     public URI getType() {
         return problemJson.get("type")
-                    .map(Value::asString)
-                    .map(it -> {
-                        try {
-                            return baseUrl.toURI().resolve(it);
-                        } catch (URISyntaxException ex) {
-                            throw new IllegalArgumentException("Bad base URL", ex);
-                        }
-                    })
-                    .orElseThrow(() -> new AcmeProtocolException("Problem without type"));
+                .map(Value::asString)
+                .map(it -> {
+                    try {
+                        return baseUrl.toURI().resolve(it);
+                    } catch (URISyntaxException ex) {
+                        throw new IllegalArgumentException("Bad base URL", ex);
+                    }
+                })
+                .orElseThrow(() -> new AcmeProtocolException("Problem without type"));
     }
 
     /**
@@ -101,15 +98,15 @@ public class Problem implements Serializable {
     @CheckForNull
     public URI getInstance() {
         return problemJson.get("instance")
-                        .map(Value::asString)
-                        .map(it ->  {
-                            try {
-                                return baseUrl.toURI().resolve(it);
-                            } catch (URISyntaxException ex) {
-                                throw new IllegalArgumentException("Bad base URL", ex);
-                            }
-                        })
-                        .orElse(null);
+                .map(Value::asString)
+                .map(it -> {
+                    try {
+                        return baseUrl.toURI().resolve(it);
+                    } catch (URISyntaxException ex) {
+                        throw new IllegalArgumentException("Bad base URL", ex);
+                    }
+                })
+                .orElse(null);
     }
 
     /**
@@ -120,9 +117,9 @@ public class Problem implements Serializable {
     @CheckForNull
     public Identifier getIdentifier() {
         return problemJson.get("identifier")
-                        .optional()
-                        .map(Value::asIdentifier)
-                        .orElse(null);
+                .optional()
+                .map(Value::asIdentifier)
+                .orElse(null);
     }
 
     /**

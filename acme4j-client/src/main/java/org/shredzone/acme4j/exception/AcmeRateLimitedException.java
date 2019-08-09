@@ -13,17 +13,16 @@
  */
 package org.shredzone.acme4j.exception;
 
-import java.net.URL;
-import java.time.Instant;
-import java.util.Collection;
-import java.util.Collections;
+import org.shredzone.acme4j.Problem;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.Immutable;
-
-import org.shredzone.acme4j.Problem;
+import java.net.URL;
+import java.time.Instant;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * An exception that is thrown when a rate limit was exceeded.
@@ -39,16 +38,13 @@ public class AcmeRateLimitedException extends AcmeServerException {
     /**
      * Creates a new {@link AcmeRateLimitedException}.
      *
-     * @param problem
-     *            {@link Problem} that caused the exception
-     * @param retryAfter
-     *            The moment the request is expected to succeed again, may be {@code null}
-     *            if not known
-     * @param documents
-     *            URLs pointing to documents about the rate limit that was hit
+     * @param problem    {@link Problem} that caused the exception
+     * @param retryAfter The moment the request is expected to succeed again, may be {@code null}
+     *                   if not known
+     * @param documents  URLs pointing to documents about the rate limit that was hit
      */
     public AcmeRateLimitedException(Problem problem, @Nullable Instant retryAfter,
-                @Nullable Collection<URL> documents) {
+                                    @Nullable Collection<URL> documents) {
         super(problem);
         this.retryAfter = retryAfter;
         this.documents =

@@ -13,11 +13,12 @@
  */
 package org.shredzone.acme4j.it.pebble;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static java.util.stream.Collectors.toList;
-import static org.awaitility.Awaitility.await;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import org.bouncycastle.asn1.x509.GeneralName;
+import org.junit.Test;
+import org.shredzone.acme4j.*;
+import org.shredzone.acme4j.challenge.Dns01Challenge;
+import org.shredzone.acme4j.it.BammBammClient;
+import org.shredzone.acme4j.util.CSRBuilder;
 
 import java.security.KeyPair;
 import java.security.cert.X509Certificate;
@@ -26,18 +27,12 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import org.bouncycastle.asn1.x509.GeneralName;
-import org.junit.Test;
-import org.shredzone.acme4j.Account;
-import org.shredzone.acme4j.AccountBuilder;
-import org.shredzone.acme4j.Authorization;
-import org.shredzone.acme4j.Certificate;
-import org.shredzone.acme4j.Order;
-import org.shredzone.acme4j.Session;
-import org.shredzone.acme4j.Status;
-import org.shredzone.acme4j.challenge.Dns01Challenge;
-import org.shredzone.acme4j.it.BammBammClient;
-import org.shredzone.acme4j.util.CSRBuilder;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static java.util.stream.Collectors.toList;
+import static org.awaitility.Awaitility.await;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Tests a complete wildcard certificate order. Wildcard certificates currently only
@@ -58,9 +53,9 @@ public class OrderWildcardIT extends PebbleITBase {
         Session session = new Session(pebbleURI());
 
         Account account = new AccountBuilder()
-                    .agreeToTermsOfService()
-                    .useKeyPair(keyPair)
-                    .create(session);
+                .agreeToTermsOfService()
+                .useKeyPair(keyPair)
+                .create(session);
 
         KeyPair domainKeyPair = createKeyPair();
 
@@ -68,11 +63,11 @@ public class OrderWildcardIT extends PebbleITBase {
         Instant notAfter = notBefore.plus(Duration.ofDays(20L));
 
         Order order = account.newOrder()
-                    .domain(TEST_WILDCARD_DOMAIN)
-                    .domain(TEST_DOMAIN)
-                    .notBefore(notBefore)
-                    .notAfter(notAfter)
-                    .create();
+                .domain(TEST_WILDCARD_DOMAIN)
+                .domain(TEST_DOMAIN)
+                .notBefore(notBefore)
+                .notAfter(notAfter)
+                .create();
         assertThat(order.getNotBefore(), is(notBefore));
         assertThat(order.getNotAfter(), is(notAfter));
         assertThat(order.getStatus(), is(Status.PENDING));
@@ -96,10 +91,10 @@ public class OrderWildcardIT extends PebbleITBase {
             challenge.trigger();
 
             await()
-                .pollInterval(1, SECONDS)
-                .timeout(30, SECONDS)
-                .conditionEvaluationListener(cond -> updateAuth(auth))
-                .until(auth::getStatus, not(isOneOf(Status.PENDING, Status.PROCESSING)));
+                    .pollInterval(1, SECONDS)
+                    .timeout(30, SECONDS)
+                    .conditionEvaluationListener(cond -> updateAuth(auth))
+                    .until(auth::getStatus, not(isOneOf(Status.PENDING, Status.PROCESSING)));
 
             if (auth.getStatus() != Status.VALID) {
                 fail("Authorization failed");
@@ -115,10 +110,10 @@ public class OrderWildcardIT extends PebbleITBase {
         order.execute(encodedCsr);
 
         await()
-            .pollInterval(1, SECONDS)
-            .timeout(30, SECONDS)
-            .conditionEvaluationListener(cond -> updateOrder(order))
-            .until(order::getStatus, not(isOneOf(Status.PENDING, Status.PROCESSING)));
+                .pollInterval(1, SECONDS)
+                .timeout(30, SECONDS)
+                .conditionEvaluationListener(cond -> updateOrder(order))
+                .until(order::getStatus, not(isOneOf(Status.PENDING, Status.PROCESSING)));
 
 
         Certificate certificate = order.getCertificate();

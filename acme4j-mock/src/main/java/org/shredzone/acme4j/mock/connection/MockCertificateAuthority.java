@@ -13,26 +13,20 @@
  */
 package org.shredzone.acme4j.mock.connection;
 
+import org.bouncycastle.pkcs.PKCS10CertificationRequest;
+import org.shredzone.acme4j.util.CertificateUtils;
+import org.shredzone.acme4j.util.KeyPairUtils;
+
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.PublicKey;
-import java.security.SignatureException;
+import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-
-import org.bouncycastle.pkcs.PKCS10CertificationRequest;
-import org.shredzone.acme4j.util.CertificateUtils;
-import org.shredzone.acme4j.util.KeyPairUtils;
 
 /**
  * A mock certificate authority. It has a random root certificate and intermediate
@@ -85,18 +79,15 @@ public class MockCertificateAuthority {
     /**
      * Creates and signs a certificate based on the given CSR.
      *
-     * @param csr
-     *         Certificate Signing Request
-     * @param notBefore
-     *         Certificate is valid starting from that instant. If {@code null}, the
-     *         certificate is valid starting now.
-     * @param notAfter
-     *         Certificate is valid until that instant. If {@code null}, it is valid for 7
-     *         days starting from {@code notBefore}.
+     * @param csr       Certificate Signing Request
+     * @param notBefore Certificate is valid starting from that instant. If {@code null}, the
+     *                  certificate is valid starting now.
+     * @param notAfter  Certificate is valid until that instant. If {@code null}, it is valid for 7
+     *                  days starting from {@code notBefore}.
      * @return The signed {@link X509Certificate}. It is valid for 7 days.
      */
     public X509Certificate signCertificate(byte[] csr, @Nullable Instant notBefore,
-            @Nullable Instant notAfter) {
+                                           @Nullable Instant notAfter) {
         setup();
         try {
             Instant nb = notBefore != null ? notBefore : Instant.now();
@@ -121,13 +112,11 @@ public class MockCertificateAuthority {
     /**
      * Returns a certificate chain for the given certificate.
      *
-     * @param cert
-     *         End entity certificate
+     * @param cert End entity certificate
      * @return Chain containing the end entity certificate, the intermediate certificate,
      * and the root certificate.
-     * @throws IllegalArgumentException
-     *         The given end entity certificate was not issued by this {@link
-     *         MockCertificateAuthority} instance.
+     * @throws IllegalArgumentException The given end entity certificate was not issued by this {@link
+     *                                  MockCertificateAuthority} instance.
      */
     public List<X509Certificate> chain(X509Certificate cert) {
         assertValidCertificate(cert);
@@ -138,11 +127,9 @@ public class MockCertificateAuthority {
      * Asserts that the given end entity certificate was issued by this {@link
      * MockCertificateAuthority} instance.
      *
-     * @param cert
-     *         {@link X509Certificate} to check
-     * @throws IllegalArgumentException
-     *         The given end entity certificate was not issued by this {@link
-     *         MockCertificateAuthority} instance.
+     * @param cert {@link X509Certificate} to check
+     * @throws IllegalArgumentException The given end entity certificate was not issued by this {@link
+     *                                  MockCertificateAuthority} instance.
      */
     public void assertValidCertificate(X509Certificate cert) {
         try {

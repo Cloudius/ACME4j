@@ -13,18 +13,17 @@
  */
 package org.shredzone.acme4j.mock.model;
 
-import java.net.URL;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.mock.connection.Repository;
 import org.shredzone.acme4j.mock.controller.Controller;
 import org.shredzone.acme4j.mock.controller.DirectoryController;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A mock ACME server directory.
@@ -46,11 +45,9 @@ public class MockDirectory extends MockResource {
     /**
      * Creates a new {@link MockDirectory} instance.
      *
-     * @param repository
-     *         {@link Repository} to add the resource to
-     * @param typeMap
-     *         Map of directory types, and {@link Controller} instances handling that
-     *         type.
+     * @param repository {@link Repository} to add the resource to
+     * @param typeMap    Map of directory types, and {@link Controller} instances handling that
+     *                   type.
      * @return The generated {@link MockDirectory}
      */
     public static MockDirectory create(Repository repository, Map<String, Controller> typeMap) {

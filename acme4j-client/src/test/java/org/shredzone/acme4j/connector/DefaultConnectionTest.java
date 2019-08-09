@@ -13,13 +13,19 @@
  */
 package org.shredzone.acme4j.connector;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.*;
-import static org.shredzone.acme4j.toolbox.TestUtils.url;
-import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
+import org.jose4j.jws.JsonWebSignature;
+import org.jose4j.jwx.CompactSerializer;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.ArgumentMatchers;
+import org.shredzone.acme4j.Login;
+import org.shredzone.acme4j.Session;
+import org.shredzone.acme4j.exception.*;
+import org.shredzone.acme4j.provider.AcmeProvider;
+import org.shredzone.acme4j.toolbox.AcmeUtils;
+import org.shredzone.acme4j.toolbox.JSON;
+import org.shredzone.acme4j.toolbox.JSONBuilder;
+import org.shredzone.acme4j.toolbox.TestUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -34,33 +40,15 @@ import java.security.cert.X509Certificate;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
-import org.jose4j.jws.JsonWebSignature;
-import org.jose4j.jwx.CompactSerializer;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.ArgumentMatchers;
-import org.shredzone.acme4j.Login;
-import org.shredzone.acme4j.Session;
-import org.shredzone.acme4j.exception.AcmeException;
-import org.shredzone.acme4j.exception.AcmeProtocolException;
-import org.shredzone.acme4j.exception.AcmeRateLimitedException;
-import org.shredzone.acme4j.exception.AcmeRetryAfterException;
-import org.shredzone.acme4j.exception.AcmeServerException;
-import org.shredzone.acme4j.exception.AcmeUnauthorizedException;
-import org.shredzone.acme4j.exception.AcmeUserActionRequiredException;
-import org.shredzone.acme4j.provider.AcmeProvider;
-import org.shredzone.acme4j.toolbox.AcmeUtils;
-import org.shredzone.acme4j.toolbox.JSON;
-import org.shredzone.acme4j.toolbox.JSONBuilder;
-import org.shredzone.acme4j.toolbox.TestUtils;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.*;
+import static org.shredzone.acme4j.toolbox.TestUtils.url;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
 
 /**
  * Unit tests for {@link DefaultConnection}.
@@ -87,9 +75,9 @@ public class DefaultConnectionTest {
 
         final AcmeProvider mockProvider = mock(AcmeProvider.class);
         when(mockProvider.directory(
-                        ArgumentMatchers.any(Session.class),
-                        ArgumentMatchers.eq(URI.create(TestUtils.ACME_SERVER_URI))))
-            .thenReturn(TestUtils.getJSON("directory"));
+                ArgumentMatchers.any(Session.class),
+                ArgumentMatchers.eq(URI.create(TestUtils.ACME_SERVER_URI))))
+                .thenReturn(TestUtils.getJSON("directory"));
 
         session = TestUtils.session(mockProvider);
         session.setLocale(Locale.JAPAN);
@@ -244,10 +232,10 @@ public class DefaultConnectionTest {
         headers.put("Content-Type", Arrays.asList("application/json"));
         headers.put("Location", Arrays.asList("https://example.com/acme/acct/asdf"));
         headers.put("Link", Arrays.asList(
-                        "<https://example.com/acme/new-authz>;rel=\"next\"",
-                        "</recover-acct>;rel=recover",
-                        "<https://example.com/acme/terms>; rel=\"terms-of-service\""
-                    ));
+                "<https://example.com/acme/new-authz>;rel=\"next\"",
+                "</recover-acct>;rel=recover",
+                "<https://example.com/acme/terms>; rel=\"terms-of-service\""
+        ));
 
         when(mockUrlConnection.getHeaderFields()).thenReturn(headers);
         when(mockUrlConnection.getURL()).thenReturn(new URL("https://example.org/acme"));
@@ -270,10 +258,10 @@ public class DefaultConnectionTest {
 
         Map<String, List<String>> headers = new HashMap<>();
         headers.put("Link", Arrays.asList(
-                        "<https://example.com/acme/terms1>; rel=\"terms-of-service\"",
-                        "<https://example.com/acme/terms2>; rel=\"terms-of-service\"",
-                        "<../terms3>; rel=\"terms-of-service\""
-                    ));
+                "<https://example.com/acme/terms1>; rel=\"terms-of-service\"",
+                "<https://example.com/acme/terms2>; rel=\"terms-of-service\"",
+                "<../terms3>; rel=\"terms-of-service\""
+        ));
 
         when(mockUrlConnection.getHeaderFields()).thenReturn(headers);
         when(mockUrlConnection.getURL()).thenReturn(baseUrl);
@@ -281,9 +269,9 @@ public class DefaultConnectionTest {
         try (DefaultConnection conn = new DefaultConnection(mockHttpConnection)) {
             conn.conn = mockUrlConnection;
             assertThat(conn.getLinks("terms-of-service"), containsInAnyOrder(
-                        url("https://example.com/acme/terms1"),
-                        url("https://example.com/acme/terms2"),
-                        url("https://example.com/acme/terms3")
+                    url("https://example.com/acme/terms1"),
+                    url("https://example.com/acme/terms2"),
+                    url("https://example.com/acme/terms3")
             ));
         }
     }
@@ -355,8 +343,8 @@ public class DefaultConnectionTest {
         when(mockUrlConnection.getHeaderField("Retry-After"))
                 .thenReturn(String.valueOf(delta));
         when(mockUrlConnection.getHeaderFieldDate(
-                        ArgumentMatchers.eq("Date"),
-                        ArgumentMatchers.anyLong()))
+                ArgumentMatchers.eq("Date"),
+                ArgumentMatchers.anyLong()))
                 .thenReturn(now);
 
         try (DefaultConnection conn = new DefaultConnection(mockHttpConnection)) {
@@ -1030,7 +1018,7 @@ public class DefaultConnectionTest {
         // Build a broken certificate chain PEM file
         byte[] brokenPem;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        OutputStreamWriter w = new OutputStreamWriter(baos)) {
+             OutputStreamWriter w = new OutputStreamWriter(baos)) {
             for (X509Certificate cert : TestUtils.createCertificate()) {
                 byte[] badCert = cert.getEncoded();
                 Arrays.sort(badCert); // break it

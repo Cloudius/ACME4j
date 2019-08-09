@@ -13,16 +13,6 @@
  */
 package org.shredzone.acme4j.mock.model;
 
-import java.net.URL;
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.shredzone.acme4j.Problem;
 import org.shredzone.acme4j.Status;
 import org.shredzone.acme4j.mock.connection.Repository;
@@ -30,6 +20,15 @@ import org.shredzone.acme4j.mock.controller.ChallengeController;
 import org.shredzone.acme4j.toolbox.AcmeUtils;
 import org.shredzone.acme4j.toolbox.JSON;
 import org.shredzone.acme4j.toolbox.JSONBuilder;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.net.URL;
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * A mock challenge.
@@ -61,10 +60,8 @@ public class MockChallenge extends MockResource {
     /**
      * Creates a new {@link MockChallenge} instance.
      *
-     * @param repository
-     *         {@link Repository} to add the resource to
-     * @param type
-     *         Challenge type (e.g. {@value org.shredzone.acme4j.challenge.Http01Challenge#TYPE}).
+     * @param repository {@link Repository} to add the resource to
+     * @param type       Challenge type (e.g. {@value org.shredzone.acme4j.challenge.Http01Challenge#TYPE}).
      * @return The generated {@link MockChallenge}
      */
     public static MockChallenge create(Repository repository, String type) {
@@ -105,9 +102,8 @@ public class MockChallenge extends MockResource {
     /**
      * Sets the current challenge status.
      *
-     * @param status
-     *         new {@link Status}, or {@code null} to clear the status and let the
-     *         resource decide on its current status automatically.
+     * @param status new {@link Status}, or {@code null} to clear the status and let the
+     *               resource decide on its current status automatically.
      */
     public void setStatus(@Nullable Status status) {
         this.status = status;
@@ -124,8 +120,7 @@ public class MockChallenge extends MockResource {
     /**
      * Sets the validation {@link Instant}.
      *
-     * @param validated
-     *         Validation {@link Instant}, {@code null} if undefined.
+     * @param validated Validation {@link Instant}, {@code null} if undefined.
      */
     public void setValidated(@Nullable Instant validated) {
         this.validated = validated;
@@ -143,9 +138,8 @@ public class MockChallenge extends MockResource {
     /**
      * Sets the {@link Problem} why a validation has failed.
      *
-     * @param error
-     *         {@link Problem} that caused the failure. {@code null} if there was no
-     *         error.
+     * @param error {@link Problem} that caused the failure. {@code null} if there was no
+     *              error.
      */
     public void setError(@Nullable Problem error) {
         this.error = error;
@@ -164,8 +158,7 @@ public class MockChallenge extends MockResource {
      * Sets the token that is used in this challenge. Only used for token based
      * challenges.
      *
-     * @param token
-     *         Token to be used.
+     * @param token Token to be used.
      */
     public void setToken(@Nullable String token) {
         this.token = token;
