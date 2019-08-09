@@ -22,7 +22,7 @@ import java.net.URL;
 import static java.util.Objects.requireNonNull;
 
 /**
- * This runtime exception is thrown when an {@link AcmeException} occured while trying to
+ * This runtime exception is thrown when an {@link AcmeException} occurred while trying to
  * lazy-load a resource from the ACME server.
  */
 @ParametersAreNonnullByDefault

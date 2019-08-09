@@ -263,7 +263,7 @@ public class OrderBuilder {
      */
     public Order create() throws AcmeException {
         if (identifierSet.isEmpty()) {
-            throw new IllegalArgumentException("At least one identifer is required");
+            throw new IllegalArgumentException("At least one identifier is required");
         }
 
         Session session = login.getSession();

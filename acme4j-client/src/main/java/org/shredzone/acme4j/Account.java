@@ -234,7 +234,7 @@ public class Account extends AcmeJsonResource {
 
     /**
      * Permanently deactivates an account. Related certificates may still be valid after
-     * account deactivation, and need to be revoked separately if neccessary.
+     * account deactivation, and need to be revoked separately if necessary.
      * <p>
      * A deactivated account cannot be reactivated!
      */

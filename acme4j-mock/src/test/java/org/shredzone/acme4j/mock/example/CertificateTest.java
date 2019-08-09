@@ -37,7 +37,7 @@ import static org.junit.Assert.assertThat;
  * certificate that is ready for downloading.
  * <p>
  * The second test {@link #testFailure()} also prepares a mock server, but this time it
- * has an order that is invalid because of an error that occured during finalization.
+ * has an order that is invalid because of an error that occurred during finalization.
  */
 public class CertificateTest {
 

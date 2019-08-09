@@ -246,4 +246,4 @@ X509Certificate latestCertificate = cert.getCertificate();
 
 If supported by the CA, it is possible to negotiate that the certificate can also be downloaded via `GET` request. First use `Metadata.isStarCertificateGetAllowed()` to check if this option is supported by the CA. If it is, add `recurrentEnableGet()` to the order parameters to enable it. After the order was finalized, you can use any HTTP client to download the latest certificate from the certificate URL by a `GET` request.
 
-Use `Order.cancelRecurrent()` to terminate automatical certificate renewals.
+Use `Order.cancelRecurrent()` to terminate automatic certificate renewals.

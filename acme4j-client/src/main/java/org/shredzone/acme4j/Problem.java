@@ -92,7 +92,7 @@ public class Problem implements Serializable {
     }
 
     /**
-     * Returns an URI that identifies the specific occurence of the problem. It is always
+     * Returns an URI that identifies the specific occurrence of the problem. It is always
      * an absolute URI.
      */
     @CheckForNull

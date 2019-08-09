@@ -46,7 +46,7 @@ public enum Status {
     VALID,
 
     /**
-     * An error or authorization/validation failure has occured. The client should check
+     * An error or authorization/validation failure has occurred. The client should check
      * for error messages.
      */
     INVALID,

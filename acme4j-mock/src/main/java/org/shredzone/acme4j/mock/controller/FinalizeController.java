@@ -22,7 +22,7 @@ import java.net.URL;
 import java.security.PublicKey;
 
 /**
- * A {@link Controller} that handles order finalizations.
+ * A {@link Controller} that handles order finalization's.
  *
  * @since 2.8
  */

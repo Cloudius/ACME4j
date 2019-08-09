@@ -103,7 +103,7 @@ public class JSONBuilder {
     }
 
     /**
-     * Puts a {@link Key} into the claim. The key is serializied as JWK.
+     * Puts a {@link Key} into the claim. The key is serialized as JWK.
      *
      * @param key       Property key
      * @param publickey {@link PublicKey} to serialize

@@ -19,7 +19,6 @@ import org.hamcrest.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.shredzone.acme4j.exception.AcmeProtocolException;
-import org.shredzone.acme4j.toolbox.AcmeUtils.*;
 
 import java.io.*;
 import java.lang.reflect.Constructor;

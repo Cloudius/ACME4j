@@ -18,7 +18,7 @@ import javax.annotation.concurrent.Immutable;
 import java.io.IOException;
 
 /**
- * This exception is thrown when a network error occured while communicating with the
+ * This exception is thrown when a network error occurred while communicating with the
  * server.
  */
 @ParametersAreNonnullByDefault

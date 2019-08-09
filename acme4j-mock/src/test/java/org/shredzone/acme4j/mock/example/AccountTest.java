@@ -107,7 +107,7 @@ public class AccountTest {
         // Our account now contains both addresses
         assertThat(account.getContacts(), containsInAnyOrder(email1, email2));
 
-        // Dito on server side
+        // Ditto on server side
         MockAccount mockAccount = server.getMockOf(account);
         assertThat(mockAccount.getContacts(), containsInAnyOrder(email1, email2));
     }
